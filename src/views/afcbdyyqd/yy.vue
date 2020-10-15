@@ -76,11 +76,14 @@ export default {
         },
         selectedCardno:'',
         cardlist:[],
-        form:{traineenum:1}
+        form:{traineenum:1},
+        type:''
       }
     },
     created(){
         this.query=this.$route.query.item
+        this.type=this.$route.query.type
+        console.log(this.type)
         console.log(this.query)
     },
     mounted() {
@@ -120,7 +123,7 @@ export default {
              this.form.periodvalidity=item.periodvalidity
             if(item.cardno==this.selectedCardno){
               this.form.cardno=item.cardno
-              this.form.cardtype=item.cardtype
+              this.form.cardtype=this.type=='团课'?'T':'P'
               this.form.isopen=item.isopen
               if(item.cardtype=='S'){
                 this.form.usabletimes=parseInt(item.curtimes)-parseInt(this.form.traineenum)
