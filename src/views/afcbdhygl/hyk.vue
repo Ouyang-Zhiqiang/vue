@@ -66,7 +66,7 @@
           <el-form :model="insertForm">
             <el-form-item label="图片" :label-width="formLabelWidth" required>
               <el-upload
-               action="https://www.facebodyfitness.com/uploadimg"
+                action="https://www.facebodyfitness.com/uploadimg"
                 name="upload_file"
                 list-type="picture-card"
                 :on-success="handleSuccess"

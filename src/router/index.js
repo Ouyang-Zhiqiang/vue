@@ -274,8 +274,7 @@ export const constantRoutes = [
         component: () => import('@/views/afcbdysgl/baobiao'),
         name: '报表',
         meta: { title: '报表' }
-      }
-      ,
+      },      
       {
         path: 'cs',
         component: () => import('@/views/afcbdysgl/cs'),
