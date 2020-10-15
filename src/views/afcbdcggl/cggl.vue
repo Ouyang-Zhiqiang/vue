@@ -41,9 +41,12 @@
             </el-form-item>
             <el-form-item label="图片添加" :label-width="formLabelWidth">
               <el-upload
-                action="http://localhost:8088/upload"
+                action="https://www.facebodyfitness.com/uploadimg"
                 name="upload_file"
                 list-type="picture-card"
+                :on-preview="handlePreviewMu"
+                :on-remove="handleRemoveMu"
+                :before-remove="beforeRemoveMu"
                 :on-success="handleSuccess1"
                 style="float:left"
               >
@@ -134,11 +137,17 @@
                   </el-form-item>
                   <el-form-item label="图片修改" :label-width="formLabelWidth">
                     <el-upload
-                      action="http://localhost:8088/upload"
+                      action="https://www.facebodyfitness.com/uploadimg"
                       name="upload_file"
                       list-type="picture-card"
+                      :on-preview="handlePreviewMu2"
+                      :on-remove="handleRemoveMu2"
+                      :before-remove="beforeRemoveMu2"
                       :on-success="handleSuccess"
                       style="float:left"
+                      multiple
+                      :on-exceed="handleExceedMu2"
+                      :file-list="fileList2"
                     >
                       <i class="el-icon-plus" />
                     </el-upload>
@@ -186,6 +195,9 @@ export default {
           dialogFormVisible:false,
           formLabelWidth: '150px',
           dialogFormVisible1:false,
+          obj:{},
+          fileList:[],
+          fileList2:[],
           insertForm:{
             storeid:'',
             resid:'',
@@ -235,8 +247,40 @@ export default {
       toOpen1(){
         this.dialogFormVisible1=true
       },
+       insertimg(){
+      this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEC0X7H', this.$qs.stringify(this.obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$message({
+            message: '恭喜你，操作成功',
+            type: 'success'
+          })
+        }).catch(error=>{
+          this.$message.error('错了哦，这是一条错误消息');
+      });
+    },
+    handleRemoveMu(file) {
+        this.fileList.forEach((item, index)=>{
+            if(file.name==item.name){
+            this.fileList.splice(index, 1)
+            }
+        })
+    },
+    handlePreviewMu(file) {
+        console.log(file);
+    },
+    handleExceedMu(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemoveMu(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+    },
       handleSuccess1(file){
-        this.insertForm.resurl=file
+        var filearr=file.split(',')
+        this.obj.urlname=filearr[1]
+        this.obj.url=filearr[0]
+        this.obj.name=filearr[1]
+        this.fileList.push(this.obj)
+        this.insertimg(this.obj)
+        // this.insertForm.resurl=file
       },
       toTrueCloseInsert(){
         this.dialogFormVisible1=false
@@ -316,7 +360,7 @@ export default {
           this.updateStoreNoImage()
         }else{
           this.updateForm.resid=(new Date()).valueOf();
-          console.log(this.updateForm.resid)
+          console.log("ssss-----"+this.updateForm.resid)
           this.updateStoreAndImage()
         }
       },
@@ -340,9 +384,29 @@ export default {
           this.$message.error('错了哦，这是一条错误消息');
         });
       },
-      handleSuccess(file){
-        this.updateForm.updateurl=file
+     handleSuccess(file){
+        // this.updateForm.updateurl=file
+         var filearr=file.split(',')
+        this.updateForm.urlname=filearr[1]
+        this.updateForm.url=filearr[0]
+        this.fileList2.push(this.updateForm)
       },
+     handleRemoveMu2(file) {
+        this.fileList.forEach((item, index)=>{
+            if(file.name==item.name){
+            this.fileList2.splice(index, 1)
+            }
+        })
+    },
+    handlePreviewMu2(file) {
+        console.log(file);
+    },
+    handleExceedMu2(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemoveMu2(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+    },
       getAllStores(data){
         this.listLoading=true
         data.page=this.listQuery.page-1

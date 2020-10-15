@@ -169,7 +169,7 @@
             {{ data.day }}
           </p>
           <div v-for="(item,index) in list" :key="index" style="width:98%;margin:0 auto;text-align:left">
-            <div v-if="data.day==item.scheduledate" style="height:120px;background:#ffa400;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px" @click="tkUrl(item)">
+            <div v-if="data.day==item.scheduledate" :class="item.coursename.substring(0, item.coursename.indexOf('_'))" style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px" @click="tkUrl(item)">
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
               <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
@@ -225,7 +225,7 @@ export default {
             form5:{},
             form6:{},
             form7:{},
-
+            
             strenthNumberArr1:[],
             strenthNumberArr2:[],
             strenthNumberArr3:[],
@@ -268,7 +268,7 @@ export default {
             this.dateRange=[]
             this.dateRange.push(dates[0])
             this.dateRange.push(dates[6])
-            console.log(this.dateRange)
+            // console.log(this.dateRange)
             this.sevenDays=dates
             // console.log(this.sevenDays)
         },
@@ -552,5 +552,53 @@ export default {
     
     .current{
         height: 950px!important;
+    }
+    .Activity{
+        background: #7271d5;
+    }
+    .Burning{
+      background:#59abf8;
+    }
+    .私教{
+      background:#7271d5;
+    }
+    .Sprint{
+      background:#82c3db;
+    }
+    .Recovery{
+       background:#d7699b;
+    }
+    .VIPR{
+      background:#82c3db;
+    }
+    .Ultmate{
+      background:#7271d5;
+    }
+    .Kick-boxing{
+      background:#7271d5;
+    }
+    .BOOM{
+       background:#82c3db;
+    }
+    .FMT运动评估{
+       background:#7271d5;
+    }
+    .power{
+       background:#82c3db;
+    }
+    .KB现代壶铃{
+       background:#82c3db;
+    }
+    .Movement{
+       background: #9277d3;
+    }
+    .aa{
+       background:#82c3db;
+    }
+    .Warm{
+       background:#82c3db;
+    }
+    .Game Day{
+       background:#82c3db;
     }
 </style>
