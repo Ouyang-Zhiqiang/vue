@@ -30,7 +30,8 @@ import * as filters from './filters' // global filters
 import { mockXHR } from '../mock'
 import echarts from 'echarts'
 import axios from 'axios'
-import qs from 'qs';
+import qs from 'qs'
+
 axios.defaults.baseURL ='/api'
 // import {post,fetch,patch,put} from './utils/httpconfig'
 

@@ -268,20 +268,13 @@ export const constantRoutes = [
         component: () => import('@/views/afcbdysgl/ysbb'),
         name: '营收报表',
         meta: { title: '营收报表' }
-      },
+      },      
       {
         path: 'baobiao',
         component: () => import('@/views/afcbdysgl/baobiao'),
-        name: '报表',
-        meta: { title: '报表' }
-      },      
-      {
-        path: 'cs',
-        component: () => import('@/views/afcbdysgl/cs'),
-        name: '报表',
-        meta: { title: '报表' }
+        name: '测试',
+        meta: { title: '测试' }
       }
-
     ]
   },
   {
