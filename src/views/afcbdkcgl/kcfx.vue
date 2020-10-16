@@ -5,8 +5,7 @@
       v-for="(item, index) in theAllstores"
       :key="index"
       @click="toGetAllByStore(item.id)"
-      >{{ item.name }}</el-button
-    >
+    >{{ item.name }}</el-button>
 
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-select v-model="coachid1" placeholder="全部教练" @change="getTest">
@@ -313,7 +312,7 @@ export default {
       listLoading: false,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 20
       },
       total: 0,
       kcmcinput: "",
@@ -321,12 +320,12 @@ export default {
       options: [
         {
           value: "团课",
-          label: "团课",
+          label: "团课"
         },
         {
           value: "私教",
-          label: "私教",
-        },
+          label: "私教"
+        }
       ],
       kclxvalue: "",
       courseitems: {},
@@ -343,7 +342,7 @@ export default {
       PersontimesandClassnumber: [],
       Amountoflessonssold: [],
       datearr: [],
-      yyrsarr: [],
+      yyrsarr: []
     };
   },
   mounted() {
@@ -481,7 +480,7 @@ export default {
     getAllStore() {
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.theAllstores = res.data.rows;
@@ -490,7 +489,7 @@ export default {
     getAllCoach() {
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.theAllCoach = res.data.rows;
@@ -501,30 +500,30 @@ export default {
       yskess.setOption({
         title: {
           text: "已上课程数",
-          subtext: "  ",
+          subtext: "  "
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
         legend: {
-          data: ["团课", "私教"],
+          data: ["团课", "私教"]
         },
         grid: {
           left: "3%",
           right: "4%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: ["总节数", "预约人次", "实到人次"],
+          data: ["总节数", "预约人次", "实到人次"]
         },
         series: [
           {
@@ -533,8 +532,8 @@ export default {
             data: [
               this.PersontimesandClassnumber.numberofgrouplessons,
               this.PersontimesandClassnumber.tNumberofreservations,
-              this.PersontimesandClassnumber.tNumberofsignin,
-            ],
+              this.PersontimesandClassnumber.tNumberofsignin
+            ]
           },
           {
             name: "私教",
@@ -542,10 +541,10 @@ export default {
             data: [
               this.PersontimesandClassnumber.numberofprivatelessons,
               this.PersontimesandClassnumber.pNumberofreservations,
-              this.PersontimesandClassnumber.pNumberofsignin,
-            ],
-          },
-        ],
+              this.PersontimesandClassnumber.pNumberofsignin
+            ]
+          }
+        ]
       });
     },
     ckxkzje() {
@@ -560,36 +559,36 @@ export default {
       ckxkzjes.setOption({
         title: {
           text: "次卡销课金额",
-          subtext: "",
+          subtext: ""
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
 
         grid: {
           left: "3%",
           right: "4%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: coursetitle,
+          data: coursetitle
         },
         series: [
           {
             name: "消课总金额",
             type: "bar",
-            data: courseamount,
-          },
-        ],
+            data: courseamount
+          }
+        ]
       });
     },
     skrs() {
@@ -597,28 +596,28 @@ export default {
       skrss.setOption({
         title: {
           text: "上课人数",
-          subtext: "",
+          subtext: ""
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
 
         grid: {
           left: "3%",
           right: "4%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"],
+          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"]
         },
         series: [
           {
@@ -631,10 +630,10 @@ export default {
               this.skrsall.Classes4,
               this.skrsall.Classes3,
               this.skrsall.Classes2,
-              this.skrsall.Classes1,
-            ],
-          },
-        ],
+              this.skrsall.Classes1
+            ]
+          }
+        ]
       });
     },
     yyrszs() {
@@ -643,22 +642,22 @@ export default {
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
         xAxis: {
           type: "category",
-          data: this.datearr,
+          data: this.datearr
         },
         yAxis: {
-          type: "value",
+          type: "value"
         },
         series: [
           {
             data: this.yyrsarr,
-            type: "line",
-          },
-        ],
+            type: "line"
+          }
+        ]
       });
     },
     getDay(day) {
@@ -745,7 +744,7 @@ export default {
       const wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
-        type: "array",
+        type: "array"
       });
       try {
         FileSaver.saveAs(
@@ -755,8 +754,8 @@ export default {
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
