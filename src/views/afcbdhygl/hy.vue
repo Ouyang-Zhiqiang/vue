@@ -1,6 +1,7 @@
 <template>
   <div id="container" style="padding:15px">
     <el-button v-for="(item,index) in stores" :key="index" @click="toGetAllByStore(item.id)">{{ item.name }}</el-button>
+    <el-button   @click="toGetAllByStore(1)">未设置场馆</el-button>
     
 
     <el-row :gutter="10" style="margin-top:20px">
@@ -208,6 +209,12 @@
           <el-table-column width="100" label="会员等级">
             <template slot-scope="scope">
               <span>Lv:{{ scope.row.memgrade }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column width="100" label="会员场馆">
+            <template slot-scope="scope">
+              <span>{{ scope.row.storename }}</span>
             </template>
           </el-table-column>
 
@@ -437,6 +444,7 @@ export default {
                     var obj={}
                     obj.id='F'
                     obj.name='全部运动馆'
+                    console.log(this.list)
                     this.stores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
@@ -491,6 +499,7 @@ export default {
                 if(res.data.total==0){
                   alert('查询暂无数据')
                 }else{
+                  alert('ok')
                   this.list=res.data.rows
                   this.total=res.data.rows[0].counts
                   this.list.forEach((item, index)=>{
@@ -572,6 +581,7 @@ export default {
               data.storeid=this.startStoreId
             }
             this.listLoading=true
+            console.log(data.storeid)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
