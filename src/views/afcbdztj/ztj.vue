@@ -20,77 +20,77 @@
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">课程营收总金额(元)</span><br>
           <div style="height:15px" />
-          <span style="font-size:18px;">{{ courserevenuetotal1 }}</span>
+          <span style="font-size:18px;">{{ courserevenuetotal1.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">新单金额(元)</span><br>
           <div style="height:15px" />
-          <span style="font-size:18px;">{{ courserevenuetotal2 }}</span>
+          <span style="font-size:18px;">{{ courserevenuetotal2.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">续费金额(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ courserevenuetotal3 }}</span>
+          <span style="font-size:18px;">{{ courserevenuetotal3.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">团课单节平均价（次卡）</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AveragePrice }}</span>
+          <span style="font-size:18px;">{{ AveragePrice.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">私教单节平均价（次卡）</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AveragePrice2 }}</span>
+          <span style="font-size:18px;">{{ AveragePrice2.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">次卡销课总金额(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ money }}</span>
+          <span style="font-size:18px;">{{ money.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">团课次卡消课金额(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ money2 }}</span>
+          <span style="font-size:18px;">{{ money2.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">私教次卡消课金额(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ money3 }}</span>
+          <span style="font-size:18px;">{{ money3.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">平均客单价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AveragePrice4 }}</span>
+          <span style="font-size:18px;">{{ AveragePrice4.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">团课平均销课单价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AveragePrice5 }}</span>
+          <span style="font-size:18px;">{{ AveragePrice5.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">私教平均销课单价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AveragePrice6 }}</span>
+          <span style="font-size:18px;">{{ AveragePrice6.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">团课单节平均价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AverageUnitPrice }}</span>
+          <span style="font-size:18px;">{{ AverageUnitPrice.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">私教单节平均价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ AverageUnitPrice2 }}</span>
+          <span style="font-size:18px;">{{ AverageUnitPrice2.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">商品总金额(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ money4 }}</span>
+          <span style="font-size:18px;">{{ money4.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">客单价(元)</span><br>
           <div style="height:18px" />
-          <span style="font-size:18px;">{{ CustomerPrice }}</span>
+          <span style="font-size:18px;">{{ CustomerPrice.toFixed(2) }}</span>
         </div>
         <div style="width:220px;height:100px;text-align:left;float:left;padding-bottom:25px">
           <span style="font-size:15px;font-weight:500;">商品售出总数(件)</span><br>
