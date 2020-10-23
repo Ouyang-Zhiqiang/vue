@@ -110,6 +110,7 @@
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-tab-pane label="课程报表">
         <el-select v-model="coachid2" placeholder="全部教练">
+          <el-option label="全部教练" value="" />
           <el-option
             v-for="item in theAllCoach"
             :key="item.userid"
@@ -445,7 +446,11 @@ export default {
           .then((res) => {
             // console.log(res.data)
             this.yno = "团课";
-            this.total = res.data[0].total;
+            if(res.data==''||res.data==null||res.data=='[]'){
+              this.total = 0
+            }else{
+              this.total = res.data[0].total;
+            }
             this.list = res.data;
           });
       } else if (this.coursetype == "私教") {
@@ -466,7 +471,11 @@ export default {
           .then((res) => {
             this.yno = "私教";
             this.list = res.data;
-            this.total = res.data[0].total;
+            if(res.data==''||res.data==null||res.data=='[]'){
+              this.total = 0
+            }else{
+              this.total = res.data[0].total;
+            }
             // console.log(res)
           });
       }
@@ -498,9 +507,14 @@ export default {
     yskcs() {
       const yskess = this.$echarts.init(document.getElementById("tab1-1"));
       yskess.setOption({
+        label: {
+            show: true,
+            position: 'right',
+            color: '#333'
+        },
         title: {
-          text: "已上课程数",
-          subtext: "  "
+          text: "已上课程数:"+(parseInt(this.PersontimesandClassnumber.numberofgrouplessons)
+          +parseInt(this.PersontimesandClassnumber.numberofprivatelessons)),
         },
         tooltip: {
           trigger: "axis",
@@ -513,7 +527,7 @@ export default {
         },
         grid: {
           left: "3%",
-          right: "4%",
+          right: "10%",
           bottom: "3%",
           containLabel: true
         },
@@ -523,25 +537,29 @@ export default {
         },
         yAxis: {
           type: "category",
-          data: ["总节数", "预约人次", "实到人次"]
+          data:  ["实到人次","预约人次", "总节数"]
         },
         series: [
           {
             name: "团课",
             type: "bar",
             data: [
-              this.PersontimesandClassnumber.numberofgrouplessons,
+              this.PersontimesandClassnumber.tNumberofsignin,
               this.PersontimesandClassnumber.tNumberofreservations,
-              this.PersontimesandClassnumber.tNumberofsignin
+              this.PersontimesandClassnumber.numberofgrouplessons
+              
+              
             ]
           },
           {
             name: "私教",
             type: "bar",
             data: [
-              this.PersontimesandClassnumber.numberofprivatelessons,
-              this.PersontimesandClassnumber.pNumberofreservations,
-              this.PersontimesandClassnumber.pNumberofsignin
+              this.PersontimesandClassnumber.pNumberofsignin,
+               this.PersontimesandClassnumber.pNumberofreservations,
+              this.PersontimesandClassnumber.numberofprivatelessons
+             
+              
             ]
           }
         ]
@@ -551,15 +569,21 @@ export default {
       const ckxkzjes = this.$echarts.init(document.getElementById("tab1-2"));
       var coursetitle = new Array();
       var courseamount = new Array();
+      var courseamountarr=0;
       for (var i = 0; i < this.Amountoflessonssold.length; i++) {
         coursetitle[i] = this.Amountoflessonssold[i].coursetitle;
         courseamount[i] = this.Amountoflessonssold[i].courseamount;
+        courseamountarr+=this.Amountoflessonssold[i].courseamount;
       }
 
       ckxkzjes.setOption({
+        label: {
+            show: true,
+            position: 'right',
+            color: '#333'
+        },
         title: {
-          text: "次卡销课金额",
-          subtext: ""
+          text: "次卡销课总金额:"+courseamountarr.toFixed(2),
         },
         tooltip: {
           trigger: "axis",
@@ -567,10 +591,9 @@ export default {
             type: "shadow"
           }
         },
-
         grid: {
           left: "3%",
-          right: "4%",
+          right: "10%",
           bottom: "3%",
           containLabel: true
         },
@@ -594,9 +617,19 @@ export default {
     skrs() {
       const skrss = this.$echarts.init(document.getElementById("tab1-3"));
       skrss.setOption({
+        label: {
+            show: true,
+            position: 'right',
+            color: '#333'
+        },
         title: {
-          text: "上课人数",
-          subtext: ""
+          text: "上课人数:"+(this.skrsall.Classes7+
+              this.skrsall.Classes6+
+              this.skrsall.Classes5+
+              this.skrsall.Classes4+
+              this.skrsall.Classes3+
+              this.skrsall.Classes2+
+              this.skrsall.Classes1),
         },
         tooltip: {
           trigger: "axis",
@@ -607,7 +640,7 @@ export default {
 
         grid: {
           left: "3%",
-          right: "4%",
+          right: "10%",
           bottom: "3%",
           containLabel: true
         },
@@ -621,7 +654,7 @@ export default {
         },
         series: [
           {
-            name: "消客总金额",
+            name: "上课人数",
             type: "bar",
             data: [
               this.skrsall.Classes7,
@@ -639,6 +672,11 @@ export default {
     yyrszs() {
       const yyrszss = this.$echarts.init(document.getElementById("tab2-1"));
       yyrszss.setOption({
+         label: {
+            show: true,
+            position: 'top',
+            color: '#333'
+        },
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -735,9 +773,9 @@ export default {
     daochu() {
       this.listQuery.limit = 99999;
       this.getKCFX();
-      setTimeout(this.daochuexcel, 2000);
+      setTimeout(this.daochuexcel, 4500);
       this.listQuery.limit = 20;
-      setTimeout(this.getKCFX, 3000);
+      setTimeout(this.getKCFX, 5000);
     },
     daochuexcel() {
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
@@ -749,7 +787,7 @@ export default {
       try {
         FileSaver.saveAs(
           new Blob([wbout], { type: "application/octet-stream" }),
-          "excel.xlsx"
+          "课程报表.xlsx"
         );
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);

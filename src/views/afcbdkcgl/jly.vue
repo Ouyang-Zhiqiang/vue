@@ -1,7 +1,16 @@
 <template>
-  <div style="width:100%;padding:10px">
- 
-    <el-popover
+  <div
+    style="
+      width: 1500px;
+      height: 800px;
+      padding: 30px;
+      background: #ffffff;
+      margin-left: 85px;
+      margin-top: 30px;
+      border-radius: 10px;
+    "
+  >
+    <!-- <el-popover
       placement="right"
       width="400"
       trigger="click"
@@ -9,70 +18,122 @@
       <audio v-for="item in music" :key="item.index" :src="item.url" controls />
     
       <el-button slot="reference" style="position:absolute;right:20px">音乐包</el-button>
-    </el-popover>
-    <div style="clear:both" />
-    <div v-for="(item,index) in parts" :key="index" style="width:25%;padding:5px;float:left">
-      <h1>{{ item.partname }}</h1>
-      <p v-for="(item1,index1) in item.actions" :key="index1">{{ item1.name }} {{ item1.number }} {{ item1.unit }}</p>
+    </el-popover> -->
+    <!-- <div style="clear:both" /> -->
+    <div class="kcxx">
+      <h2>课程信息</h2>
+      <div style="margin-left: 0px">课程名称:{{ this.query.coursename }}</div>
+      <div>
+        开课时间:{{ this.query.schedulebegin }}-{{ this.query.schedulebegin }}
+      </div>
+      <div>教练:{{ this.query.coachname }}</div>
+      <div>预约人数:{{this.getyysl(this.users)}}/{{ this.reservablenumber }}</div>
     </div>
-    
-    <div style="clear:both" />
-    <div v-for="item in users" :key="item.index" style="width:10%;float:left;text-align:center;margin-top:15px">
-      <img :src="item.resurl" style="width:65px;height:65px;border-radius:50%"><br>
-      <span>{{ item.name }}</span>
-    </div>
-    
-  </div>    
+    <br />
+    <el-table :data="users" style="width: 100%">
+      <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
+      <el-table-column prop="tel" label="电话" width="130"> </el-table-column>
+      <el-table-column prop="traineenum" label="人数" width="100">
+      </el-table-column>
+      <el-table-column prop="cardname" label="会员卡" width="180">
+      </el-table-column>
+      <el-table-column label="签到状态" width="100">
+        <template slot-scope="scope">
+          <span
+            v-if="scope.row.signstate == '1'"
+            style="color: green; font-weight: 600"
+          >
+            已签到
+          </span>
+          <span v-else-if="scope.row.signstate == '0'">未签到</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="预约状态" width="100">
+        <template slot-scope="scope">
+          <span v-if="scope.row.ordstate == '1'">已预约</span>
+          <span
+            v-else-if="scope.row.ordstate == '2'"
+            style="color: red; font-weight: 600"
+          >
+            已取消
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="remarks" label="备注"> </el-table-column>
+      <el-table-column prop="createdon" label="预约时间" width="200">
+      </el-table-column>
+      <el-table-column label="操作" width="200">
+        <template slot-scope="scope">
+          <div v-if="scope.row.ordstate == 1 && scope.row.signstate == 0">
+            <el-button type="text" @click="signed(scope.row)">签到</el-button>
+            <el-button type="text" @click="cancleord(scope.row)"
+              >取消预约</el-button
+            >
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
-
 export default {
-    data() {
-        return {
-           query:{},
-           users:[],
-           music:[],
-           parts:[]
-        }
+  data() {
+    return {
+      query: {},
+      users: [],
+      music: [],
+      parts: [],
+      reservablenumber:''
+    };
+  },
+  created() {
+    this.query = this.$route.query.item;
+    this.getusers();
+  },
+  methods: {
+    getusers() {
+      var data = {};
+      data.scheduleid = this.query.scheduleid;
+      this.$axios
+        .post(
+          "http://localhost:8081/web/CCourse/getcourseinformation",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.users = res.data;
+          this.reservablenumber=res.data[0].reservablenumber
+        });
     },
-    created(){
-        this.query=this.$route.query.item
-        console.log(this.query)
-        this.getusers()
-        this.getmusic()
-        this.getparts()
-    },
-    methods:{
-        getusers(){
-          var e={}
-          e.courseid=this.query.courseid
-          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24C2HHHWU5PM', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              this.users=res.data.rows
-          })
-        },
-        getmusic(){
-          var e={}
-          e.cid=this.query.cid
-          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24C2HHHWU5QM', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              if(res.data.rows[0]){
-                  this.music=JSON.parse(res.data.rows[0])
-              }
-          })
-        },
-        getparts(){
-          var e={}
-          e.sid=this.query.sid
-          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24C2HHHWU5QH', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              if(res.data.rows[0]){
-                  this.parts=JSON.parse(res.data.rows[0])
-              }
-          })
+    getyysl(e) {
+      var i = 0;
+      if (e != null) {
+        for (var j = 0; j < e.length; j++) {
+          if (e[j].ordstate == 1) {
+            i++;
+          }
         }
-    }
-}
+      }
+
+      return i;
+    },
+  },
+};
 </script>
 
-<style>   
-   
+<style>
+.kcxx {
+  width: 1440px;
+  height: 150px;
+  background: seashell;
+  padding: 20px;
+  border-radius: 10px;
+}
+.kcxx div {
+  float: left;
+  margin-left: 150px;
+  font-size: 16px;
+  font-weight: bold;
+}
 </style>

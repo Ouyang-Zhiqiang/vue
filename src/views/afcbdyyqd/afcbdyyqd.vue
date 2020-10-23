@@ -125,7 +125,7 @@
           </el-table-column>
           <el-table-column width="80" label="课程价格" align="center">
             <template slot-scope="scope">
-              <span>{{ scope.row.courseprice }} </span>
+              <span>{{ scope.row.courseprice.toFixed(2) }} </span>
             </template>
           </el-table-column>
 

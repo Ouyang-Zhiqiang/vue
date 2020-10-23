@@ -90,7 +90,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="操作人" width="200">
+          <el-table-column align="center" label="备注">
             <template slot-scope="scope">
               <span>{{ scope.row.remarks }}</span>
             </template>
