@@ -103,6 +103,7 @@
           <el-table-column align="center" label="会员" width="100">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
+              <span id="sp">{{item.coachid }}</span>
             </template>
           </el-table-column>
 
@@ -176,7 +177,7 @@
                 >签到</el-button>
                 <el-button
                   type="text"
-                  @click="cancleord(scope.row)"
+                  @click="cancleord(scope.row,item.coachid )"
                 >取消预约</el-button>
               </div>
             </template>
@@ -320,6 +321,7 @@ export default {
           this.list.forEach((item) => {
             item.users = JSON.parse(item.users);
           });
+          console.log(this.list.users)
           this.listLoading = false;
         });
         }else{
@@ -389,26 +391,38 @@ export default {
           this.$message.error("错了哦，这是一条错误消息");
         });
     },
-    cancleord(e) {
-      //取消预约
-      var obj = {};
-      obj = e;
-      this.$axios
-        .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
-          this.$qs.stringify(obj),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        )
-        .then((res) => {
-          this.getAllTeam();
+   cancleord(e,coachid) {
+     e.coachid=coachid
+      //取消预约
+      var obj = {};
+      obj = e;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
+          this.$qs.stringify(obj),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.cancleThenSend(obj)
+          this.getAllTeam();
+          this.$message({
+            message: "恭喜你，操作成功",
+            type: "success"
+          });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+    },
+    cancleThenSend(obj){
+       this.$axios.post('http://localhost:8081/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
-            message: "恭喜你，操作成功",
+            message: "短信发送成功",
             type: "success"
           });
-        })
-        .catch((error) => {
-          this.$message.error("错了哦，这是一条错误消息");
-        });
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
     },
     toUrl(e, type) {
       // console.log(e)
@@ -538,5 +552,8 @@ export default {
 }
 .el-card__body {
   padding-top: 0px;
+}
+#sp{
+  display: none;
 }
 </style>
