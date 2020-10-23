@@ -9,30 +9,30 @@
             </div>
             <div class="right">
               <span class="sp1">总收入</span>
-              <h1>{{ getAmount('all').toFixed(2) }}</h1>
+              <h1>{{ getAmount('all') }}</h1>
               <span>元</span>
             </div>
           </div>
           <div class="bottom">
             <div class="topon">
               <span class="sp1">今日营收</span>
-              <h1>{{ getAmount('jr').toFixed(2) }}</h1>
+              <h1>{{ getAmount('jr') }}</h1>
               <span>元</span>
             </div>
             <div class="topb">
               <div>
                 <span class="sp1">昨日</span>
-                <h3>{{ getAmount('zr').toFixed(2) }}</h3>
+                <h3>{{ getAmount('zr') }}</h3>
                 <span>元</span>
               </div>
               <div>
                 <span class="sp1">本周</span>
-                <h3>{{ getAmount('bz').toFixed(2) }}</h3>
+                <h3>{{ getAmount('bz') }}</h3>
                 <span>元</span>
               </div>
               <div>
                 <span class="sp1">本月</span>
-                <h3>{{ getAmount('by').toFixed(2) }}</h3>
+                <h3>{{ getAmount('by') }}</h3>
                 <span>元</span>
               </div>
             </div>

@@ -447,11 +447,11 @@ export default {
       return i;
     },
     daochu() {
-      this.listQuery.limit = 99999;
+      this.listQuery.limit = 9999;
       this.getAllTeam();
-      setTimeout(this.daochuexcel, 2000);
+      setTimeout(this.daochuexcel,3000);
       this.listQuery.limit = 20;
-      setTimeout(this.getAllTeam, 3000);
+      setTimeout(this.getAllTeam,4000);
     },
     daochuexcel(e) {
       import("@/vendor/Export2Excel").then((excel) => {
