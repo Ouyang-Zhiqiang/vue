@@ -60,6 +60,7 @@ export default {
         showNow:false,
         user:{},
         form: {
+          ordtype:'',
           userid:'',
           currentpoints1:0,
           currentpoints:0,
@@ -135,7 +136,6 @@ export default {
               }
             }
           });
-          console.log(this.form)
           this.yycourse(this.form)
       },
       querySearchAsync(queryString, cb) {
@@ -183,19 +183,32 @@ export default {
         return [];
       },
       yycourse(e){
+        //未开卡时
         if(e.isopen==false||e.isopen=="false"){
           this.$axios.post(' https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            
+
              }).catch(error=>{
                 this.$message.error('错了哦，这是一条错误消息');
             })
         }
              this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
              this.form={}
-             this.$message({
-               message: '恭喜你，操作成功',
-               type: 'success'
+                this.$message({
+                message: '恭喜你，操作成功',
+                type: 'success'
              })
+            //var jsonstr=JSON.parse(e);
+
+            var ss={}
+            ss=e
+              this.$axios.post('http://localhost:8081/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                  this.$message({
+                  message: '短信已发送',
+                  type: 'success'
+              })
+              }).catch(error=>{
+                              this.$message.error('错了哦，这是一条错误消息');
+              })
              this.$router.push({
                  path:'/afcbdyyqd/afcbdyyqd',
                  query: {
