@@ -176,10 +176,17 @@ export const constantRoutes = [
         meta: { title: '组合名管理' }
       },
       {
-        path: 'jly',
-        component: () => import('@/views/afcbdkcgl/jly'),
-        name: '教练页',
-        meta: { title: '教练页' },
+        path: 'tkkcxx',
+        component: () => import('@/views/afcbdkcgl/tkkcxx'),
+        name: '团课课程信息',
+        meta: { title: '团课课程信息' },
+        hidden:true 
+      },
+      {
+        path: 'sjkcxx',
+        component: () => import('@/views/afcbdkcgl/sjkcxx'),
+        name: '私教课程信息',
+        meta: { title: '私教课程信息' },
         hidden:true
       },
       {

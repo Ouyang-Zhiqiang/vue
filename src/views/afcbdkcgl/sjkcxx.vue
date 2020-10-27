@@ -2,7 +2,6 @@
   <div
     style="
       width: 1500px;
-      height: 800px;
       padding: 30px;
       background: #ffffff;
       margin-left: 85px;
@@ -10,24 +9,17 @@
       border-radius: 10px;
     "
   >
-    <!-- <el-popover
-      placement="right"
-      width="400"
-      trigger="click"
-    >
-      <audio v-for="item in music" :key="item.index" :src="item.url" controls />
-    
-      <el-button slot="reference" style="position:absolute;right:20px">音乐包</el-button>
-    </el-popover> -->
-    <!-- <div style="clear:both" /> -->
     <div class="kcxx">
       <h2>课程信息</h2>
       <div style="margin-left: 0px">课程名称:{{ this.query.coursename }}</div>
+      <div>上课日期:{{ this.query.scheduledate }}</div>
       <div>
-        开课时间:{{ this.query.schedulebegin }}-{{ this.query.schedulebegin }}
+        开课时间:{{ this.query.schedulebegin }}-{{ this.query.scheduleend }}
       </div>
       <div>教练:{{ this.query.coachname }}</div>
-      <div>预约人数:{{this.getyysl(this.users)}}/{{ this.reservablenumber }}</div>
+      <div>
+        预约人数:{{ this.getyysl(this.users) }}/1
+      </div>
     </div>
     <br />
     <el-table :data="users" style="width: 100%">
@@ -82,28 +74,25 @@ export default {
     return {
       query: {},
       users: [],
-      music: [],
-      parts: [],
-      reservablenumber:''
+      reservablenumber: "",
     };
   },
   created() {
-    this.query = this.$route.query.item;
-    this.getusers();
+    this.query = this.$route.query.item
+    this.getusers()
   },
   methods: {
-    getusers() {
+      getusers() {
       var data = {};
-      data.scheduleid = this.query.scheduleid;
+      data.ScheduleId = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/getcourseinformation",
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6FHI",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.users = res.data;
-          this.reservablenumber=res.data[0].reservablenumber
+          this.users = res.data.rows;
         });
     },
     getyysl(e) {
@@ -115,10 +104,10 @@ export default {
           }
         }
       }
-
       return i;
-    },
-  },
+    }
+
+  }
 };
 </script>
 
@@ -132,7 +121,7 @@ export default {
 }
 .kcxx div {
   float: left;
-  margin-left: 150px;
+  margin-left: 100px;
   font-size: 16px;
   font-weight: bold;
 }

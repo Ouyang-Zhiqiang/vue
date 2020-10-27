@@ -159,7 +159,7 @@
       <el-button style="margin-top:15px;margin-bottom:10px;float:left;margin-left:20px" @click="nextWeek()">下周</el-button>
       <div style="clear:both" />
 
-      <el-calendar :range="dateRange" style="text-align:center;height:1500px!important">
+      <el-calendar :range="dateRange" style="text-align:center;height:1050px!important">
         <template
           slot="dateCell"
           slot-scope="{date, data}"
@@ -255,8 +255,9 @@ export default {
     },
     methods:{
         tkUrl(e){
+          console.log(e)
             this.$router.push({
-                path:'/afcbdkcgl/jly',
+                path:'/afcbdkcgl/tkkcxx',
                 query: {
                     item: e
                 }

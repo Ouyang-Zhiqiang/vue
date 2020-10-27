@@ -53,6 +53,10 @@
 export default {
     data() {
       return {
+       loginForm: {
+         userid:'',
+         username:''
+       },
         restaurants: [],
         state: '',
         timeout:  null,
@@ -84,8 +88,9 @@ export default {
     created(){
         this.query=this.$route.query.item
         this.type=this.$route.query.type
-        console.log(this.type)
-        console.log(this.query)
+        this.loginForm.username=localStorage.getItem('username')
+        this.loginForm.userid=localStorage.getItem('userid')
+
     },
     mounted() {
       this.restaurants = this.loadAll();
@@ -120,6 +125,10 @@ export default {
           this.form.coursename=this.query.coursename
           this.form.courseid=this.query.courseid
           this.form.userid=this.user.userid
+          this.form.createdby=this.loginForm.userid
+          this.form.createdname=this.loginForm.username
+          this.form.lasteby=this.loginForm.userid
+          this.form.lastename=this.loginForm.username
           this.cardlist.forEach(item => {
              this.form.periodvalidity=item.periodvalidity
             if(item.cardno==this.selectedCardno){
@@ -183,10 +192,14 @@ export default {
         return [];
       },
       yycourse(e){
+        console.log(e)
         //未开卡时
         if(e.isopen==false||e.isopen=="false"){
-          this.$axios.post(' https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '开卡成功',
+                type: 'success'
+             })
              }).catch(error=>{
                 this.$message.error('错了哦，这是一条错误消息');
             })
@@ -197,11 +210,9 @@ export default {
                 message: '恭喜你，操作成功',
                 type: 'success'
              })
-            //var jsonstr=JSON.parse(e);
-
             var ss={}
             ss=e
-              this.$axios.post('http://localhost:8081/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   this.$message({
                   message: '短信已发送',
                   type: 'success'

@@ -1,7 +1,7 @@
 <template>
   <div id="container" style="padding:15px">
     <el-button v-for="(item,index) in stores" :key="index" @click="toGetAllByStore(item.id)">{{ item.name }}</el-button>
-    <el-button   @click="toGetAllByStore(1)">未设置场馆</el-button>
+    <el-button v-show="isShow"  id="storeshow"   @click="toGetAllByStore(1)">未设置场馆</el-button>
     
 
     <el-row :gutter="10" style="margin-top:20px">
@@ -186,7 +186,7 @@
 
 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="姓名" width="130">
+          <el-table-column align="center" label="姓名" width="150">
             <template slot-scope="scope">
 
               <span style="color:#337AB7;cursor:pointer" @click="toUrl(scope.row)">{{ scope.row.name }}</span>
@@ -194,25 +194,25 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="140" label="手机号">
+          <el-table-column align="center" width="130" label="手机号">
             <template slot-scope="scope">
               <span style="color:#337AB7;cursor:pointer" @click="toUrl(scope.row)">{{ scope.row.tel }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="170" align="center" label="会员卡">
+          <el-table-column width="180" align="center" label="会员卡">
             <template slot-scope="scope">
               <span v-html="scope.row.cardsname" />
             </template>
           </el-table-column>
 
-          <el-table-column width="78" label="会员等级">
+          <el-table-column width="80" label="会员等级">
             <template slot-scope="scope">
               <span>Lv:{{ scope.row.memgrade }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="100" label="会员场馆">
+          <el-table-column width="130" label="会员场馆">
             <template slot-scope="scope">
               <span>{{ scope.row.storename }}</span>
             </template>
@@ -224,18 +224,18 @@
             </template>
           </el-table-column>
 
-          <el-table-column class-name="status-col" label="推荐人" width="120">
+          <el-table-column class-name="status-col" label="推荐人" width="90">
             <template slot-scope="scope">
               <span>{{ scope.row.tjr }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="销售" width="120">
+          <el-table-column align="center" label="销售" width="80">
             <template slot-scope="scope">
               <span>{{ scope.row.xs }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="状态" width="100">
+          <el-table-column align="center" label="状态" width="80">
             <template slot-scope="scope">
               <span v-if="scope.row.status == '1'">正常</span>
               <span v-else-if="scope.row.status == '0'">不可用</span>
@@ -314,11 +314,13 @@
 import data from '../pdf/content';
 import { fetchList } from '@/api/hy';
 import Pagination from '@/components/Pagination';
+import $ from 'jquery';
 
 export default {
     components: { Pagination },
     data(){
         return{
+          isShow:false,
             dialogImageUrl: '',
             dialogVisible: false,
             formLabelWidth: '150px',
@@ -434,8 +436,16 @@ export default {
       this.getAllStore()
       this.getAllxs5()
       this.getAllStore3()
+      this.storeBlock()
+
     },
     methods:{
+        storeBlock(){
+          var name=localStorage.getItem('username')
+          if(name=='系统管理员'||name.equal("系统管理员")||name.equal("梅霞")){
+            this.isShow=true
+          }
+        },
         getAllStore3(){
             if(localStorage.getItem('username')=='系统管理员'){
                 this.startStoreId='F'
@@ -672,8 +682,6 @@ export default {
         //用户基本信息修改
         updateUser(){
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEV5DL', this.$qs.stringify(this.form), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            this.listQuery.page=1
-            this.toGetAll(this.listQuery)
             this.$message({
               message: '恭喜你，操作成功',
               type: 'success'
@@ -806,7 +814,6 @@ export default {
         toTrueClose(){
           this.dialogFormVisible=false
           this.updateUser()
-
         },
         toTrue4(){
           if(this.form4.name==''||this.form4.sex==''||this.form4.tel==''||this.form4.storeId==''){
@@ -822,7 +829,6 @@ export default {
             data.userid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1UUV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.dialogFormVisible4=false
-
               this.$message({
                 message: '恭喜你，操作成功',
                 type: 'success'

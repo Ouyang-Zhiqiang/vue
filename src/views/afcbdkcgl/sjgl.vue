@@ -91,7 +91,7 @@
             {{ data.day }}
           </p>
           <div v-for="(item,index) in list" :key="index" style="width:98%;margin:0 auto;text-align:left">
-            <div v-if="data.day==item.scheduledate" style="height:95px;background:#16a951;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
+            <div v-if="data.day==item.scheduledate" @click="sjUrl(item)"  style="height:95px;background:#16a951;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br><br>
               <span style="padding-bottom:5px">{{ item.reservednumber }}/1</span><br>
@@ -117,7 +117,7 @@ export default {
             allStores:[],
             allCoach:[],
             storeid:'',
-            coachid:'A',
+            coachid:'',
             list:[],
             form:{
                 intervaltime:'15'
@@ -138,6 +138,14 @@ export default {
         this.getPreCourse()
     },
     methods:{
+        sjUrl(e){
+            this.$router.push({
+                path:'/afcbdkcgl/sjkcxx',
+                query: {
+                    item: e
+                }
+            })
+        },
         getWeek(currentDay) {
             var currentDate = new Date(currentDay)
             var timesStamp = currentDate.getTime();
@@ -181,25 +189,23 @@ export default {
         },
         getCources(){
             var data={}
-            data.day1=this.dateRange[0]
-            data.day2=this.dateRange[1]
+            data.CourseDatestart=this.dateRange[0]
+            data.CourseDateend=this.dateRange[1]
             data.storeid=this.storeid
             data.coachid=this.coachid
-            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG21HX', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                this.list=res.data.rows
-                // console.log(this.list)
+            this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.list=res.data
             });
         },
         getStartCources(){
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 var data={}
-                data.day1=this.dateRange[0]
-                data.day2=this.dateRange[1]
+                data.CourseDatestart=this.dateRange[0]
+                data.CourseDateend=this.dateRange[1]
                 data.storeid=res.data.rows[0].id
                 data.coachid=this.coachid
-                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG21HX', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                    this.list=res.data.rows
-                    // console.log(this.list)
+                this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.list=res.data
                 });
             })
         },

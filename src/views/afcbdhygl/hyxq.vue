@@ -162,12 +162,13 @@
           <img :src="img.originalpath" width="100px" height="100px">
         </div>
         <div style="width:350px;float:left">
-          <span style="font-size:18px;">{{ query.name }}</span><br>
+          <span style="font-size:24px;color:#307EF8">{{ query.name }}</span><br>
           <span style="font-size:15px;">等级：lv{{ query.memgrade }}</span><br>
-          <span style="font-size:15px;">{{ query.tel }}</span><br>
+          <span style="font-size:15px;">手机：{{ query.tel }}</span><br>
           <span style="font-size:15px;">积分：{{ query.points }}</span><br>
-          <span style="font-size:15px;">创建时间：{{ query.createdon }}</span><br>
+          <span style="font-size:15px;">时间：{{ query.createdon }}</span><br>
         </div>
+        <el-button type="primary" style="float:right" @click="tjgjjl">添加跟进记录</el-button>
       </el-tab-pane>
     </el-tabs>
 
@@ -193,7 +194,7 @@
     <el-tabs type="border-card" style="margin-top:10px">
       <el-tab-pane label="会员绑卡">
         <el-table v-loading="listLoading" :data="bindCardList" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="时间" width="200">
+          <el-table-column align="center" label="时间" width="180">
             <template slot-scope="scope">
               <span>{{ scope.row.createdon }}</span>
             </template>
@@ -225,13 +226,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="备注" width="250">
+          <el-table-column align="center" label="备注">
             <template slot-scope="scope">
               <span>{{ scope.row.remarks }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="操作" width="350">
+          <el-table-column align="center" label="操作" width="300">
             <template slot-scope="scope"> 
               <div v-if="scope.row.cardtype=='P'">
                 <el-button v-if="scope.row.state==1" type="text" @click="opencard(scope.row)">停卡</el-button>
@@ -281,8 +282,27 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
+
+      <el-tab-pane label="跟进记录">
+          <el-table :data="genjinall" style="width: 100%">
+            <el-table-column prop="remarks" label="跟进内容">
+            </el-table-column>
+            <el-table-column prop="createdname" label="跟进人" width="380">
+            </el-table-column>
+            <el-table-column prop="createdon" label="跟进时间" width="380">
+            </el-table-column>
+          </el-table>
+      </el-tab-pane>
+
     </el-tabs>
 
+    <el-dialog title="添加跟进记录" :visible.sync="dialogVisible" width="30%" :before-close="quxiao">
+      <el-input v-model="gjjltext" placeholder="跟进记录"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="quxiao">取 消</el-button>
+        <el-button type="primary" @click="addgjjl">确 定</el-button>
+      </span>
+</el-dialog>
     
 
   </div>
@@ -331,7 +351,10 @@ export default {
             },
             dialogFormVisible5:false,
             theAllStores:[],
-            bjxs:[]
+            bjxs:[],
+            genjinall:[],
+            dialogVisible:false,
+            gjjltext:''
         }
     },
     created(){
@@ -344,7 +367,7 @@ export default {
         this.getCardAmount()
         this.getBindCardList()
         this.getMyBuyList()
-        // console.log(this.query)
+        this.genjinjilu()
     },
     mounted(){
         
@@ -594,6 +617,37 @@ export default {
             }).catch(error=>{
               this.$message.error('错了哦，这是一条错误消息');
           });
+        },
+        genjinjilu(){   
+          var data={}
+          data.userid=this.query.userid 
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEV7T4', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.genjinall=res.data.rows
+          });
+        },
+        tjgjjl(){
+          this.dialogVisible=true
+        },
+        quxiao(){
+          this.dialogVisible=false
+          this.gjjltext=''
+        },
+        addgjjl(){          
+          var data={}
+          data.userid=this.query.userid
+          data.remarks=this.gjjltext
+          data.createdby=localStorage.getItem('userid')
+          data.createdname=localStorage.getItem('username')
+          data.createdip='127.0.0.1'
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6X6B', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$message({
+                message: '操作成功',
+                type: 'success'
+            })
+            this.genjinjilu()
+          });
+          this.dialogVisible=false
+          this.gjjltext=''
         }
 
     }
