@@ -442,6 +442,7 @@ export default {
     methods:{
         storeBlock(){
           var name=localStorage.getItem('username')
+
           if(name=='系统管理员'||name.equal("系统管理员")||name.equal("梅霞")){
             this.isShow=true
           }

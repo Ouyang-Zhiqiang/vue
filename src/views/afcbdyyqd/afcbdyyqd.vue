@@ -89,7 +89,7 @@
               margin-top: 2px;
             "
           >
-            {{ getyysl(item.users) }}/{{ item.reservablenumber }}
+            {{item.reservednumber }}/{{ item.reservablenumber }}
           </span>
         </div>
         <el-table
@@ -177,13 +177,14 @@
                 >签到</el-button>
                 <el-button
                   type="text"
-                  @click="cancleord(scope.row,item.coachid )"
+                  @click="cancleord(scope.row,item.scheduleid,item.coachid )"
                 >取消预约</el-button>
               </div>
             </template>
           </el-table-column>
         </el-table>
       </div>
+     
     </el-card>
     <pagination
       v-show="total > 0"
@@ -217,7 +218,7 @@ export default {
       //运动馆
       options1: [],
       //教练
-      options2: [],
+      options2: [],  
       options5: [
         {
           value: "C",
@@ -242,6 +243,10 @@ export default {
           label: "私教"
         }
       ],
+      teamschedule:{
+        traineenum:0,
+        scheduleid:''
+      },
       courseType: "团课",
       selectForm: {
         storeid: "A",
@@ -391,11 +396,40 @@ export default {
           this.$message.error("错了哦，这是一条错误消息");
         });
     },
-   cancleord(e,coachid) {
+   cancleord(e,scheduleid,coachid) {
      e.coachid=coachid
       //取消预约
       var obj = {};
       obj = e;
+ 
+      this.teamschedule.traineenum=e.traineenum
+      this.teamschedule.scheduleid=scheduleid
+      if(this.courseType=="团课"){
+         this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6TV3",
+          this.$qs.stringify(this.teamschedule),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        ).then((res) => {
+          this.$message({
+            message: "恭喜你，操作成功",
+            type: "success"
+          });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+      }else{
+       this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6U00",
+          this.$qs.stringify(this.teamschedule),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+      }
       this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
@@ -415,7 +449,7 @@ export default {
         });
     },
     cancleThenSend(obj){
-       this.$axios.post('http://localhost:8081/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+       this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
             message: "短信发送成功",
             type: "success"
