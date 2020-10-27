@@ -15,44 +15,44 @@
         <el-button type="success">导出Excel</el-button>
                 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="评价" width="350">
+          <el-table-column align="center" label="评价">
             <template slot-scope="scope">
               <span>{{ scope.row.contents }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="评价人" width="250">
+          <el-table-column align="center" label="评价人" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.createdname }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="课程" width="250">
+          <el-table-column align="center" label="课程" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.coursename }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="教练" width="250">
+          <el-table-column align="center" label="教练" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.coachname }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="状态" width="250">
+          <el-table-column align="center" label="状态" width="200">
             <template slot-scope="scope">
               <span v-if="scope.row.isshow==true">已显示</span>
               <span v-if="scope.row.isshow==false">已隐藏</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="时间" width="280">
+          <el-table-column align="center" label="时间" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.createdon }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="操作" width="290">
+          <el-table-column align="center" label="操作" width="200">
             <template slot-scope="scope">
               <el-button v-if="scope.row.isshow==true" type="text" @click="updateToDisEn(scope.row.isshow,scope.row.commentid,scope.$index)">隐藏</el-button>
               <el-button v-else-if="scope.row.isshow==false" type="text" @click="updateToDisEn(scope.row.isshow,scope.row.commentid,scope.$index)">显示</el-button>

@@ -186,7 +186,7 @@
 
 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="姓名" width="150">
+          <el-table-column align="center" label="姓名" width="130">
             <template slot-scope="scope">
 
               <span style="color:#337AB7;cursor:pointer" @click="toUrl(scope.row)">{{ scope.row.name }}</span>
@@ -194,19 +194,19 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="180" label="手机号">
+          <el-table-column align="center" width="140" label="手机号">
             <template slot-scope="scope">
               <span style="color:#337AB7;cursor:pointer" @click="toUrl(scope.row)">{{ scope.row.tel }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="220" align="center" label="会员卡">
+          <el-table-column width="170" align="center" label="会员卡">
             <template slot-scope="scope">
               <span v-html="scope.row.cardsname" />
             </template>
           </el-table-column>
 
-          <el-table-column width="100" label="会员等级">
+          <el-table-column width="78" label="会员等级">
             <template slot-scope="scope">
               <span>Lv:{{ scope.row.memgrade }}</span>
             </template>
@@ -235,13 +235,13 @@
               <span>{{ scope.row.xs }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="状态" width="120">
+          <el-table-column align="center" label="状态" width="100">
             <template slot-scope="scope">
               <span v-if="scope.row.status == '1'">正常</span>
               <span v-else-if="scope.row.status == '0'">不可用</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="备注" width="180">
+          <el-table-column align="center" label="备注">
             <template slot-scope="scope">
               <span>{{ scope.row.remarks }}</span>
             </template>
@@ -509,7 +509,6 @@ export default {
                 if(res.data.total==0){
                   alert('查询暂无数据')
                 }else{
-                  alert('ok')
                   this.list=res.data.rows
                   this.total=res.data.rows[0].counts
                   this.list.forEach((item, index)=>{
@@ -683,6 +682,8 @@ export default {
         //用户基本信息修改
         updateUser(){
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEV5DL', this.$qs.stringify(this.form), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.listQuery.page=1
+            this.toGetAll(this.listQuery)
             this.$message({
               message: '恭喜你，操作成功',
               type: 'success'
@@ -815,6 +816,7 @@ export default {
         toTrueClose(){
           this.dialogFormVisible=false
           this.updateUser()
+
         },
         toTrue4(){
           if(this.form4.name==''||this.form4.sex==''||this.form4.tel==''||this.form4.storeId==''){
@@ -830,6 +832,7 @@ export default {
             data.userid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1UUV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.dialogFormVisible4=false
+
               this.$message({
                 message: '恭喜你，操作成功',
                 type: 'success'
