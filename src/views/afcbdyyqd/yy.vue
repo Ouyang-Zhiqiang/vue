@@ -128,7 +128,7 @@ export default {
               this.form.isopen=item.isopen
               if(item.cardtype=='S'){
                 this.form.usabletimes=parseInt(item.curtimes)-parseInt(this.form.traineenum)
-                this.form.courseprice=item.totalfee/item.totaltimes
+                this.form.courseprice=item.timefee
                 this.form.cardname=item.cardname
               }else if(item.cardtype=='P'){
                 this.form.usabletimes=parseInt((new Date(item.cardend)-new Date())/ (1000 * 60 * 60 * 24))
@@ -168,6 +168,7 @@ export default {
             this.showNow=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNCEA0', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.cardlist=res.data.rows
+              console.log("--------"+this.cardlist[0].totalfee)
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNDCNH', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 if(res.data.rows.length>0){
                   this.form.ordtype='E'
@@ -185,8 +186,30 @@ export default {
       yycourse(e){
         //未开卡时
         if(e.isopen==false||e.isopen=="false"){
-          this.$axios.post(' https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '开卡成功',
+                type: 'success'
+               })
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
+        }
+        if(this.type=="团课"){
+            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RAY', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '修改团课人数成功',
+                type: 'success'
+               })
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
+        }else{
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RXS', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '修改私教人数成功',
+                type: 'success'
+               })
              }).catch(error=>{
                 this.$message.error('错了哦，这是一条错误消息');
             })
@@ -196,12 +219,10 @@ export default {
                 this.$message({
                 message: '恭喜你，操作成功',
                 type: 'success'
-             })
-            //var jsonstr=JSON.parse(e);
-
+               })
             var ss={}
             ss=e
-              this.$axios.post('http://localhost:8081/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   this.$message({
                   message: '短信已发送',
                   type: 'success'

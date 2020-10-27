@@ -1,7 +1,7 @@
 <template>
   <div id="container" style="padding:15px">
     <el-button v-for="(item,index) in stores" :key="index" @click="toGetAllByStore(item.id)">{{ item.name }}</el-button>
-    <el-button   @click="toGetAllByStore(1)">未设置场馆</el-button>
+    <el-button v-show="isShow"  id="storeshow"   @click="toGetAllByStore(1)">未设置场馆</el-button>
     
 
     <el-row :gutter="10" style="margin-top:20px">
@@ -314,11 +314,13 @@
 import data from '../pdf/content';
 import { fetchList } from '@/api/hy';
 import Pagination from '@/components/Pagination';
+import $ from 'jquery';
 
 export default {
     components: { Pagination },
     data(){
         return{
+          isShow:false,
             dialogImageUrl: '',
             dialogVisible: false,
             formLabelWidth: '150px',
@@ -434,8 +436,16 @@ export default {
       this.getAllStore()
       this.getAllxs5()
       this.getAllStore3()
+      this.storeBlock()
+
     },
     methods:{
+        storeBlock(){
+          var name=localStorage.getItem('username')
+          if(name=='邓佳丽'||name.equal("邓佳丽")||name.equal("梅霞")){
+            this.isShow=true
+          }
+        },
         getAllStore3(){
             if(localStorage.getItem('username')=='系统管理员'){
                 this.startStoreId='F'
