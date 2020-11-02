@@ -177,7 +177,7 @@ export default {
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.allStores=res.data.rows
             this.storeid=this.allStores[0].id
-            // console.log(this.allStores)
+            // console.log("this.allStores"+this.allStores)
           });
         },
         getAllCoach(){
@@ -261,8 +261,9 @@ export default {
                 this.allDate.forEach((item)=>{
                     var obj={}
                     this.allStores.forEach((item1)=>{
-                        if(this.form.storeid==item1.storeid){
+                        if(this.form.storeid==item1.id){
                             obj.storename=item1.name
+                            console.log("item1.name"+item1.name)
                         }
                     })
                     this.allCourse.forEach((item2)=>{
@@ -274,17 +275,23 @@ export default {
                     obj.storeid=this.form.storeid
                     obj.courseid=this.form.courseid
                     obj.scheduledate=item
-                    obj.schedulebegin=this.form.hourse+':'+this.form.minutes
-                    obj.scheduleend=this.form.hourse1+':'+this.form.minutes1
+                    var begin=this.form.hourse+":"+this.form.minutes+":00"
+                    obj.schedulebegin=begin
+                    var end=this.form.hourse1+":"+this.form.minutes1+":00"
+                    obj.scheduleend=end
                     obj.intervaltime=this.form.intervaltime
-                    obj.lastedby='系统管理员'
-                    obj.lastedname='系统管理员'
-                    obj.createdby='系统管理员'
-                    obj.createdname='系统管理员'
+                    var userid=localStorage.getItem('userid')
+                    var username=localStorage.getItem('username')
+                    obj.lastedby=userid
+                    obj.lastedname=username
+                    obj.createdby=userid
+                    obj.createdname=username
                     // console.log(obj)
+                     console.log("data------"+ localStorage.getItem('resurl'))
                     this.insertPreCourse(obj)
                 })
             }  
+           
         },
         insertPreCourse(data){
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG2B8E', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{

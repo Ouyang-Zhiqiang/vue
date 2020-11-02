@@ -139,7 +139,14 @@ export default {
               }
             }
           });
-          this.yycourse(this.form)
+
+          if(this.selectedCardno==''||this.selectedCardno==undefined){
+            this.$message.error('请选择会员卡');
+          }else{
+            this.yycourse(this.form)
+          }
+
+          
       },
       querySearchAsync(queryString, cb) {
         // var restaurants = this.restaurants;
