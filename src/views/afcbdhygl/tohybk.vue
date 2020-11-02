@@ -272,7 +272,7 @@ export default {
             message: '恭喜你，操作成功',
             type: 'success'
           })
-          this.$axios.post('http://localhost:8081/web/CCourse/goukasongjifen', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.$axios.post('https://www.facebodyfitness.com/web/CCourse/goukasongjifen', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.$message({
             message: '此次绑卡赠送积分'+data.points,
             type: 'success'
@@ -323,22 +323,6 @@ export default {
       },
       loadAll() {
         return [];
-      },
-      yycourse(e){
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          this.form={}
-          this.$message({
-            message: '恭喜你，操作成功',
-            type: 'success'
-          })
-          this.$router.push({
-              path:'/afcbdyyqd/afcbdyyqd',
-              query: {
-              }
-          })
-        }).catch(error=>{
-          this.$message.error('错了哦，这是一条错误消息');
-      });
       }
     }
 }

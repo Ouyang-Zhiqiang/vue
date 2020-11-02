@@ -23,6 +23,9 @@
       <div>
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="dialogVisible = true">修改可预约人数</el-button>
       </div>
+      <div>
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
+      </div>
 
     </div>
     <br />
@@ -77,6 +80,7 @@
       <el-button type="primary" @click="queding()">确 定</el-button>
       </span>
     </el-dialog>
+    {{this.query}}
   </div>
 </template>
 
@@ -156,7 +160,7 @@ export default {
       if (e != null) {
         for (var j = 0; j < e.length; j++) {
           if (e[j].ordstate == 1) {
-            i++;
+            i+=e[j].traineenum
           }
         }
       }
@@ -206,6 +210,23 @@ export default {
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
+        var teamschedule={}
+        teamschedule.traineenum=e.traineenum
+        teamschedule.scheduleid=this.query.scheduleid
+         this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6TV3",
+          this.$qs.stringify(teamschedule),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        ).then((res) => {
+          this.$message({
+            message: "恭喜你，操作成功",
+            type: "success"
+          });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
     },
     cancleThenSend(obj) {
       this.$axios
@@ -221,6 +242,16 @@ export default {
           this.$message.error("错了哦，这是一条错误消息");
         });
     },
+    toUrl() {
+      // console.log(e)
+      this.$router.push({
+        path: "/afcbdyyqd/yy",
+        query: {
+          item: this.query,
+          type:'团课'
+        }
+      });
+    }
   },
 };
 </script>
@@ -235,7 +266,7 @@ export default {
 }
 .kcxx div {
   float: left;
-  margin-left: 100px;
+  margin-left:79px;
   font-size: 16px;
   font-weight: bold;
 }

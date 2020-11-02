@@ -126,22 +126,6 @@ export default {
       loadAll() {
         return [];
       },
-      yycourse(e){
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          this.form={}
-          this.$message({
-            message: '恭喜你，操作成功',
-            type: 'success'
-          })
-          this.$router.push({
-              path:'/afcbdyyqd/afcbdyyqd',
-              query: {
-              }
-          })
-        }).catch(error=>{
-          this.$message.error('错了哦，这是一条错误消息');
-      });
-      },
       toadd(){
         for (let index = 0; index < 5; index++) {
             var obj={action:'', quantity:'', descs:''}

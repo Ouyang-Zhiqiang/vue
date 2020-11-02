@@ -100,11 +100,76 @@ export default {
       if (e != null) {
         for (var j = 0; j < e.length; j++) {
           if (e[j].ordstate == 1) {
-            i++;
+            i+=e[j].traineenum
           }
         }
       }
       return i;
+    },
+    signed(e) {
+      //签到
+      var obj = {};
+      obj = e;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHHP",
+          this.$qs.stringify(obj),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.$message({
+            message: "恭喜你，操作成功",
+            type: "success"
+          });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+    },
+    cancleord(e) {
+      //取消预约
+      var obj = {};
+      obj = e;
+      var teamschedule={}
+      teamschedule.traineenum=e.traineenum
+      teamschedule.scheduleid=this.query.scheduleid
+       this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6U00",
+          this.$qs.stringify(teamschedule),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
+          this.$qs.stringify(obj),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.cancleThenSend(obj)
+          this.$message({
+            message: "恭喜你，操作成功",
+            type: "success"
+          });
+        })
+        .catch((error) => {
+          this.$message.error("222错了哦，这是一条错误消息");
+        });
+    },
+    cancleThenSend(obj){
+       console.log(obj)
+       this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.$message({
+            message: "短信发送成功",
+            type: "success"
+          });
+          this.getusers()
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
     }
 
   }

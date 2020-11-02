@@ -53,10 +53,6 @@
 export default {
     data() {
       return {
-       loginForm: {
-         userid:'',
-         username:''
-       },
         restaurants: [],
         state: '',
         timeout:  null,
@@ -88,8 +84,6 @@ export default {
     created(){
         this.query=this.$route.query.item
         this.type=this.$route.query.type
-        this.loginForm.username=localStorage.getItem('username')
-        this.loginForm.userid=localStorage.getItem('userid')
 
     },
     mounted() {
@@ -125,10 +119,10 @@ export default {
           this.form.coursename=this.query.coursename
           this.form.courseid=this.query.courseid
           this.form.userid=this.user.userid
-          this.form.createdby=this.loginForm.userid
-          this.form.createdname=this.loginForm.username
-          this.form.lasteby=this.loginForm.userid
-          this.form.lastename=this.loginForm.username
+          this.form.createdby=localStorage.getItem('userid')
+          this.form.createdname=localStorage.getItem('username')
+          this.form.lasteby=localStorage.getItem('userid')
+          this.form.lastename=localStorage.getItem('username')
           this.cardlist.forEach(item => {
              this.form.periodvalidity=item.periodvalidity
             if(item.cardno==this.selectedCardno){
@@ -232,7 +226,7 @@ export default {
                })
             var ss={}
             ss=e
-              this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   this.$message({
                   message: '短信已发送',
                   type: 'success'

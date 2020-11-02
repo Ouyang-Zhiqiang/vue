@@ -89,7 +89,7 @@
               margin-top: 2px;
             "
           >
-            {{item.reservednumber }}/{{ item.reservablenumber }}
+            {{getyysl(item.users) }}/{{ item.reservablenumber }}
           </span>
         </div>
         <el-table
@@ -114,8 +114,8 @@
           </el-table-column>
 
           <el-table-column width="50" align="center" label="人数">
-            <template>
-              <span>1</span>
+            <template slot-scope="scope">
+              <span>{{ scope.row.traineenum }}</span>
             </template>
           </el-table-column>
 
@@ -449,7 +449,7 @@ export default {
         });
     },
     cancleThenSend(obj){
-       this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+       this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
             message: "短信发送成功",
             type: "success"
@@ -469,11 +469,12 @@ export default {
       });
     },
     getyysl(e) {
+      console.log(e)
       var i = 0;
       if (e != null) {
         for (var j = 0; j < e.length; j++) {
           if (e[j].ordstate == 1) {
-            i++;
+            i+=e[j].traineenum
           }
         }
       }

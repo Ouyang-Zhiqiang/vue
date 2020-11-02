@@ -81,7 +81,7 @@
       <el-button style="margin-top:15px;margin-bottom:10px;float:left;margin-left:20px" @click="nextWeek()">下周</el-button>
       <div style="clear:both" />
 
-      <el-calendar :range="dateRange" style="text-align:center;height:1500px!important">
+      <el-calendar :range="dateRange" style="text-align:center;height:800px!important">
         <template
           slot="dateCell"
           slot-scope="{date, data}"
@@ -193,7 +193,7 @@ export default {
             data.CourseDateend=this.dateRange[1]
             data.storeid=this.storeid
             data.coachid=this.coachid
-            this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.list=res.data
             });
         },
@@ -204,7 +204,7 @@ export default {
                 data.CourseDateend=this.dateRange[1]
                 data.storeid=res.data.rows[0].id
                 data.coachid=this.coachid
-                this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.list=res.data
                 });
             })

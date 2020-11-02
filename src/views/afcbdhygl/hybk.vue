@@ -31,31 +31,31 @@
         <el-button type="success" style="margin-top:5px;" @click="toUrl">添加会员绑卡</el-button>
 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="卡名" width="200">
+          <el-table-column align="center" label="卡名" width="300">
             <template slot-scope="scope">
               <span>{{ scope.row.cardname }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="200" label="姓名">
+          <el-table-column align="center" width="250" label="姓名">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="200" align="center" label="手机号">
+          <el-table-column width="300" align="center" label="手机号">
             <template slot-scope="scope">
               <span>{{ scope.row.tel }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="200" label="余额" align="center">
+          <el-table-column width="250" label="余额" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.curtimes }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column class-name="status-col" label="备注" width="230">
+          <el-table-column class-name="status-col" label="备注">
             <template slot-scope="scope">
               <span>{{ scope.row.remarks }}</span>
             </template>

@@ -27,9 +27,9 @@
         />
 
         <el-button type="success" style="margin-top:5px" @click="getFxlist">查询</el-button>
-        <el-button type="success" style="margin-top:5px">导出Excel</el-button>
+        <el-button type="success" style="margin-top:5px" @click="daochu">导出Excel</el-button>
 
-        <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
+        <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px" id="out-table">
           <el-table-column align="center" label="时间" width="150">
             <template slot-scope="scope">
               <span>{{ scope.row.createdon }}</span>
@@ -109,6 +109,9 @@ import { date } from 'jszip/lib/defaults'
 import data from '../pdf/content';
 import { fetchList } from '@/api/hy';
 import Pagination from '@/components/Pagination';
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
+import $ from "jquery";
 
 export default {
     components: { Pagination },
@@ -213,6 +216,30 @@ export default {
           this.total=this.list[0].total
         });
       }
+      ,
+    daochu() {
+      this.listQuery.limit = 99999;
+      this.getFxlist();
+      setTimeout(this.daochuexcel, 3500);
+      this.listQuery.limit = 20;
+      setTimeout(this.getFxlist,4000);
+    },
+    daochuexcel() {
+      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
+      const wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          "营收报表.xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+    }
     }
 }
 </script>

@@ -35,21 +35,6 @@
       </el-col>
     </el-row>
         
-    <!-- <el-tabs type="border-card" style="margin-top:20px">
-      <el-tab-pane label="会员增势">
-        <el-button>近7天</el-button>
-        <el-button>近15天</el-button>
-        <el-button>近30天</el-button>
-        <el-date-picker
-          v-model="datevalue"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
-        <div id="tab1-1" style="width:1500px;height:300px;margin-top:25px" />
-      </el-tab-pane>
-    </el-tabs> -->
 
     <el-tabs type="border-card" style="margin-top:20px">
       <el-tab-pane label="会员列表">
@@ -418,13 +403,7 @@ export default {
            
         }
     },
-    // async created(){
-    //     console.log("created ")
-    //     // https://www.facebodyfitness.com/hi/main?hi=24B21OYFSK1L
-    //     await fetchList({});
-    // },
     mounted() {
-        this.hyzs()
     },
     created(){
       this.getAllStore2()
@@ -455,7 +434,6 @@ export default {
                     var obj={}
                     obj.id='F'
                     obj.name='全部运动馆'
-                    console.log(this.list)
                     this.stores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
@@ -482,7 +460,6 @@ export default {
                     })
                     this.stores=mystore
                     this.startStoreId=this.stores[0].id
-                    // console.log(this.stores)
                 })
             }    
         },
@@ -591,7 +568,6 @@ export default {
               data.storeid=this.startStoreId
             }
             this.listLoading=true
-            console.log(data.storeid)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
@@ -651,7 +627,6 @@ export default {
         tetest01(){
           var data={tel:'8', name:'罗'}
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVVRY', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            console.log(res)
           });
         },
         //获取所有运动馆
@@ -820,15 +795,24 @@ export default {
           if(this.form4.name==''||this.form4.sex==''||this.form4.tel==''||this.form4.storeId==''){
             alert('检测有未填信息！')
           }else{
-            this.form4.createdby='系统管理员'
-            this.form4.createdname='系统管理员'
-            this.form4.lastedby='系统管理员'
-            this.form4.lastedname='系统管理员'
+            this.form4.createdby=localStorage.getItem('userid')
+            this.form4.createdname=localStorage.getItem('username')
+            this.form4.lastedby=localStorage.getItem('userid')
+            this.form4.lastedname=localStorage.getItem('username')
             this.form4.createdip='127.0.0.1'
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var minute = date.getMinutes(); 
+            var second = date.getSeconds();
+
             var data={}
             data=this.form4
-            data.userid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
+            data.userid=year+''+month+''+day+''+hour+''+minute+''+second
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1UUV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.toGetAll(this.listQuery)
               this.dialogFormVisible4=false
               this.$message({
                 message: '恭喜你，操作成功',
@@ -861,59 +845,6 @@ export default {
           this.clickSearch=true
           this.listQuery.page=1
           this.toGetAll(this.listQuery)
-        },
-        hyzs(){
-            const hyzss = this.$echarts.init(document.getElementById('tab1-1'))
-            hyzss.setOption({
-                 title: {
-                    text: '会员增势'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data:['邮件营销', '联盟广告', '视频广告']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: {}
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
-                    {
-                        name:'邮件营销',
-                        type:'line',
-                        stack: '总量',
-                        data:[120, 132, 101, 134, 90, 230, 210]
-                    },
-                    {
-                        name:'联盟广告',
-                        type:'line',
-                        stack: '总量',
-                        data:[220, 182, 191, 234, 290, 330, 310]
-                    },
-                    {
-                        name:'视频广告',
-                        type:'line',
-                        stack: '总量',
-                        data:[150, 232, 201, 154, 190, 330, 410]
-                    }
-                ]
-            })
         },
         toUrl(e){
             this.$router.push({
