@@ -25,6 +25,7 @@
           start-placeholder="Start date"
           end-placeholder="End date"
         />
+        <el-input  placeholder="姓名" v-model="name" style="width:180px;margin-top:5px" />
 
         <el-button type="success" style="margin-top:5px" @click="getFxlist">查询</el-button>
         <el-button type="success" style="margin-top:5px">导出Excel</el-button>
@@ -119,6 +120,7 @@ export default {
             list:[],
             storeid:'',
             saleid:'',
+            name:'',
             theAllstores:[],
             xsvalue:'',
             listLoading:false,
@@ -207,6 +209,7 @@ export default {
         data.saleuserid=this.saleid
         data.page=this.listQuery.page
         data.limit=this.listQuery.limit
+        data.name=this.name
         
         this.$axios.post('https://www.facebodyfitness.com/selectMemberCardList', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.list=res.data

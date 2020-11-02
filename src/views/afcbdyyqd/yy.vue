@@ -145,7 +145,14 @@ export default {
               }
             }
           });
-          this.yycourse(this.form)
+
+          if(this.selectedCardno==''||this.selectedCardno==undefined){
+            this.$message.error('请选择会员卡');
+          }else{
+            this.yycourse(this.form)
+          }
+
+          
       },
       querySearchAsync(queryString, cb) {
         // var restaurants = this.restaurants;
@@ -232,7 +239,7 @@ export default {
                })
             var ss={}
             ss=e
-              this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   this.$message({
                   message: '短信已发送',
                   type: 'success'
