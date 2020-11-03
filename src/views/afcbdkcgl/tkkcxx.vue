@@ -80,7 +80,6 @@
       <el-button type="primary" @click="queding()">确 定</el-button>
       </span>
     </el-dialog>
-    {{this.query}}
   </div>
 </template>
 

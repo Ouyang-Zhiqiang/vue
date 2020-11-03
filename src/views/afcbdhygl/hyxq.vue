@@ -406,53 +406,103 @@
       <el-tab-pane label="体测信息">
         <el-tabs type="border-card" tab-position="right">
           <el-tab-pane label="体重">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block" 
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb1" style="width: 1500px; height: 255px" />
+            </span>
+
+            <div
+              id="tb1"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            ></div>
           </el-tab-pane>
           <el-tab-pane label="基础代谢">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               cal
-            </div>
-            <div id="tb2" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb2"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
           <el-tab-pane label="体脂率">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               %
-            </div>
-            <div id="tb3" style="width: 1500px; height: 255px" />
-          </el-tab-pane>
-          <el-tab-pane label="脂肪重量">
+            </span>
             <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+              id="tb3"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
+          </el-tab-pane>
+          <el-tab-pane label="脂肪含量">
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb4" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb4"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
           <el-tab-pane label="骨骼肌">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb5" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb5"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
         </el-tabs>
         <br />
-        <el-button style="float: right" size="mini" type="primary" @click="dialogVisible2 = true"
+        <el-button
+          style="float: right"
+          size="mini"
+          type="primary"
+          @click="dialogVisible2 = true"
           >添加体测</el-button
         >
         <br />
@@ -476,8 +526,12 @@
           <el-table-column prop="腰围" label="腰围" width="150">
           </el-table-column>
           <el-table-column prop="name" label="操作">
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
+            <template slot-scope="scope">
+              <el-button type="text">编辑</el-button>
+              <el-button type="text" @click="shanchutice(scope.row)"
+                >删除</el-button
+              >
+            </template>
           </el-table-column>
         </el-table>
         <br />
@@ -503,41 +557,118 @@
       width="25%"
       :before-close="quxiaoaddtice"
     >
-      <div slot="footer" class="dialog-footer" style="margin-top:-60px;width:400px;font-size:14px">
-        体脂率：<el-input v-model="tice.tizhi" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        身高：<el-input v-model="tice.shengao" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        体重：<el-input v-model="tice.tizhong" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        基础代谢：<el-input v-model="tice.jichudaixie" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        大腿围(L)：<el-input v-model="tice.datuiweil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        大腿围(R)：<el-input v-model="tice.datuiweir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        小腿(L)：<el-input v-model="tice.xiaotuil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        小腿(R)：<el-input v-model="tice.xiaotuir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        手臂 (L)：<el-input v-model="tice.shoubil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        手臂 (R)：<el-input v-model="tice.shoubir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        胸围：<el-input v-model="tice.xiongwei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        脂肪含量：<el-input v-model="tice.zhifang" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        骨骼肌含量：<el-input v-model="tice.gugeji" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        腰围：<el-input v-model="tice.yaowei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        臀围：<el-input v-model="tice.tunwei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
+      <div
+        slot="footer"
+        class="dialog-footer"
+        style="margin-top: -60px; width: 400px; font-size: 14px"
+      >
+        体脂率：<el-input
+          v-model="tice.tizhi"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        身高：<el-input
+          v-model="tice.shengao"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        体重：<el-input
+          v-model="tice.tizhong"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        基础代谢：<el-input
+          v-model="tice.jichudaixie"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        大腿围(L)：<el-input
+          v-model="tice.datuiweil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        大腿围(R)：<el-input
+          v-model="tice.datuiweir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        小腿(L)：<el-input
+          v-model="tice.xiaotuil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        小腿(R)：<el-input
+          v-model="tice.xiaotuir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        手臂 (L)：<el-input
+          v-model="tice.shoubil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        手臂 (R)：<el-input
+          v-model="tice.shoubir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        胸围：<el-input
+          v-model="tice.xiongwei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        脂肪含量：<el-input
+          v-model="tice.zhifang"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        骨骼肌含量：<el-input
+          v-model="tice.gugeji"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        腰围：<el-input
+          v-model="tice.yaowei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        臀围：<el-input
+          v-model="tice.tunwei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br /><br />
         <el-button @click="quxiaoaddtice">取 消</el-button>
-        <el-button type="primary" @click="addtice"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="addtice">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -554,6 +685,7 @@ export default {
   components: { Pagination },
   data() {
     return {
+      visible: false,
       dialogFormVisible: false,
       formLabelWidth: "150px",
       img: {},
@@ -589,26 +721,29 @@ export default {
       bjxs: [],
       genjinall: [],
       dialogVisible: false,
-      dialogVisible2:false,
+      dialogVisible2: false,
       gjjltext: "",
       ticeliebiao: [],
-      tice:{
-        tizhi:'',
-        shengao:'',
-        tizhong:'',
-        jichudaixie:'',
-        datuiweil:'',
-        datuiweir:'',
-        xiaotuil:'',
-        xiaotuir:'',
-        shoubil:'',
-        shoubir:'',
-        xiongwei:'',
-        zhifang:'',
-        gugeji:'',
-        yaowei:'',
-        tunwei:''
-      }
+      tice: {
+        tizhi: "",
+        shengao: "",
+        tizhong: "",
+        jichudaixie: "",
+        datuiweil: "",
+        datuiweir: "",
+        xiaotuil: "",
+        xiaotuir: "",
+        shoubil: "",
+        shoubir: "",
+        xiongwei: "",
+        zhifang: "",
+        gugeji: "",
+        yaowei: "",
+        tunwei: "",
+        userid: "",
+        createdby: "",
+        createdname: "",
+      },
     };
   },
   created() {
@@ -1016,8 +1151,15 @@ export default {
     },
     tcxxtu() {
       if (this.ticeliebiao.length <= 0) {
-        $(".danwei").html("暂无参数");
+        $(".danwei").text("没有数据哦,赶快添加一条吧>_<");
+        $("#tb1,#tb2,#tb3,#tb4,#tb5").html('');
       } else {
+        var danwei = document.getElementsByClassName("danwei");
+        danwei[0].innerText  = "kg";
+        danwei[1].innerText  = "cal";
+        danwei[2].innerText  = "%";
+        danwei[3].innerText  = "kg";
+        danwei[4].innerText  = "kg";
         const tb1 = this.$echarts.init(document.getElementById("tb1"));
         var shijian = new Array();
         var tizhong = new Array();
@@ -1190,7 +1332,7 @@ export default {
       data.userid = this.query.userid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/ticeliebiao",
+          "https://www.facebodyfitness.com/web/CCourse/ticeliebiao",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1199,38 +1341,73 @@ export default {
           this.tcxxtu();
         });
     },
-    addtice(){
-      var data={}
-      data.userid=this.query.userid
-      data.createdby=localStorage.getItem("userid")
-      data.createdname=localStorage.getItem("username")
+    addtice() {
+      this.tice.createdby = localStorage.getItem("userid");
+      this.tice.createdname = localStorage.getItem("username");
+      this.tice.userid = this.query.userid;
       this.$axios
         .post(
           "http://localhost:8081/web/CCourse/addtice",
-          this.$qs.stringify(this.tice,data),
+          this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+          });
+          this.getticeliebiao();
+          this.tcxxtu();
+          this.quxiaoaddtice();
         });
     },
-    quxiaoaddtice(){
-      this.dialogVisible2=false;
-        this.tice.tizhi='',
-        this.tice.shengao='',
-        this.tice.tizhong='',
-        this.tice.jichudaixie='',
-        this.tice.datuiweil='',
-        this.tice.datuiweir='',
-        this.tice.xiaotuil='',
-        this.tice.xiaotuir='',
-        this.tice.shoubil='',
-        this.tice.shoubir='',
-        this.tice.xiongwei='',
-        this.tice.zhifang='',
-        this.tice.gugeji='',
-        this.tice.yaowei='',
-        this.tice.tunwei=''
-    }
+    quxiaoaddtice() {
+      this.dialogVisible2 = false;
+      this.tice.tizhi = "";
+      this.tice.shengao = "";
+      this.tice.tizhong = "";
+      this.tice.jichudaixie = "";
+      this.tice.datuiweil = "";
+      this.tice.datuiweir = "";
+      this.tice.xiaotuil = "";
+      this.tice.xiaotuir = "";
+      this.tice.shoubil = "";
+      this.tice.shoubir = "";
+      this.tice.xiongwei = "";
+      this.tice.zhifang = "";
+      this.tice.gugeji = "";
+      this.tice.yaowei = "";
+      this.tice.tunwei = "";
+    },
+    deletetice(e) {
+      var data = {};
+      data.time = e.时间;
+      data.userid = this.query.userid;
+      this.$axios
+        .post(
+          "http://localhost:8081/web/CCourse/deletetice",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.getticeliebiao();
+          this.$message({
+            message: "已删除",
+            type: "success",
+          });
+        });
+    },
+    shanchutice(e) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.deletetice(e);
+        })
+        .catch(() => {});
+    },
   },
 };
 </script>
