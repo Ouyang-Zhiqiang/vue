@@ -123,6 +123,7 @@ export default {
           this.form.createdname=localStorage.getItem('username')
           this.form.lasteby=localStorage.getItem('userid')
           this.form.lastename=localStorage.getItem('username')
+          
           this.cardlist.forEach(item => {
              this.form.periodvalidity=item.periodvalidity
             if(item.cardno==this.selectedCardno){
@@ -131,7 +132,7 @@ export default {
               this.form.isopen=item.isopen
               if(item.cardtype=='S'){
                 this.form.usabletimes=parseInt(item.curtimes)-parseInt(this.form.traineenum)
-                this.form.courseprice=item.timefee
+                this.form.courseprice=item.timefee*parseInt(this.form.traineenum)
                 this.form.cardname=item.cardname
               }else if(item.cardtype=='P'){
                 this.form.usabletimes=parseInt((new Date(item.cardend)-new Date())/ (1000 * 60 * 60 * 24))
