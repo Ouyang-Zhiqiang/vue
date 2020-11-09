@@ -140,7 +140,7 @@ export default {
               }
             }
           });
-
+          console.log("user---"+this.user.userid)
           if(this.selectedCardno==''||this.selectedCardno==undefined){
             this.$message.error('请选择会员卡');
           }else{
@@ -174,12 +174,11 @@ export default {
         this.selectedCardno=''
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAR9', this.$qs.stringify(item), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.user=res.data.rows[0]
-          console.log(this.user)
+          console.log("this.storeid----"+this.user.storeid)
           if(res.data.rows.length){
             this.showNow=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNCEA0', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.cardlist=res.data.rows
-              console.log("--------"+this.cardlist[0].totalfee)
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNDCNH', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 if(res.data.rows.length>0){
                   this.form.ordtype='E'
@@ -195,7 +194,6 @@ export default {
         return [];
       },
       yycourse(e){
-        console.log(e)
         //未开卡时
         if(e.isopen==false||e.isopen=="false"){
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -225,23 +223,32 @@ export default {
              }).catch(error=>{
                 this.$message.error('错了哦，这是一条错误消息');
             })
-        }
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        
              this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
              this.form={}
                 this.$message({
                 message: '恭喜你，操作成功',
                 type: 'success'
                })
-            var ss={}
-            ss=e
-              this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        
+        var uid={userid:''}
+        uid.userid=this.user.userid
+              this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOA6JM', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               var st=res.data.rows[0].storeid
+              if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
+                 var ss={}
+                  ss=e
+                  this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   this.$message({
                   message: '短信已发送',
                   type: 'success'
-              })
-              }).catch(error=>{
-                              this.$message.error('错了哦，这是一条错误消息');
-              })
+                  })
+                  }).catch(error=>{
+                                  this.$message.error('错了哦，这是一条错误消息');
+                  })
+                  }
+             })
              this.$router.push({
                  path:'/afcbdyyqd/afcbdyyqd',
                  query: {
