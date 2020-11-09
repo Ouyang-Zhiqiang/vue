@@ -224,6 +224,9 @@
           <span style="font-size: 15px">时间：{{ query.createdon }}</span
           ><br />
         </div>
+        <el-button type="success" style="float: right" @click="toOpen(query)" size="mini"
+          >编辑</el-button
+        >
         <el-button type="primary" style="float: right" @click="tjgjjl" size="mini"
           >添加跟进记录</el-button
         >
@@ -281,7 +284,11 @@
               <span v-if="scope.row.state == 0">停卡</span>
             </template>
           </el-table-column>
-
+          <el-table-column align="center" label="购卡金额" width="80">
+            <template slot-scope="scope">
+               <span>{{scope.row.originalfee}}</span>
+            </template>
+          </el-table-column>
           <el-table-column align="center" label="余额" width="150">
             <template slot-scope="scope">
               <span>{{ scope.row.curtimes }}</span>
@@ -791,6 +798,50 @@
         <el-button type="primary" @click="addtice">确 定</el-button>
       </div>
     </el-dialog>
+ <el-dialog title="会员编辑" :visible.sync="dialogFormVisible6" style="width:1200px;margin:0 auto">
+          <el-form :model="form">
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.name" style="width:270px;float:left" />
+            </el-form-item>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+              <el-radio v-model="form.sex" label="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
+              <el-radio v-model="form.sex" label="1" style="float:left;margin-top:10px;">女</el-radio>
+            </el-form-item>
+            <el-form-item label="电话" :label-width="formLabelWidth">
+              <el-input v-model="form.tel" style="width:270px;float:left" />
+            </el-form-item>
+            <el-form-item label="场馆" :label-width="formLabelWidth">
+              <el-select v-model="form.storeId" style="width:270px;float:left">
+                <el-option v-for="item in theAllStores" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="来源" :label-width="formLabelWidth">
+              <el-select v-model="form.sourcetype" style="width:270px;float:left">
+                <el-option v-for="item in sources" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="销售" :label-width="formLabelWidth">
+              <el-select v-model="form.xsid" style="width:270px;float:left">
+                <el-option v-for="item in bjxs" :key="item.userid" :label="item.name" :value="item.userid" />
+              </el-select>
+            </el-form-item>
+                  
+            <el-form-item label="备注" :label-width="formLabelWidth">
+              <el-input
+                v-model="form.remarks"
+                style="width:270px;float:left;height:100px"
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :placeholder="form.remarks"
+              />
+            </el-form-item>
+                  
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible6 = false">取 消</el-button>
+            <el-button type="primary" @click="toTrueClose()">确 定</el-button>
+          </div>
+        </el-dialog>
   </div>
 </template>
 
@@ -810,6 +861,25 @@ export default {
         page:1,
         limit:20
       },
+       form: {
+              name: '',
+              sex: '',
+              tel: '',
+              xsid:'',
+              storeId: '',
+              storeName:'',
+              xsname:'',
+              remarks:''
+            },
+     sources:[
+         {id:0, name:'自然到店'},
+         {id:1, name:'老带新'},
+         {id:2, name:'拉访'},
+         {id:3, name:'大众点评'},
+         {id:4, name:'活动'},
+         {id:5, name:'其他'}
+            ],
+      dialogFormVisible6:false,
       yuyuejilu4: [],
       dialogFormVisible: false,
       formLabelWidth: "150px",
@@ -896,7 +966,9 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.bjxs = res.data.rows;
+          var noxs={name:'暂无销售', userid:0}
+            this.bjxs=res.data.rows
+            this.bjxs.unshift(noxs)
         });
     },
     getAllStore2() {
@@ -973,6 +1045,36 @@ export default {
           this.bindCardList = res.data.rows;
         });
     },
+    //点击打开用户信息编辑弹窗
+        toOpen(e){
+          this.dialogFormVisible6=true
+          this.form.name=e.name
+          this.form.sex=e.sex
+          this.form.tel=e.tel
+          this.form.storeId=e.storeid
+          this.form.storeName=e.storename
+          this.form.xsid=e.saleuserid
+          this.form.xsname=e.xs
+          this.form.remarks=e.remarks
+          this.form.userid=e.userid
+          this.form.sourcetype=e.sourcetype
+        },
+         //会员编辑弹窗点击确定
+        toTrueClose(){
+          this.dialogFormVisible6=false
+          this.updateUser()
+        },
+          //用户基本信息修改
+        updateUser(){
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEV5DL', this.$qs.stringify(this.form), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$message({
+              message: '恭喜你，操作成功',
+              type: 'success'
+            })
+          }).catch(error=>{
+            this.$message.error('错了哦，这是一条错误消息');
+          });
+        },
     tpingzhang(e) {
       this.pingzhangobj.cardno = e.cardno;
       this.pingzhangobj.cardid = e.cardid;
