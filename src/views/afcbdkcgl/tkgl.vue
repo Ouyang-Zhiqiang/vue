@@ -544,7 +544,6 @@ export default {
         addTeamCourse(e){
             this.dialogFormVisible=false
             var data=e
-            // console.log(data)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVHDX', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.$message({
                     message: '恭喜你，操作成功',
