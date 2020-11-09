@@ -224,13 +224,14 @@
           <span style="font-size: 15px">时间：{{ query.createdon }}</span
           ><br />
         </div>
-        <el-button type="primary" style="float: right" @click="tjgjjl"
+        <el-button type="primary" style="float: right" @click="tjgjjl" size="mini"
           >添加跟进记录</el-button
         >
       </el-tab-pane>
     </el-tabs>
 
-    <el-tabs type="border-card" style="margin-top: 10px">
+    <el-tabs type="border-card" style="margin-top: 10px" id="hyxq_1">
+
       <el-tab-pane label="会员分析">
         <div style="width: 100%; padding: 20px">
           <div style="width: 33%; float: left">
@@ -248,10 +249,8 @@
           </div>
         </div>
       </el-tab-pane>
-    </el-tabs>
 
-    <el-tabs type="border-card" style="margin-top: 10px">
-      <el-tab-pane label="会员绑卡">
+      <el-tab-pane label="会员卡信息">
         <el-table
           v-loading="listLoading"
           :data="bindCardList"
@@ -260,7 +259,7 @@
           highlight-current-row
           style="margin-top: 20px"
         >
-          <el-table-column align="center" label="时间" width="180">
+          <el-table-column align="center" label="绑卡时间" width="180">
             <template slot-scope="scope">
               <span>{{ scope.row.createdon }}</span>
             </template>
@@ -268,7 +267,7 @@
 
           <el-table-column
             align="center"
-            label="会员卡(卡号末六位)"
+            label="会员卡"
             width="250"
           >
             <template slot-scope="scope">
@@ -318,7 +317,7 @@
                   @click="changestate(scope.row.cardno)"
                   >恢复</el-button
                 >
-                <el-button type="text">期限变更</el-button>
+                <el-button type="text" @click="openqixian(scope.row)">期限变更</el-button>
                 <el-button type="text" @click="tpingzhang(scope.row)"
                   >平账</el-button
                 >
@@ -354,43 +353,85 @@
         </el-table>
       </el-tab-pane>
 
-      <el-tab-pane label="最新消费">
-        <el-table
-          v-loading="listLoading"
-          :data="myBuyList"
-          border
-          fit
-          highlight-current-row
-          style="margin-top: 20px"
-        >
-          <el-table-column align="center" label="时间" width="300">
-            <template slot-scope="scope">
-              <span>{{ scope.row.createdon }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            align="center"
-            label="会员卡(卡号末六位)"
-            width="250"
-          >
-            <template slot-scope="scope">
-              <span>{{ scope.row.cardname }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column align="center" label="购买次数" width="150">
-            <template slot-scope="scope">
-              <span>{{ scope.row.buytimes }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column align="center" label="备注" width="350">
-            <template slot-scope="scope">
-              <span>{{ scope.row.remarks }}</span>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-tab-pane label="消费记录">
+        <div style="width:100%;height:270px;">
+          <div style="width:100%;height:30px;">
+              <span style="font-size:18px;line-height:30px">预约记录</span>
+              <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="yuyuegengduo()">更多</el-button>
+          </div>
+          <hr/>
+      <el-table
+      :data="yuyuejilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="date"
+        label="上课时间"
+        width="200">
+        <template slot-scope="scope">
+        {{ scope.row.coursedate+' '+scope.row.coursetime }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coursename"
+        label="课程名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="类型"
+        width="120">
+        <template slot-scope="scope">
+        {{ scope.row.cardtype=='T'?'团课':'私教'}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coachname"
+        label="教练"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="courseprice"
+        label="课程价格"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="remarks"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="预约状态"
+        width="150">
+        <template slot-scope="scope">
+        <span v-if="scope.row.ordstate==1" style="color:green">
+            已预约
+          </span>
+          <span v-if="scope.row.ordstate==2" style="color:red">
+            已取消
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="签到状态"
+        width="150">
+        <template slot-scope="scope">
+        <span v-if="scope.row.signstate==1" style="color:green">
+            已签到
+          </span>
+          <span v-if="scope.row.signstate==0" style="color:red">
+            未签到
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createdon"
+        label="预约时间"
+        width="200">
+      </el-table-column>
+    </el-table>   
+    </div>
+        
       </el-tab-pane>
 
       <el-tab-pane label="跟进记录">
@@ -406,83 +447,216 @@
       <el-tab-pane label="体测信息">
         <el-tabs type="border-card" tab-position="right">
           <el-tab-pane label="体重">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block" 
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb1" style="width: 1500px; height: 255px" />
+            </span>
+
+            <div
+              id="tb1"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            ></div>
           </el-tab-pane>
           <el-tab-pane label="基础代谢">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               cal
-            </div>
-            <div id="tb2" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb2"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
           <el-tab-pane label="体脂率">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               %
-            </div>
-            <div id="tb3" style="width: 1500px; height: 255px" />
-          </el-tab-pane>
-          <el-tab-pane label="脂肪重量">
+            </span>
             <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+              id="tb3"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
+          </el-tab-pane>
+          <el-tab-pane label="脂肪含量">
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb4" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb4"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
           <el-tab-pane label="骨骼肌">
-            <div
-              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8"
+            <span
+              style="margin-left: 143px; margin-bottom: -50px; color: #307ef8;display:block"
               class="danwei"
             >
               kg
-            </div>
-            <div id="tb5" style="width: 1500px; height: 255px" />
+            </span>
+            <div
+              id="tb5"
+              style="
+                width: 1500px;
+                height: 255px;
+                font-size: 80px;
+                text-align: center;
+                line-height: 255px;
+              "
+            />
           </el-tab-pane>
         </el-tabs>
         <br />
-        <el-button style="float: right" size="mini" type="primary" @click="dialogVisible2 = true"
+        <el-button
+          style="float: right"
+          size="mini"
+          type="primary"
+          @click="tianjiatice()"
           >添加体测</el-button
         >
         <br />
         <el-table :data="ticeliebiao" style="width: 100%">
           <el-table-column prop="时间" label="体测时间" width="200">
           </el-table-column>
-          <el-table-column prop="身高" label="身高" width="150">
+          <el-table-column prop="身高" label="身高(cm)" width="150">
           </el-table-column>
-          <el-table-column prop="体重" label="体重" width="150">
+          <el-table-column prop="体重" label="体重(kg)" width="150">
           </el-table-column>
-          <el-table-column prop="基础代谢" label="基础代谢" width="180">
+          <el-table-column prop="基础代谢" label="基础代谢(cal)" width="180">
           </el-table-column>
-          <el-table-column prop="体脂率" label="体脂率" width="150">
+          <el-table-column prop="体脂率" label="体脂率(%)" width="150">
           </el-table-column>
-          <el-table-column prop="脂肪含量" label="脂肪含量" width="180">
+          <el-table-column prop="脂肪含量" label="脂肪含量(kg)" width="180">
           </el-table-column>
-          <el-table-column prop="骨骼肌含量" label="骨骼肌含量" width="180">
+          <el-table-column prop="骨骼肌含量" label="骨骼肌含量(kg)" width="180">
           </el-table-column>
-          <el-table-column prop="胸围" label="胸围" width="150">
+          <el-table-column prop="胸围" label="胸围(cm)" width="150">
           </el-table-column>
-          <el-table-column prop="腰围" label="腰围" width="150">
+          <el-table-column prop="腰围" label="腰围(cm)" width="150">
           </el-table-column>
           <el-table-column prop="name" label="操作">
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
+            <template slot-scope="scope">
+              <el-button type="text" @click="bianjitice(scope.row)">编辑</el-button>
+              <el-button type="text" @click="shanchutice(scope.row)"
+                >删除</el-button
+              >
+            </template>
           </el-table-column>
         </el-table>
         <br />
       </el-tab-pane>
     </el-tabs>
+
+    <div id="hyxq_2" style="display:none">
+          <div style="width:100%;height:50px;">
+              <span style="font-size:18px;line-height:60px">预约记录</span>
+              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="yuyuefanhui()">返回</el-button>
+          </div>
+          <hr/>
+      <el-table
+      :data="yuyuejilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="date"
+        label="上课时间"
+        width="200">
+        <template slot-scope="scope">
+        {{ scope.row.coursedate+' '+scope.row.coursetime }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coursename"
+        label="课程名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="类型"
+        width="120">
+        <template slot-scope="scope">
+        {{ scope.row.cardtype=='T'?'团课':'私教'}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coachname"
+        label="教练"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="courseprice"
+        label="课程价格"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="remarks"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="预约状态"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="scope.row.ordstate==1" style="color:green">
+            已预约
+          </span>
+          <span v-if="scope.row.ordstate==2" style="color:red">
+            已取消
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="签到状态"
+        width="150">
+        <template slot-scope="scope">
+         <span v-if="scope.row.signstate==1" style="color:green">
+            已签到
+          </span>
+          <span v-if="scope.row.signstate==0" style="color:red">
+            未签到
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createdon"
+        label="预约时间"
+        width="200">
+      </el-table-column>
+    </el-table> 
+    <pagination :total="yuyuetotal" :page.sync="yuyuefenye.page" :limit.sync="yuyuefenye.limit" style="float:right;" @pagination="getyuyuejilu()"/> 
+    </div>
 
     <el-dialog
       title="添加跟进记录"
@@ -498,46 +672,123 @@
     </el-dialog>
 
     <el-dialog
-      title="添加体测"
+      title="体测信息"
       :visible.sync="dialogVisible2"
       width="25%"
       :before-close="quxiaoaddtice"
     >
-      <div slot="footer" class="dialog-footer" style="margin-top:-60px;width:400px;font-size:14px">
-        体脂率：<el-input v-model="tice.tizhi" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        身高：<el-input v-model="tice.shengao" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        体重：<el-input v-model="tice.tizhong" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        基础代谢：<el-input v-model="tice.jichudaixie" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        大腿围(L)：<el-input v-model="tice.datuiweil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        大腿围(R)：<el-input v-model="tice.datuiweir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        小腿(L)：<el-input v-model="tice.xiaotuil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        小腿(R)：<el-input v-model="tice.xiaotuir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        手臂 (L)：<el-input v-model="tice.shoubil" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        手臂 (R)：<el-input v-model="tice.shoubir" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        胸围：<el-input v-model="tice.xiongwei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        脂肪含量：<el-input v-model="tice.zhifang" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        骨骼肌含量：<el-input v-model="tice.gugeji" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        腰围：<el-input v-model="tice.yaowei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
-        臀围：<el-input v-model="tice.tunwei" placeholder="请输入数字" style="width:300px"></el-input>
-        <br/><br/>
+      <div
+        slot="footer"
+        class="dialog-footer"
+        style="margin-top: -60px; width: 400px; font-size: 14px"
+      >
+        体脂率：<el-input
+          v-model="tice.tizhi"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        身高：<el-input
+          v-model="tice.shengao"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        体重：<el-input
+          v-model="tice.tizhong"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        基础代谢：<el-input
+          v-model="tice.jichudaixie"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        大腿围L：<el-input
+          v-model="tice.datuiweil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        大腿围R：<el-input
+          v-model="tice.datuiweir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        小腿L：<el-input
+          v-model="tice.xiaotuil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        小腿R：<el-input
+          v-model="tice.xiaotuir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        手臂L：<el-input
+          v-model="tice.shoubil"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        手臂R：<el-input
+          v-model="tice.shoubir"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        胸围：<el-input
+          v-model="tice.xiongwei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        脂肪含量：<el-input
+          v-model="tice.zhifang"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        骨骼肌含量：<el-input
+          v-model="tice.gugeji"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        腰围：<el-input
+          v-model="tice.yaowei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
+        臀围：<el-input
+          v-model="tice.tunwei"
+          placeholder="请输入数字"
+          style="width: 300px; margin-top: 5px"
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br /><br />
         <el-button @click="quxiaoaddtice">取 消</el-button>
-        <el-button type="primary" @click="addtice"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="addtice">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -554,6 +805,12 @@ export default {
   components: { Pagination },
   data() {
     return {
+      yuyuetotal:0,
+      yuyuefenye:{
+        page:1,
+        limit:20
+      },
+      yuyuejilu4: [],
       dialogFormVisible: false,
       formLabelWidth: "150px",
       img: {},
@@ -561,7 +818,6 @@ export default {
       courseAmount: {},
       cardamount: {},
       bindCardList: [],
-      myBuyList: [],
       listLoading: false,
       pingzhangShow: false,
       pingzhangobj: {},
@@ -589,39 +845,44 @@ export default {
       bjxs: [],
       genjinall: [],
       dialogVisible: false,
-      dialogVisible2:false,
+      dialogVisible2: false,
       gjjltext: "",
       ticeliebiao: [],
-      tice:{
-        tizhi:'',
-        shengao:'',
-        tizhong:'',
-        jichudaixie:'',
-        datuiweil:'',
-        datuiweir:'',
-        xiaotuil:'',
-        xiaotuir:'',
-        shoubil:'',
-        shoubir:'',
-        xiongwei:'',
-        zhifang:'',
-        gugeji:'',
-        yaowei:'',
-        tunwei:''
-      }
+      tice: {
+        tizhi: "",
+        shengao: "",
+        tizhong: "",
+        jichudaixie: "",
+        datuiweil: "",
+        datuiweir: "",
+        xiaotuil: "",
+        xiaotuir: "",
+        shoubil: "",
+        shoubir: "",
+        xiongwei: "",
+        zhifang: "",
+        gugeji: "",
+        yaowei: "",
+        tunwei: "",
+        userid: "",
+        createdby: "",
+        createdname: "",
+        createdon:""
+      },
+      ticetype:''
     };
   },
   created() {
-    this.query = this.$route.query.item;
-    this.getAllxs();
-    this.getAllStore2();
-    this.getImg();
-    this.getAmount();
-    this.getCourseAmount();
-    this.getCardAmount();
-    this.getBindCardList();
-    this.getMyBuyList();
-    this.genjinjilu();
+    this.query = this.$route.query.item
+    this.getAllxs()
+    this.getAllStore2()
+    this.getImg()
+    this.getAmount()
+    this.getCourseAmount()
+    this.getCardAmount()
+    this.getBindCardList()
+    this.genjinjilu()
+    this.getyuyuejilu4()
   },
   mounted() {
     this.getticeliebiao();
@@ -712,19 +973,6 @@ export default {
           this.bindCardList = res.data.rows;
         });
     },
-    getMyBuyList() {
-      var data = {};
-      data.userid = this.query.userid;
-      this.$axios
-        .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBD94",
-          this.$qs.stringify(data),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        )
-        .then((res) => {
-          this.myBuyList = res.data.rows;
-        });
-    },
     tpingzhang(e) {
       this.pingzhangobj.cardno = e.cardno;
       this.pingzhangobj.cardid = e.cardid;
@@ -774,6 +1022,7 @@ export default {
       this.qixianobj.cardid = e.cardid;
       this.qixianobj.oldbegin = e.cardbegin;
       this.qixianobj.oldend = e.cardend;
+      this.qixianobj.userid =this.query.userid;
       this.dialogFormVisible2 = true;
     },
     qixian() {
@@ -1016,8 +1265,15 @@ export default {
     },
     tcxxtu() {
       if (this.ticeliebiao.length <= 0) {
-        $(".danwei").html("暂无参数");
+        $(".danwei").text("没有数据哦,赶快添加一条吧>_<");
+        $("#tb1,#tb2,#tb3,#tb4,#tb5").html('');
       } else {
+        var danwei = document.getElementsByClassName("danwei");
+        danwei[0].innerText  = "kg";
+        danwei[1].innerText  = "cal";
+        danwei[2].innerText  = "%";
+        danwei[3].innerText  = "kg";
+        danwei[4].innerText  = "kg";
         const tb1 = this.$echarts.init(document.getElementById("tb1"));
         var shijian = new Array();
         var tizhong = new Array();
@@ -1190,7 +1446,7 @@ export default {
       data.userid = this.query.userid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/ticeliebiao",
+          "https://www.facebodyfitness.com/web/CCourse/ticeliebiao",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1199,37 +1455,159 @@ export default {
           this.tcxxtu();
         });
     },
-    addtice(){
-      var data={}
-      data.userid=this.query.userid
-      data.createdby=localStorage.getItem("userid")
-      data.createdname=localStorage.getItem("username")
-      this.$axios
+    addtice() {
+      this.tice.createdby = localStorage.getItem("userid");
+      this.tice.createdname = localStorage.getItem("username");
+      this.tice.userid = this.query.userid;
+      if(this.ticetype=='insert'){
+        this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/addtice",
-          this.$qs.stringify(this.tice,data),
+          "http://localhost:8081/web/CCourse/inserttice",
+          this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+          });
+          this.getticeliebiao();
+          this.quxiaoaddtice();
+        });
+      }else if(this.ticetype=='update'){
+        this.$axios
+        .post(
+          "http://localhost:8081/web/CCourse/updatetice",
+          this.$qs.stringify(this.tice),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+          });
+          this.getticeliebiao();
+          this.quxiaoaddtice();
+          
+        });
+      }
+
+
+      
+    },
+    quxiaoaddtice() {
+      this.dialogVisible2 = false;
+      this.tice.tizhi = "";
+      this.tice.shengao = "";
+      this.tice.tizhong = "";
+      this.tice.jichudaixie = "";
+      this.tice.datuiweil = "";
+      this.tice.datuiweir = "";
+      this.tice.xiaotuil = "";
+      this.tice.xiaotuir = "";
+      this.tice.shoubil = "";
+      this.tice.shoubir = "";
+      this.tice.xiongwei = "";
+      this.tice.zhifang = "";
+      this.tice.gugeji = "";
+      this.tice.yaowei = "";
+      this.tice.tunwei = "";
+    },
+    deletetice(e) {
+      var data = {};
+      data.time = e.时间;
+      data.userid = this.query.userid;
+      this.$axios
+        .post(
+          "http://localhost:8081/web/CCourse/deletetice",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.getticeliebiao();
+          this.$message({
+            message: "已删除",
+            type: "success",
+          });
         });
     },
-    quxiaoaddtice(){
-      this.dialogVisible2=false;
-        this.tice.tizhi='',
-        this.tice.shengao='',
-        this.tice.tizhong='',
-        this.tice.jichudaixie='',
-        this.tice.datuiweil='',
-        this.tice.datuiweir='',
-        this.tice.xiaotuil='',
-        this.tice.xiaotuir='',
-        this.tice.shoubil='',
-        this.tice.shoubir='',
-        this.tice.xiongwei='',
-        this.tice.zhifang='',
-        this.tice.gugeji='',
-        this.tice.yaowei='',
-        this.tice.tunwei=''
+    shanchutice(e) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.deletetice(e);
+        })
+        .catch(() => {});
+    },
+    tianjiatice(){
+      this.ticetype='insert'
+      this.dialogVisible2 = true;
+    },
+    bianjitice(e){  
+      this.tice.tizhi = e.体脂率
+      this.tice.shengao = e.身高
+      this.tice.tizhong = e.体重
+      this.tice.jichudaixie = e.基础代谢
+      this.tice.datuiweil = e.大腿围L
+      this.tice.datuiweir = e.大腿围R
+      this.tice.xiaotuil = e.小腿L
+      this.tice.xiaotuir = e.小腿R
+      this.tice.shoubil = e.手臂L
+      this.tice.shoubir = e.手臂R
+      this.tice.xiongwei = e.胸围
+      this.tice.zhifang = e.脂肪含量
+      this.tice.gugeji = e.骨骼肌含量
+      this.tice.yaowei = e.腰围
+      this.tice.tunwei = e.臀围
+      this.tice.createdon = e.时间
+      this.ticetype='update'
+      this.dialogVisible2 = true;
+    },
+    yuyuegengduo(){
+      this.getyuyuejilu()
+        $("#hyxq_1").css("display","none")
+        $("#hyxq_2").css("display","block")
+    },
+    yuyuefanhui(){
+        this.getyuyuejilu4()
+        $("#hyxq_1").css("display","block")
+        $("#hyxq_2").css("display","none")
+    },
+    getyuyuejilu4(){
+      var data={}
+      data.userid=this.query.userid
+      data.limit=4
+      data.page=0
+        this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEVC9U",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.yuyuejilu4=res.data.rows
+        });
+    },
+    getyuyuejilu(){
+      var data={}
+      data.userid=this.query.userid
+      data.limit=this.yuyuefenye.limit
+      data.page=this.yuyuefenye.page-1
+        this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEVC9U",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.yuyuejilu4=res.data.rows
+          if(res.data.rows.length>0){
+            this.yuyuetotal=res.data.rows[0].yuyuetotal
+          }
+        });
     }
   },
 };

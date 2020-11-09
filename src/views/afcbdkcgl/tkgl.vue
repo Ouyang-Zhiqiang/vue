@@ -174,14 +174,14 @@
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
               <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
-              <span style="padding-bottom:5px">约{{ item.reservednumber }}/{{ item.reservablenumber }}</span><br>
+              <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
               <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
               </div>
               <div v-else :class="item.coursename.substring(0, item.coursename.indexOf('_'))"  style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
               <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
-              <span style="padding-bottom:5px">约{{ item.reservednumber }}/{{ item.reservablenumber }}</span><br>
+              <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
               <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
               </div>
             </div>

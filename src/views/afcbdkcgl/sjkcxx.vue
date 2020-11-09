@@ -20,6 +20,9 @@
       <div>
         预约人数:{{ this.getyysl(this.users) }}/1
       </div>
+      <div>
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
+      </div>
     </div>
     <br />
     <el-table :data="users" style="width: 100%">
@@ -170,6 +173,17 @@ export default {
              }).catch(error=>{
                 this.$message.error('错了哦，这是一条错误消息');
             })
+    }
+    ,
+    toUrl() {
+      // console.log(e)
+      this.$router.push({
+        path: "/afcbdyyqd/yy",
+        query: {
+          item: this.query,
+          type:'私教'
+        }
+      });
     }
 
   }

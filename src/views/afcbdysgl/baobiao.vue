@@ -1231,7 +1231,7 @@ export default {
       data.str = JSON.stringify(this.list);
       this.$axios
         .post(
-          "http://localhost:8081/web/TjTest/updateAllTest",
+          "https://www.facebodyfitness.com/web/TjTest/updateAllTest",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
