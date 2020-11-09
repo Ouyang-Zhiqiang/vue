@@ -286,7 +286,7 @@
           </el-table-column>
           <el-table-column align="center" label="购卡金额" width="80">
             <template slot-scope="scope">
-               <span>{{scope.row.originalfee}}</span>
+               <span>{{scope.row.sellingfee}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="余额" width="150">
