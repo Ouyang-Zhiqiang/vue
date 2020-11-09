@@ -327,6 +327,7 @@ export default {
               name: '',
               sex: '',
               tel: '',
+              xsid:'',
               storeId: '',
               storeName:'',
               xsname:'',
@@ -834,11 +835,11 @@ export default {
           this.list(index).storename=this.form.storeName
           this.list(index).saleuserid=this.form.xsid
           this.list(index).remarks=this.form.remarks
-          this.bjxs.forEach((item)=>{
-            if(this.form.xsid==item.userid){
-              this.list(index).xs=item.name
-            }
-          })
+          // this.bjxs.forEach((item)=>{
+          //   if(this.form.xsid==item.userid){
+          //     this.list(index).xs=item.name
+          //   }
+          // })
         },
         //点击搜索
         toClickSearch(){

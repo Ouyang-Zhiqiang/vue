@@ -140,42 +140,52 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="120" label="支持课程">
+          <el-table-column align="center" width="100" label="支持课程">
             <template slot-scope="scope">
               <span v-if="scope.row.coursetype == 'T'">团课</span>
               <span v-else-if="scope.row.coursetype == 'P'">私教</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="120" align="center" label="类型">
+          <el-table-column width="200" align="center" label="类型">
             <template slot-scope="scope">
               <span v-if="scope.row.cardtype == 'S'">次卡</span>
               <span v-else-if="scope.row.cardtype == 'P'">期卡</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="100" label="梯度" align="center">
+          <el-table-column width="80" label="梯度" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.tdcount }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column class-name="status-col" label="在线购买" width="120">
+          <el-table-column class-name="status-col" label="在线购买" width="150">
             <template slot-scope="scope">
               <span v-if="scope.row.isonlinebuy == true">支持</span>
               <span v-else-if="scope.row.isonlinebuy == false">不支持</span>
             </template>
           </el-table-column>
 
-          <el-table-column class-name="status-col" label="支持场馆" width="270">
+          <el-table-column class-name="status-col" label="支持场馆" width="400">
             <template slot-scope="scope">
               <span>{{ scope.row.storesjson }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="状态" width="120">
+          <el-table-column align="center" label="状态" width="200">
             <template slot-scope="scope">
               <span v-if="scope.row.state == '1'">正常</span>
               <span v-else-if="scope.row.state == '0'">禁用</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="操作" width="290">
+            <template slot-scope="scope">
+
+              <!-- 会员编辑按钮 -->
+              <el-button type="text" @click="toOpen(scope.row)">编辑</el-button>
+              <el-button v-if="scope.row.state==1" type="text" @click="updateToDisEn(scope.row.status,scope.row.userid,scope.$index)">禁用</el-button>
+              <el-button v-else-if="scope.row.state==0" type="text" @click="updateToDisEn(scope.row.status,scope.row.userid,scope.$index)">启用</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -316,6 +326,17 @@ export default {
         handleSuccess(file){
           this.insertForm.resurl=file
           this.insertForm.resid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)+''
+        },
+         //禁用恢复
+        updateToDisEn(e, id, index){
+          var status=0
+          if(e==0){
+            status=1
+            this.updateStatus(status, id, index);
+          }else if(e==1){
+            status=0
+            this.updateStatus(status, id, index);
+          }
         },        
         toOpen(){
           this.dialogFormVisible=true
