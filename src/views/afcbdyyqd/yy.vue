@@ -194,72 +194,69 @@ export default {
         return [];
       },
       yycourse(e){
-        // //未开卡时
-        // if(e.isopen==false||e.isopen=="false"){
-        //   this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-        //        this.$message({
-        //         message: '开卡成功',
-        //         type: 'success'
-        //        })
-        //      }).catch(error=>{
-        //         this.$message.error('错了哦，这是一条错误消息');
-        //     })
-        // }
-        // if(this.type=="团课"){
-        //     this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RAY', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-        //        this.$message({
-        //         message: '修改团课人数成功',
-        //         type: 'success'
-        //        })
-        //      }).catch(error=>{
-        //         this.$message.error('错了哦，这是一条错误消息');
-        //     })
-        // }else{
-        //   this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RXS', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-        //        this.$message({
-        //         message: '修改私教人数成功',
-        //         type: 'success'
-        //        })
-        //      }).catch(error=>{
-        //         this.$message.error('错了哦，这是一条错误消息');
-        //     })
-        // }
+        //未开卡时
+        if(e.isopen==false||e.isopen=="false"){
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '开卡成功',
+                type: 'success'
+               })
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
+        }
+        if(this.type=="团课"){
+            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RAY', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '修改团课人数成功',
+                type: 'success'
+               })
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
+        }else{
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RXS', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.$message({
+                message: '修改私教人数成功',
+                type: 'success'
+               })
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
         
-        //      this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-        //      this.form={}
-        //         this.$message({
-        //         message: '恭喜你，操作成功',
-        //         type: 'success'
-        //        })
+             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+             this.form={}
+                this.$message({
+                message: '恭喜你，操作成功',
+                type: 'success'
+               })
         
         var uid={userid:''}
         uid.userid=this.user.userid
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOA6JM', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              //  if(res.data.rows[0].storeid!='2020082713550410017'){
-                  var data={}
-                   data.templatetype=1
-                   data.openid=res.data.rows[0].openid
-                   data.schedulebegin=e.coursedate+" "+e.coursetime
-                   data.coursename=e.coursename
-                   console.log(data)
-                  this.$axios.post('http://localhost:8081/web/wxremind/geiWxRemind', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                      this.$message({
-                      message: '服务号已发送',
-                      type: 'success'
+               var st=res.data.rows[0].storeid
+              if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
+                 var ss={}
+                  ss=e
+                  this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                  this.$message({
+                  message: '短信已发送',
+                  type: 'success'
                   })
                   }).catch(error=>{
                                   this.$message.error('错了哦，这是一条错误消息');
-                  })  
-                  // }
+                  })
+                  }
              })
-            //  this.$router.push({
-            //      path:'/afcbdyyqd/afcbdyyqd',
-            //      query: {
-            //      }
-            //  })
-            //     }).catch(error=>{
-            //     this.$message.error('错了哦，这是一条错误消息');
-            // })
+             this.$router.push({
+                 path:'/afcbdyyqd/afcbdyyqd',
+                 query: {
+                 }
+             })
+                }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
       }
     }
 }
