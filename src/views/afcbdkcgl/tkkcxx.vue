@@ -27,6 +27,10 @@
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
       </div>
 
+      <div v-if="isremoved()">
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="deletetk()">删除</el-button>
+      </div>
+
     </div>
     <br />
     <el-table :data="users" style="width: 100%">
@@ -98,6 +102,17 @@ export default {
     this.getusers();
   },
   methods: {
+    isremoved(){
+      if(this.users.length<=0){
+        return true
+      }
+      for(var i=0;i<this.users.length;i++){
+        if(this.users[i].ordstate==1){
+          return false
+        }
+      }
+      return true
+    },
     queding(){
       var data={}
       data.reservablenumber=this.reservablenumber
@@ -242,7 +257,6 @@ export default {
         });
     },
     toUrl() {
-      // console.log(e)
       this.$router.push({
         path: "/afcbdyyqd/yy",
         query: {
@@ -250,6 +264,30 @@ export default {
           type:'团课'
         }
       });
+    },
+    deletetk(){
+      var data={}
+      data.scheduleid=this.query.scheduleid
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOC68Z",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.$message({
+          message: '删除成功！',
+          type: 'success'
+        });
+        this.$router.push({
+        path: "/afcbdkcgl/tkgl"
+      });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+
+      
     }
   },
 };
@@ -265,7 +303,7 @@ export default {
 }
 .kcxx div {
   float: left;
-  margin-left:79px;
+  margin-left:40px;
   font-size: 16px;
   font-weight: bold;
 }
