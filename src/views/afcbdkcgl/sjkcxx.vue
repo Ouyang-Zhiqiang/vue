@@ -68,7 +68,6 @@
         </template>
       </el-table-column>
     </el-table>
-    {{this.query}}
   </div>
 </template>
 
