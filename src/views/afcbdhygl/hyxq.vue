@@ -254,8 +254,10 @@
       </el-tab-pane>
 
       <el-tab-pane label="会员卡信息">
+        <!-- <el-button type="primary" size="mini">有效会员卡</el-button>
+        <el-button type="primary" size="mini">失效会员卡</el-button> -->
         <el-table
-          v-loading="listLoading"
+          v-loading="listLoading" 
           :data="bindCardList"
           border
           fit
@@ -361,10 +363,11 @@
       </el-tab-pane>
 
       <el-tab-pane label="消费记录">
+        <!-- 预约记录 -->
         <div style="width:100%;height:270px;">
           <div style="width:100%;height:30px;">
               <span style="font-size:18px;line-height:30px">预约记录</span>
-              <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="yuyuegengduo()">更多</el-button>
+              <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_2')">更多</el-button>
           </div>
           <hr/>
       <el-table
@@ -438,8 +441,75 @@
       </el-table-column>
     </el-table>   
     </div>
-        
-      </el-tab-pane>
+    <br/><br/>
+    <!-- 操作记录 -->
+    <div style="width:100%;height:270px;">
+      <div style="width:100%;height:30px;">
+        <span style="font-size:18px;line-height:30px">操作记录</span>
+        <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_3')">更多</el-button>
+      </div>
+    <hr/>
+      <el-table
+      :data="caozuojilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="operatingtime"
+        label="时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="vipcard"
+        label="会员卡"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingtype"
+        label="操作项"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="operatingchange"
+        label="变更"
+        width="120">
+         <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
+            +{{scope.row.operatingchange}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingchange}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingfee"
+        label="金额"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
+            +{{scope.row.operatingfee}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingfee}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingtheterm"
+        label="期限"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingpeople"
+        label="操作人"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="operatingremarks"
+        label="备注">
+      </el-table-column>
+    </el-table>   
+    </div>
+    </el-tab-pane>
 
       <el-tab-pane label="跟进记录">
         <el-table :data="genjinall" style="width: 100%">
@@ -589,7 +659,7 @@
     <div id="hyxq_2" style="display:none">
           <div style="width:100%;height:50px;">
               <span style="font-size:18px;line-height:60px">预约记录</span>
-              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="yuyuefanhui()">返回</el-button>
+              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_2')">返回</el-button>
           </div>
           <hr/>
       <el-table
@@ -662,7 +732,75 @@
         width="200">
       </el-table-column>
     </el-table> 
-    <pagination :total="yuyuetotal" :page.sync="yuyuefenye.page" :limit.sync="yuyuefenye.limit" style="float:right;" @pagination="getyuyuejilu()"/> 
+    <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getyuyuejilu()"/> 
+    </div>
+
+    <div id="hyxq_3" style="display:none">
+          <div style="width:100%;height:50px;">
+              <span style="font-size:18px;line-height:60px">操作记录</span>
+              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_3')">返回</el-button>
+          </div>
+          <hr/>
+      <el-table
+      :data="caozuojilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="operatingtime"
+        label="时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="vipcard"
+        label="会员卡"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingtype"
+        label="操作项"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="operatingchange"
+        label="变更"
+        width="120">
+         <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
+            +{{scope.row.operatingchange}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingchange}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingfee"
+        label="金额"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
+            +{{scope.row.operatingfee}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingfee}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingtheterm"
+        label="期限"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingpeople"
+        label="操作人"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="operatingremarks"
+        label="备注">
+      </el-table-column>
+    </el-table>   
+    <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getcaozuojilu()"/> 
     </div>
 
     <el-dialog
@@ -856,11 +994,12 @@ export default {
   components: { Pagination },
   data() {
     return {
-      yuyuetotal:0,
-      yuyuefenye:{
+      total:0,
+      fenye:{
         page:1,
         limit:20
       },
+      caozuojilu4:[],
        form: {
               name: '',
               sex: '',
@@ -953,11 +1092,18 @@ export default {
     this.getBindCardList()
     this.genjinjilu()
     this.getyuyuejilu4()
+    this.getcaozuojilu4()
   },
   mounted() {
     this.getticeliebiao();
   },
   methods: {
+    getFirstcharacter(e){
+      if(String(e).substr(0,1)!='-'){
+        return true
+      }
+      return false
+    },
     getAllxs() {
       this.$axios
         .post(
@@ -1668,15 +1814,24 @@ export default {
       this.ticetype='update'
       this.dialogVisible2 = true;
     },
-    yuyuegengduo(){
-      this.getyuyuejilu()
+    gengduo(e){
+      
+      if(e=='#hyxq_2'){
+        this.getyuyuejilu()
+      }else if(e=='#hyxq_3'){
+        this.getcaozuojilu()
+      }
         $("#hyxq_1").css("display","none")
-        $("#hyxq_2").css("display","block")
+        $(e).css("display","block")
     },
-    yuyuefanhui(){
+    fanhui(e){
+      if(e=='#hyxq_2'){
         this.getyuyuejilu4()
+      }else if(e=='#hyxq_3'){
+        this.getcaozuojilu4()
+      }
         $("#hyxq_1").css("display","block")
-        $("#hyxq_2").css("display","none")
+        $(e).css("display","none")
     },
     getyuyuejilu4(){
       var data={}
@@ -1696,8 +1851,8 @@ export default {
     getyuyuejilu(){
       var data={}
       data.userid=this.query.userid
-      data.limit=this.yuyuefenye.limit
-      data.page=this.yuyuefenye.page-1
+      data.limit=this.fenye.limit
+      data.page=this.fenye.page-1
         this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24BACFMEVC9U",
@@ -1707,10 +1862,57 @@ export default {
         .then((res) => {
           this.yuyuejilu4=res.data.rows
           if(res.data.rows.length>0){
-            this.yuyuetotal=res.data.rows[0].yuyuetotal
+            this.total=res.data.rows[0].yuyuetotal
           }
         });
+    },    
+    getcaozuojilu4(){
+      var data={}
+      data.userid=this.query.userid
+      data.limit=4
+      data.page=0
+        this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOCH1H",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.caozuojilu4=res.data.rows
+        });
+    },
+    getcaozuojilu(){
+      var data={}
+      data.userid=this.query.userid
+      data.limit=this.fenye.limit
+      data.page=this.fenye.page-1
+        this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOCH1H",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.caozuojilu4=res.data.rows
+          if(res.data.rows.length>0){
+          var data2={}
+          data2.userid=this.query.userid
+          data2.limit=999999
+          data2.page=0
+          this.$axios
+          .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOCH1H",
+          this.$qs.stringify(data2),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+          )
+        .then((res) => {
+          this.total=res.data.rows.length
+        });
+            
+        }
+        });
     }
+
   },
 };
 </script>

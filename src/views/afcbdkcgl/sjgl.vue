@@ -205,6 +205,7 @@ export default {
                 data.storeid=res.data.rows[0].id
                 data.coachid=this.coachid
                 this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    console.log(res.data)
                     this.list=res.data
                 });
             })
