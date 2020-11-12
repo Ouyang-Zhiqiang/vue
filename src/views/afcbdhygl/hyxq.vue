@@ -1125,6 +1125,7 @@ export default {
       this.qixianobj.oldbegin = e.cardbegin;
       this.qixianobj.oldend = e.cardend;
       this.qixianobj.userid =this.query.userid;
+      this.qixianobj.isopen=e.isopen
       this.dialogFormVisible2 = true;
     },
     qixian() {
@@ -1134,6 +1135,20 @@ export default {
       this.qixianobj.newend = this.datevalue[1]
         .toLocaleDateString()
         .replace(/\//g, "-");
+        if(this.qixianobj.isopen==false||this.qixianobj.isopen==''||this.qixianobj.isopen==null){    
+          this.$axios
+            .post(
+              "https://www.facebodyfitness.com/hi/main?hi=24CQRLLODE1I",
+              this.$qs.stringify(this.qixianobj),
+              { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+            )
+            .then((res) => {
+            })
+            .catch((error) => {
+              this.$message.error("错了哦，这是一条错误消息");
+            });
+        }
+
       this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBH95",

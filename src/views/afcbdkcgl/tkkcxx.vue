@@ -26,6 +26,9 @@
       <div>
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
       </div>
+      <div>
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="updateCoach()">修改课程教练</el-button>
+      </div>
 
       <div v-if="isremoved()">
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="deletetk()">删除</el-button>
@@ -84,6 +87,29 @@
       <el-button type="primary" @click="queding()">确 定</el-button>
       </span>
     </el-dialog>
+
+       <el-dialog title="修改本课程教练" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
+          <el-form :model="form">
+            <el-form-item label="本课程教练" :label-width="formLabelWidth" required>
+              <span>{{form.thiscoachname}}</span>
+            </el-form-item>
+         
+            <el-form-item label="修改为" :label-width="formLabelWidth" required>
+                <el-select  v-model="form.coachid"  placeholder="全部教练">
+                <el-option
+                  v-for="item in options2"
+                  :key="item.userid"
+                  :label="item.name"
+                  :value="item.userid"
+                />
+              </el-select>
+              </el-form-item>
+              </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="toTrueClose()">确 定</el-button>
+          </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -93,6 +119,16 @@ export default {
     return {
       query: {},
       users: [],
+       //教练
+      options2: [],
+      form:{
+        thiscoachid:'',
+        thiscoachname:'',
+        coachid: "B",
+        coachname:''
+      },
+      dialogVisible1:false,
+      formLabelWidth: '150px',
       reservablenumber: "",
       dialogVisible: false
     };
@@ -100,6 +136,7 @@ export default {
   created() {
     this.query = this.$route.query.item;
     this.getusers();
+    this.getAllCoach();
   },
   methods: {
     isremoved(){
@@ -112,6 +149,18 @@ export default {
         }
       }
       return true
+    },
+  
+    getAllCoach() {
+      this.$axios
+        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then((res) => {
+          var obj = { userid: "B", name: "全部教练" };
+          this.options2 = res.data.rows;
+          this.options2.unshift(obj);
+        });
     },
     queding(){
       var data={}
@@ -264,6 +313,27 @@ export default {
           type:'团课'
         }
       });
+    },
+    // 修改本次课程教练
+    updateCoach(){
+        this.form.thiscoachid=this.query.coachid
+        this.form.thiscoachname=this.query.coachname
+        this.dialogVisible1=true
+
+    },
+      toTrueClose(){
+        var cid=this.form.coachid
+        if(cid!='B'||!cid.equals('B')){
+        var name=this.options2.forEach((item)=>{
+                  if(item.userid==cid){
+                  this.form.coachname=item.name
+                  }
+                });
+        }else{
+          message: '请选择教练！'
+        }
+        
+
     },
     deletetk(){
       var data={}
