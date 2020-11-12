@@ -224,10 +224,10 @@
           <span style="font-size: 15px">时间：{{ query.createdon }}</span
           ><br />
         </div>
-        <el-button type="success" style="float: right" @click="toOpen(query)" size="mini"
+        <el-button type="primary" style="float: right" @click="toOpen(query)" size="mini"
           >编辑</el-button
         >
-        <el-button type="primary" style="float: right" @click="tjgjjl" size="mini"
+        <el-button type="primary" style="float: right;margin-right:20px" @click="tjgjjl" size="mini"
           >添加跟进记录</el-button
         >
       </el-tab-pane>
