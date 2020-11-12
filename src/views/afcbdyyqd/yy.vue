@@ -24,8 +24,8 @@
             <div>
               <el-radio v-for="(item,index) in cardlist" :key="index" v-model="selectedCardno" :label="item.cardno">
                 <span>{{ item.cardname }}</span>&nbsp;&nbsp;&nbsp;
-                <span v-if="item.isopen==1">{{ item.cardbegin }}~{{ item.cardend }}</span> &nbsp;&nbsp;&nbsp;&nbsp;
-                <span v-if="item.isopen==0">未开卡</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                <span v-if="item.isopen==true">{{ item.cardbegin }}~{{ item.cardend }}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                <span v-if="item.isopen==false||item.isopen==''||item.isopen==null">未开卡</span> &nbsp;&nbsp;&nbsp;&nbsp;
                 <span v-if="item.cardtype=='S'">{{ item.curtimes }}次</span> &nbsp;&nbsp;&nbsp;&nbsp;
                 <span v-if="item.cardtype=='S'">次卡</span>&nbsp;&nbsp;&nbsp;&nbsp;
                 <span v-if="item.cardtype=='P'">期卡</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -174,7 +174,6 @@ export default {
         this.selectedCardno=''
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAR9', this.$qs.stringify(item), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.user=res.data.rows[0]
-          console.log("this.storeid----"+this.user.storeid)
           if(res.data.rows.length){
             this.showNow=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNCEA0', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{

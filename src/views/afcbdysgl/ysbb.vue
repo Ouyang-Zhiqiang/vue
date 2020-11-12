@@ -151,7 +151,7 @@ export default {
         this.getFxlist()
       },
       getAllStore2(){
-            if(localStorage.getItem('username')=='系统管理员'){
+            if(localStorage.getItem('username')=='系统管理员'||localStorage.getItem('username')=='金慧慧'){
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.theAllstores=res.data.rows
                     var obj={}
