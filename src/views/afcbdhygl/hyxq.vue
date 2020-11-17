@@ -276,7 +276,7 @@
             width="250"
           >
             <template slot-scope="scope">
-              <span>{{ scope.row.cardname }}({{scope.row.cardno.substring()}})</span>
+              <span>{{ scope.row.cardname }}</span>
             </template>
           </el-table-column>
 
