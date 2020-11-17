@@ -154,6 +154,7 @@ export default {
             }
             this.listLoading=true
             data.page=this.listQuery.page-1
+
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEV5AC', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
@@ -212,7 +213,6 @@ export default {
           this.getAllBindCards(this.listQuery)
         },
         toUrl(){
-          // console.log(e)
           this.$router.push({
               path:'/afcbdhygl/tohybk'
           })

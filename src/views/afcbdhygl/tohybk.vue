@@ -267,6 +267,9 @@ export default {
         data.remarks=this.xuka.cardname
         data.userid=this.user.userid
         data.points=Math.round(this.xuka.totalfee)
+        this.xuka.createdby=localStorage.getItem('userid')
+        this.xuka.createdname=localStorage.getItem('username')
+        console.log(this.xuka)
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNE921', this.$qs.stringify(this.xuka), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.$message({
             message: '恭喜你，操作成功',

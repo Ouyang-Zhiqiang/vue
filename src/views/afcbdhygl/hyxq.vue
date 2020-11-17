@@ -254,8 +254,9 @@
       </el-tab-pane>
 
       <el-tab-pane label="会员卡信息">
-        <!-- <el-button type="primary" size="mini">有效会员卡</el-button>
-        <el-button type="primary" size="mini">失效会员卡</el-button> -->
+        <el-button type="primary" size="mini" @click="sxhyk" style="float:right">失效会员卡</el-button>
+        <el-button type="primary" size="mini" @click="yxhyk" style="float:right;margin-right:25px">有效会员卡</el-button>
+        <br/>
         <el-table
           v-loading="listLoading" 
           :data="bindCardList"
@@ -1089,7 +1090,7 @@ export default {
     this.getAmount()
     this.getCourseAmount()
     this.getCardAmount()
-    this.getBindCardList()
+    this.yxhyk()
     this.genjinjilu()
     this.getyuyuejilu4()
     this.getcaozuojilu4()
@@ -1178,12 +1179,25 @@ export default {
           this.cardamount = res.data.rows[0];
         });
     },
-    getBindCardList() {
+    yxhyk() {
       var data = {};
       data.userid = this.query.userid;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBD8Z",
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLODOA9",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.bindCardList = res.data.rows;
+        });
+    },
+    sxhyk() {
+      var data = {};
+      data.userid = this.query.userid;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLODOAH",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1303,7 +1317,7 @@ export default {
         )
         .then((res) => {
           this.dialogFormVisible2 = false;
-          this.getBindCardList();
+          this.yxhyk();
           this.qixianobj = {};
           this.$message({
             message: "恭喜你，操作成功",
@@ -1329,7 +1343,7 @@ export default {
         )
         .then((res) => {
           this.dialogFormVisible3 = false;
-          this.getBindCardList();
+          this.yxhyk();
           this.stopcard = {};
           this.$message({
             message: "恭喜你，操作成功",
@@ -1358,7 +1372,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.getBindCardList();
+          this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
             type: "success",
@@ -1395,7 +1409,7 @@ export default {
         )
         .then((res) => {
           this.dialogFormVisible4 = false;
-          this.getBindCardList();
+          this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
             type: "success",
