@@ -26,8 +26,8 @@
       <div>
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
       </div>
-      <div>
-        <el-button type="primary" size="mini" style="margin-top:-6px" @click="updateCoach()">修改课程教练</el-button>
+      <div v-if="isShow()">
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="updateCoach()">编辑</el-button>
       </div>
 
       <div v-if="isremoved()">
@@ -88,13 +88,21 @@
       </span>
     </el-dialog>
 
-       <el-dialog title="修改本课程教练" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
+       <el-dialog title="编辑" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
           <el-form :model="form">
-            <el-form-item label="本课程教练" :label-width="formLabelWidth" required>
+             <el-form-item label="运动馆:" :label-width="formLabelWidth" required>
+              <span>{{form.storename}}</span>
+            </el-form-item>
+
+            <el-form-item label="本课程教练:" :label-width="formLabelWidth" required>
               <span>{{form.thiscoachname}}</span>
             </el-form-item>
+
+            <el-form-item label="课程名称:" :label-width="formLabelWidth" required>
+              <span>{{form.coursename}}</span>
+            </el-form-item>
          
-            <el-form-item label="修改为" :label-width="formLabelWidth" required>
+            <el-form-item label="教练:" :label-width="formLabelWidth" required>
                 <el-select  v-model="form.coachid"  placeholder="全部教练">
                 <el-option
                   v-for="item in options2"
@@ -104,9 +112,31 @@
                 />
               </el-select>
               </el-form-item>
+
+              <el-form-item label="上课开始时间"  :label-width="formLabelWidth" required>
+            <el-select v-model="form.hourse" style="width:100px;float:left">
+              <el-option v-for="item in startHourse" :key="item" :label="item" :value="item" />
+            </el-select><span style="float:left;padding:0 5px">点</span>
+            <el-select v-model="form.minutes" style="width:100px;float:left">
+              <el-option v-for="item in startMinute" :key="item" :label="item" :value="item" />
+            </el-select><span style="float:left;padding:0 5px">分</span>
+            </el-form-item>
+            <el-form-item label="课程时长:" :label-width="formLabelWidth" required>
+              <el-input v-model="form.courseduration" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;min
+            </el-form-item>
+            <el-form-item label="已约人数:" :label-width="formLabelWidth" required>
+              <span>{{form.reservednumber}}</span>
+            </el-form-item>
+            <el-form-item label="可预约人数:" :label-width="formLabelWidth" required>
+              <el-input v-model="form.reservablenumber" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;
+            </el-form-item>
+            <el-form-item label="人数不足不开课" :label-width="formLabelWidth" required>
+              <el-radio v-model="form.isopened" label="0" style="float:left;margin-top:10px;margin-left:5px">是</el-radio>
+              <el-radio v-model="form.isopened" label="1" style="float:left;margin-top:10px;">否</el-radio>
+            </el-form-item>
               </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="dialogVisible1 = false">取 消</el-button>
             <el-button type="primary" @click="toTrueClose()">确 定</el-button>
           </div>
     </el-dialog>
@@ -114,6 +144,7 @@
 </template>
 
 <script>
+import { TimePicker } from 'element-ui';
 export default {
   data() {
     return {
@@ -121,16 +152,28 @@ export default {
       users: [],
        //教练
       options2: [],
+      startHourse:['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+      startMinute:['00', '15', '30', '45'],
       form:{
         thiscoachid:'',
         thiscoachname:'',
+        storename:'',
+        coursename:'',
         coachid: "B",
-        coachname:''
+        coachname:'',
+        hourse:'',
+        courseduration:'60',
+        minutes:'',
+        reservednumber:'',
+        isopened:'',
+        scheduleid:'',
+        schedulebegin:'',
+        scheduleend:''
       },
       dialogVisible1:false,
       formLabelWidth: '150px',
       reservablenumber: "",
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
   created() {
@@ -139,6 +182,13 @@ export default {
     this.getAllCoach();
   },
   methods: {
+    isShow(){
+      if(this.query.reservednumber==0){
+        return true
+      }else{
+        return false
+      }
+    },
     isremoved(){
       if(this.users.length<=0){
         return true
@@ -316,21 +366,61 @@ export default {
     },
     // 修改本次课程教练
     updateCoach(){
-        this.form.thiscoachid=this.query.coachid
+        this.form.coachid=this.query.coachid
         this.form.thiscoachname=this.query.coachname
+        this.form.coachname=this.query.coachname
+        this.form.coursename=this.query.coursename
+        this.form.storename=this.query.storename
+        this.form.reservednumber=this.query.reservednumber
+        this.form.reservablenumber=this.query.reservablenumber
+        this.form.isopened=this.query.isopened=true?'0':'1'
+        this.form.hourse=this.query.schedulebegin.split(':')[0]
+        this.form.minutes=this.query.schedulebegin.split(':')[1]
+        this.form.scheduleend=this.query.scheduleend
+        this.form.courseduration=this.form.courseduration
+        
         this.dialogVisible1=true
 
     },
       toTrueClose(){
         var cid=this.form.coachid
-        if(cid!='B'||!cid.equals('B')){
-        var name=this.options2.forEach((item)=>{
-                  if(item.userid==cid){
-                  this.form.coachname=item.name
-                  }
+        if(cid!='B'){
+          if(this.form.hourse==""||this.form.hourse==null||this.form.hourse==undefined||this.form.minutes==''||this.form.minutes==null||this.form.minutes==undefined){
+            this.$message.warning("请选择课程时间！");
+          }else{
+            var data={}
+            data=this.form
+            data.scheduleid=this.query.scheduleid
+            data.schedulebegin=data.hourse+":"+data.minutes
+            var name=this.options2.forEach((item)=>{
+                      if(item.userid==cid){
+                      this.form.coachname=item.name
+                      }
+                    });
+                this.$axios
+                .post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOE6XI",
+                  this.$qs.stringify(data),
+                  { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+                )
+                .then((res) => {
+                  this.$message({
+                  message: '编辑成功！',
+                  type: 'success'
                 });
+                this.$router.push({
+                path: "/afcbdkcgl/tkgl"
+              });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+
+         
+          }
+         
         }else{
-          message: '请选择教练！'
+         this.$message.warning("请选择教练！");
         }
         
 
