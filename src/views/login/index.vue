@@ -38,8 +38,7 @@
                   size="mini"
                   :loading="sendboolean"
                   @click="sendPhone"
-                  >发送验证码</el-button
-                >
+                >发送验证码</el-button>
               </span>
             </el-form-item>
           </el-tooltip>
@@ -73,17 +72,16 @@
               </span>
             </el-form-item>
           </el-tooltip>
-          <br/>
+          <br>
           <el-button
             :loading="loading"
             type="primary"
             style="width: 100%; margin-bottom: 35px"
             @click.native.prevent="handleLogin"
-            >登录</el-button
-          >
+          >登录</el-button>
         </el-tab-pane>
         <el-tab-pane label="微信登录" name="second">
-          <div id="weixin" style="width: 450px; text-align: center"></div>
+          <div id="weixin" style="width: 450px; text-align: center" />
         </el-tab-pane>
       </el-tabs>
     </el-form>
@@ -118,19 +116,19 @@ export default {
       sendboolean: false,
       loginForm: {
         username: "",
-        password: "",
+        password: ""
       },
       trueForm: {
         username: "",
-        password: "",
+        password: ""
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", validator: validateUsername },
+          { required: true, trigger: "blur", validator: validateUsername }
         ],
         password: [
-          { required: true, trigger: "blur", validator: validatePassword },
-        ],
+          { required: true, trigger: "blur", validator: validatePassword }
+        ]
       },
       passwordType: "password",
       capsTooltip: false,
@@ -138,7 +136,7 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      activeName: "first",
+      activeName: "first"
     };
   },
   watch: {
@@ -150,8 +148,8 @@ export default {
           this.otherQuery = this.getOtherQuery(query);
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   created() {},
   mounted() {
@@ -212,7 +210,7 @@ export default {
         localStorage.setItem("myphone", "admin");
         this.$axios
           .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
           })
           .then((res) => {
             var storeid = "";
@@ -234,7 +232,7 @@ export default {
           .then(() => {
             this.$router.push({
               path: this.redirect || "/",
-              query: this.otherQuery,
+              query: this.otherQuery
             });
             this.loading = false;
           })
@@ -258,8 +256,8 @@ export default {
             this.$axios
               .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
                 headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }
               })
               .then((res) => {
                 localStorage.setItem("storenumber", res.data.rows[0].count);
@@ -277,7 +275,7 @@ export default {
                 .then(() => {
                   this.$router.push({
                     path: this.redirect || "/",
-                    query: this.otherQuery,
+                    query: this.otherQuery
                   });
                   this.loading = false;
                 })
@@ -313,7 +311,7 @@ export default {
           scope: "snsapi_login", // 网页默认即可
           redirect_uri: "https://www.facebodyfitness.com/fbadmin", // 授权成功后回调的url
           state: Math.ceil(Math.random() * 1000), // 可设置为简单的随机数加session用来校验
-          style: "black", // 提供"black"、"white"可选。二维码的样式
+          style: "black" // 提供"black"、"white"可选。二维码的样式
         });
       };
       const code = qs.parse(window.location.search.substr(1)).code;
@@ -334,8 +332,8 @@ export default {
                   "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R",
                   {
                     headers: {
-                      "Content-Type": "application/x-www-form-urlencoded",
-                    },
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    }
                   }
                 )
                 .then((res) => {
@@ -353,7 +351,7 @@ export default {
                 .then(() => {
                   this.$router.push({
                     path: this.redirect || "/",
-                    query: this.otherQuery,
+                    query: this.otherQuery
                   });
                   this.loading = false;
                 })
@@ -365,8 +363,8 @@ export default {
             }
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

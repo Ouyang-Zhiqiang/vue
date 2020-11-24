@@ -35,14 +35,12 @@
       </div>
 
     </div>
-    <br />
+    <br>
     <el-table :data="users" style="width: 100%">
-      <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-      <el-table-column prop="tel" label="电话" width="130"> </el-table-column>
-      <el-table-column prop="traineenum" label="人数" width="100">
-      </el-table-column>
-      <el-table-column prop="cardname" label="会员卡" width="180">
-      </el-table-column>
+      <el-table-column prop="name" label="姓名" width="120" />
+      <el-table-column prop="tel" label="电话" width="130" />
+      <el-table-column prop="traineenum" label="人数" width="100" />
+      <el-table-column prop="cardname" label="会员卡" width="180" />
       <el-table-column label="签到状态" width="100">
         <template slot-scope="scope">
           <span
@@ -65,80 +63,80 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="remarks" label="备注"> </el-table-column>
-      <el-table-column prop="createdon" label="预约时间" width="200">
-      </el-table-column>
+      <el-table-column prop="remarks" label="备注" />
+      <el-table-column prop="createdon" label="预约时间" width="200" />
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <div v-if="scope.row.ordstate == 1 && scope.row.signstate == 0">
             <el-button type="text" @click="signed(scope.row)">签到</el-button>
-            <el-button type="text" @click="cancleord(scope.row)"
-              >取消预约</el-button
-            >
+            <el-button
+              type="text"
+              @click="cancleord(scope.row)"
+            >取消预约</el-button>
           </div>
         </template>
       </el-table-column>
     </el-table>
 
     <el-dialog title="修改可预约人数" :visible.sync="dialogVisible" width="30%" :before-close="quxiao">
-      <el-input v-model="reservablenumber"></el-input>
+      <el-input v-model="reservablenumber" />
       <span slot="footer" class="dialog-footer">
-      <el-button @click="quxiao()">取 消</el-button>
-      <el-button type="primary" @click="queding()">确 定</el-button>
+        <el-button @click="quxiao()">取 消</el-button>
+        <el-button type="primary" @click="queding()">确 定</el-button>
       </span>
     </el-dialog>
 
-       <el-dialog title="编辑" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
-          <el-form :model="form">
-             <el-form-item label="运动馆:" :label-width="formLabelWidth" required>
-              <span>{{form.storename}}</span>
-            </el-form-item>
+    <el-dialog title="编辑" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
+      <el-form :model="form">
+        <el-form-item label="运动馆:" :label-width="formLabelWidth" required>
+          <span>{{ form.storename }}</span>
+        </el-form-item>
 
-            <el-form-item label="本课程教练:" :label-width="formLabelWidth" required>
-              <span>{{form.thiscoachname}}</span>
-            </el-form-item>
+        <el-form-item label="本课程教练:" :label-width="formLabelWidth" required>
+          <span>{{ form.thiscoachname }}</span>
+        </el-form-item>
 
-            <el-form-item label="课程名称:" :label-width="formLabelWidth" required>
-              <span>{{form.coursename}}</span>
-            </el-form-item>
+        <el-form-item label="课程名称:" :label-width="formLabelWidth" required>
+          <span>{{ form.coursename }}</span>
+        </el-form-item>
          
-            <el-form-item label="教练:" :label-width="formLabelWidth" required>
-                <el-select  v-model="form.coachid"  placeholder="全部教练">
-                <el-option
-                  v-for="item in options2"
-                  :key="item.userid"
-                  :label="item.name"
-                  :value="item.userid"
-                />
-              </el-select>
-              </el-form-item>
+        <el-form-item label="教练:" :label-width="formLabelWidth" required>
+          <el-select v-model="form.coachid" placeholder="全部教练">
+            <el-option
+              v-for="item in options2"
+              :key="item.userid"
+              :label="item.name"
+              :value="item.userid"
+            />
+          </el-select>
+        </el-form-item>
 
-              <el-form-item label="上课开始时间"  :label-width="formLabelWidth" required>
-            <el-select v-model="form.hourse" style="width:100px;float:left">
-              <el-option v-for="item in startHourse" :key="item" :label="item" :value="item" />
-            </el-select><span style="float:left;padding:0 5px">点</span>
-            <el-select v-model="form.minutes" style="width:100px;float:left">
-              <el-option v-for="item in startMinute" :key="item" :label="item" :value="item" />
-            </el-select><span style="float:left;padding:0 5px">分</span>
-            </el-form-item>
-            <el-form-item label="课程时长:" :label-width="formLabelWidth" required>
-              <el-input v-model="form.courseduration" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;min
-            </el-form-item>
-            <el-form-item label="已约人数:" :label-width="formLabelWidth" required>
-              <span>{{form.reservednumber}}</span>
-            </el-form-item>
-            <el-form-item label="可预约人数:" :label-width="formLabelWidth" required>
-              <el-input v-model="form.reservablenumber" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;
-            </el-form-item>
-            <el-form-item label="人数不足不开课" :label-width="formLabelWidth" required>
-              <el-radio v-model="form.isopened" label="0" style="float:left;margin-top:10px;margin-left:5px">是</el-radio>
-              <el-radio v-model="form.isopened" label="1" style="float:left;margin-top:10px;">否</el-radio>
-            </el-form-item>
-              </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible1 = false">取 消</el-button>
-            <el-button type="primary" @click="toTrueClose()">确 定</el-button>
-          </div>
+        <el-form-item label="上课开始时间" :label-width="formLabelWidth" required>
+          <el-select v-model="form.hourse" style="width:100px;float:left">
+            <el-option v-for="item in startHourse" :key="item" :label="item" :value="item" />
+          </el-select><span style="float:left;padding:0 5px">点</span>
+          <el-select v-model="form.minutes" style="width:100px;float:left">
+            <el-option v-for="item in startMinute" :key="item" :label="item" :value="item" />
+          </el-select><span style="float:left;padding:0 5px">分</span>
+        </el-form-item>
+        <el-form-item label="课程时长:" :label-width="formLabelWidth" required>
+          <el-input v-model="form.courseduration" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;min
+        </el-form-item>
+        <el-form-item label="已约人数:" :label-width="formLabelWidth" required>
+          <span>{{ form.reservednumber }}</span>
+        </el-form-item>
+        <el-form-item label="可预约人数:" :label-width="formLabelWidth" required>
+          <el-input v-model="form.reservablenumber" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;
+        </el-form-item>
+        <el-form-item label="人数不足不开课" :label-width="formLabelWidth" required>
+          <el-radio v-model="form.isopened" label="0" style="float:left;margin-top:10px;margin-left:5px">是</el-radio>
+          <el-radio v-model="form.isopened" label="1" style="float:left;margin-top:10px;">否</el-radio>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="toTrueClose()">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -173,7 +171,7 @@ export default {
       dialogVisible1:false,
       formLabelWidth: '150px',
       reservablenumber: "",
-      dialogVisible: false,
+      dialogVisible: false
     };
   },
   created() {
@@ -224,7 +222,7 @@ export default {
         .then((res) => {
           this.$message({
             message: "修改成功",
-            type: "success",
+            type: "success"
           });
           this.getreservablenumber()
           this.dialogVisible=false
@@ -265,7 +263,6 @@ export default {
           }else{
             this.reservablenumber=this.query.reservablenumber
           }
-          
         });
     },
     getyysl(e) {
@@ -294,7 +291,7 @@ export default {
           this.getAllTeam();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
@@ -317,7 +314,7 @@ export default {
           this.getreservablenumber();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
@@ -380,7 +377,6 @@ export default {
         this.form.courseduration=this.form.courseduration
         
         this.dialogVisible1=true
-
     },
       toTrueClose(){
         var cid=this.form.coachid
@@ -415,15 +411,10 @@ export default {
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
-
-         
           }
-         
         }else{
          this.$message.warning("请选择教练！");
         }
-        
-
     },
     deletetk(){
       var data={}
@@ -446,10 +437,8 @@ export default {
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
-
-      
     }
-  },
+  }
 };
 </script>
 
