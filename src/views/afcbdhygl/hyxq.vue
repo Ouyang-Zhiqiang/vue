@@ -145,18 +145,22 @@
       style="width: 1200px; margin: 0 auto"
     >
       <el-form :model="stopcard">
-        <!-- <el-form-item label="停卡期限" :label-width="formLabelWidth">
-          <el-radio v-model="stopTime" label="P">永久停卡</el-radio>
-          <el-radio v-model="stopTime" label="T">临时停卡</el-radio>
+        <el-form-item label="停卡期限" :label-width="formLabelWidth">
+          <el-radio v-model="stoptype" label="P">永久停卡</el-radio>
+          <el-radio v-model="stoptype" label="T">临时停卡</el-radio>
         </el-form-item>
-        <el-form-item label="收款(元)" :label-width="formLabelWidth" v-if="stopTime=='T'">
+        <el-form-item v-if="stoptype=='T'" label="停卡时间" :label-width="formLabelWidth"> 
+          <el-date-picker v-model="stoptime" type="daterange"
+           range-separator="-" start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            value-format="yyyy-MM-dd"
+            style="width:270px;float:left">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="收款(元)" :label-width="formLabelWidth" v-if="stoptype=='T'">
             <el-input v-model="stopcard.recamount"  style="width:270px;float:left"></el-input>
-        </el-form-item> -->
-        <el-form-item
-          v-if="stopTime == 'P'"
-          label="退费(元)"
-          :label-width="formLabelWidth"
-        >
+        </el-form-item>
+        <el-form-item v-if="stoptype == 'P'" label="退费(元)" :label-width="formLabelWidth">
           <el-input v-model="stopcard.fee" style="width: 270px; float: left" />
         </el-form-item>
         <el-form-item label="支付方式" :label-width="formLabelWidth">
@@ -1036,7 +1040,8 @@ export default {
       dialogFormVisible3: false,
       qixianobj: {},
       datevalue: {},
-      stopTime: "P",
+      stoptype: "P",
+      stoptime:'',
       stopcard: {},
       payoption: [
         { label: "刷卡", value: "3" },
@@ -1333,8 +1338,13 @@ export default {
       this.stopcard = {};
     },
     stopcardtrue() {
-      this.stopcard.stoptype = this.stopTime;
-
+      this.stopcard.stoptype = this.stoptype;
+      this.stopcard.createdby = localStorage.getItem("userid");
+      this.stopcard.createdname = localStorage.getItem("username");
+      if(this.stopcard.stoptype=='T'){
+        this.stopcard.disablebegin=this.stoptime[0]
+        this.stopcard.disableend=this.stoptime[1]
+      }
       this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHEG",
@@ -1947,4 +1957,6 @@ export default {
 </script>
 
 <style scoped>
+  
 </style>
+
