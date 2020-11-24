@@ -218,8 +218,7 @@ export default {
           this.list=res.data
           this.total=this.list[0].total
         });
-      }
-      ,
+      },
     daochu() {
       this.listQuery.limit = 99999;
       this.getFxlist();
