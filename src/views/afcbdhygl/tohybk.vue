@@ -249,13 +249,19 @@ export default {
                 this.xuka.storename=item.name
             }
         })
-        if(this.xuka.isopen=='0'){
-            this.xuka.cardbegin=null
-            this.xuka.cardend=null
-        }else if(this.xuka.isopen=='1'){
-            this.xuka.cardbegin=this.xuka.mydate[0].toLocaleDateString().replace(/\//g, '-')
-            this.xuka.cardend=this.xuka.mydate[1].toLocaleDateString().replace(/\//g, '-')
+        if(this.xuka.isopen!=''&&this.xuka.isopen!=null&&this.xuka.isopen!=undefined){
+          if(this.xuka.isopen=='0'){
+              this.xuka.cardbegin=null
+              this.xuka.cardend=null
+          }else if(this.xuka.isopen=='1'){
+              this.xuka.cardbegin=this.xuka.mydate[0].toLocaleDateString().replace(/\//g, '-')
+              this.xuka.cardend=this.xuka.mydate[1].toLocaleDateString().replace(/\//g, '-')
+          }
+        }else{
+          this.$message.error('选择是否开卡！！')
+          return false
         }
+
         this.xuka.cardno=this.guid()
         // console.log(this.xuka)
         this.insertCard()

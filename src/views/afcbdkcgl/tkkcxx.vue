@@ -344,7 +344,7 @@ export default {
     cancleThenSend(obj) {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId",
+          "http://localhost:8081/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
