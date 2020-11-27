@@ -94,7 +94,7 @@
             <div v-if="data.day==item.scheduledate" @click="sjUrl(item)"  style="height:95px;background:#16a951;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br><br>
-              <span style="padding-bottom:5px">{{ item.reservednumber }}/1</span><br>
+              <span style="padding-bottom:5px">{{ item.reservednumber }}/{{ item.reservednumber }}</span><br>
             </div>
           </div>
         
