@@ -86,8 +86,8 @@
               <el-input v-model="form4.name" style="width:270px;float:left" />
             </el-form-item>
             <el-form-item label="性别" :label-width="formLabelWidth" required>
-              <el-radio v-model="form4.sex" label="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
-              <el-radio v-model="form4.sex" label="1" style="float:left;margin-top:10px;">女</el-radio>
+              <el-radio v-model="form4.sex" label="0" value="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
+              <el-radio v-model="form4.sex" label="1"  value="1"  style="float:left;margin-top:10px;">女</el-radio>
             </el-form-item>
             <el-form-item label="电话" :label-width="formLabelWidth" required>
               <el-input v-model="form4.tel" style="width:270px;float:left" />
@@ -345,7 +345,7 @@ export default {
             },
             form4:{
               name: '',
-              sex: '',
+              sex: '0',
               tel: '',
               storeId: '',
               storeName:'',
@@ -719,7 +719,7 @@ export default {
           this.form4.tel=''
           this.form4.name=''
           this.form4.storeId=''
-          this.form4.sex=''
+          this.form4.sex='0'
           this.form4.xsid=''
           this.form4.remarks=''
           this.dialogFormVisible4=true
@@ -796,32 +796,46 @@ export default {
           if(this.form4.name==''||this.form4.sex==''||this.form4.tel==''||this.form4.storeId==''){
             alert('检测有未填信息！')
           }else{
-            this.form4.createdby=localStorage.getItem('userid')
-            this.form4.createdname=localStorage.getItem('username')
-            this.form4.lastedby=localStorage.getItem('userid')
-            this.form4.lastedname=localStorage.getItem('username')
-            this.form4.createdip='127.0.0.1'
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth()+1;
-            var day = date.getDate();
-            var hour = date.getHours();
-            var minute = date.getMinutes(); 
-            var second = date.getSeconds();
+            var phone={}
+            phone.tel=this.form4.tel
+            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOJG9Q', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              var row=res.data.rows
+               console.log("res----"+res.data.rows)
+              if(row!=null&&row!=''&&row!=undefined){
+                  this.$message.error("手机号已存在");
+              }else{
+                                this.form4.createdby=localStorage.getItem('userid')
+                this.form4.createdname=localStorage.getItem('username')
+                this.form4.lastedby=localStorage.getItem('userid')
+                this.form4.lastedname=localStorage.getItem('username')
+                this.form4.createdip='127.0.0.1'
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth()+1;
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minute = date.getMinutes(); 
+                var second = date.getSeconds();
 
-            var data={}
-            data=this.form4
-            data.userid=year+''+month+''+day+''+hour+''+minute+''+second
-            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1UUV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              this.toGetAll(this.listQuery)
-              this.dialogFormVisible4=false
-              this.$message({
-                message: '恭喜你，操作成功',
-                type: 'success'
-              })
+                var data={}
+                data=this.form4
+                data.userid=year+''+month+''+day+''+hour+''+minute+''+second
+                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1UUV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                  this.toGetAll(this.listQuery)
+                  this.dialogFormVisible4=false
+                  this.$message({
+                    message: '恭喜你，操作成功',
+                    type: 'success'
+                  })
+                }).catch(error=>{
+                  this.$message.error('错了哦，这是一条错误消息');
+                });
+              }
             }).catch(error=>{
               this.$message.error('错了哦，这是一条错误消息');
             });
+            
+
           }
         },
         createUser(){

@@ -49,9 +49,14 @@
             </template>
           </el-table-column>
 
-          <el-table-column width="250" label="余额" align="center">
+          <el-table-column width="150" label="余额" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.curtimes }}</span>
+            </template>
+          </el-table-column>
+           <el-table-column width="150" label="创建人" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.createdname }}</span>
             </template>
           </el-table-column>
 

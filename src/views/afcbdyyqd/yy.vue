@@ -140,7 +140,6 @@ export default {
               }
             }
           });
-          console.log("user---"+this.user.userid)
           if(this.selectedCardno==''||this.selectedCardno==undefined){
             this.$message.error('请选择会员卡');
           }else{
