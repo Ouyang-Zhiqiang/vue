@@ -162,7 +162,7 @@
           />
         </el-form-item>
         <el-form-item v-if="stoptype=='T'" label="收款(元)" :label-width="formLabelWidth">
-          <el-input v-model="stopcard.recamount" style="width:270px;float:left" />
+          <el-input v-model="stopcard.fee" style="width:270px;float:left" />
         </el-form-item>
         <el-form-item v-if="stoptype == 'P'" label="退费(元)" :label-width="formLabelWidth">
           <el-input v-model="stopcard.fee" style="width: 270px; float: left" />
@@ -187,9 +187,9 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="conclecard()">取 消</el-button>
+      <div slot="footer" class="dialog-footer">  
         <el-button type="primary" @click="stopcardtrue()">确 定</el-button>
+        <el-button @click="conclecard()">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -1368,6 +1368,8 @@ export default {
       if(this.stopcard.stoptype=='T'){
         this.stopcard.disablebegin=this.stoptime[0]
         this.stopcard.disableend=this.stoptime[1]
+      }else{
+        this.stopcard.fee=this.stopcard.fee-(this.stopcard.fee*2)
       }
       this.$axios
         .post(
@@ -1773,7 +1775,7 @@ export default {
       if(this.ticetype=='insert'){
         this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/inserttice",
+          "https://www.facebodyfitness.com/web/CCourse/inserttice",
           this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1788,7 +1790,7 @@ export default {
       }else if(this.ticetype=='update'){
         this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/updatetice",
+          "https://www.facebodyfitness.com/web/CCourse/updatetice",
           this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1826,7 +1828,7 @@ export default {
       data.userid = this.query.userid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/deletetice",
+          "https://www.facebodyfitness.com/web/CCourse/deletetice",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
