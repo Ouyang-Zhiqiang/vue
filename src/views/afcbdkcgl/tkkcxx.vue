@@ -252,7 +252,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/getcourseinformation",
+          "https://www.facebodyfitness.com/web/CCourse/getcourseinformation",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

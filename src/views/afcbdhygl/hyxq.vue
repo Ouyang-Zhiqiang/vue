@@ -78,10 +78,9 @@
           <el-input v-model="xuka.remarks" style="width: 270px; float: left" />
         </el-form-item>
         <el-form-item label="卡有效期" :label-width="formLabelWidth">
-          <el-checkbox
-            v-model="xuka.sz"
-            style="float: left"
-          >设置有效期</el-checkbox><br>
+          <el-checkbox v-model="xuka.sz" style="float: left"
+            >设置有效期</el-checkbox
+          ><br />
           <el-date-picker
             v-model="xuka.mydate"
             style="margin-top: 5px; width: 270px"
@@ -151,18 +150,15 @@
           <el-radio v-model="stoptype" label="T">临时停卡</el-radio>
         </el-form-item>
         <el-form-item v-if="stoptype=='T'" label="停卡时间" :label-width="formLabelWidth"> 
-          <el-date-picker
-            v-model="stoptime"
-            type="daterange"
-            range-separator="-"
-            start-placeholder="开始时间"
+          <el-date-picker v-model="stoptime" type="daterange"
+           range-separator="-" start-placeholder="开始时间"
             end-placeholder="结束时间"
             value-format="yyyy-MM-dd"
-            style="width:270px;float:left"
-          />
+            style="width:270px;float:left">
+          </el-date-picker>
         </el-form-item>
-        <el-form-item v-if="stoptype=='T'" label="收款(元)" :label-width="formLabelWidth">
-          <el-input v-model="stopcard.recamount" style="width:270px;float:left" />
+        <el-form-item label="收款(元)" :label-width="formLabelWidth" v-if="stoptype=='T'">
+            <el-input v-model="stopcard.fee"  style="width:270px;float:left"></el-input>
         </el-form-item>
         <el-form-item v-if="stoptype == 'P'" label="退费(元)" :label-width="formLabelWidth">
           <el-input v-model="stopcard.fee" style="width: 270px; float: left" />
@@ -187,9 +183,9 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="conclecard()">取 消</el-button>
+      <div slot="footer" class="dialog-footer">  
         <el-button type="primary" @click="stopcardtrue()">确 定</el-button>
+        <el-button @click="conclecard()">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -218,53 +214,53 @@
     <el-tabs type="border-card" style="margin-top: 10px">
       <el-tab-pane label="会员详情">
         <div style="width: 150px; height: 150px; float: left">
-          <img :src="img.originalpath" width="100px" height="100px">
+          <img :src="img.originalpath" width="100px" height="100px" />
         </div>
         <div style="width: 350px; float: left">
-          <span style="font-size: 24px; color: #307ef8">{{ query.name }}</span><br>
-          <span style="font-size: 15px">等级：lv{{ query.memgrade }}</span><br>
-          <span style="font-size: 15px">手机：{{ query.tel }}</span><br>
-          <span style="font-size: 15px">积分：{{ query.points }}</span><br>
-          <span style="font-size: 15px">时间：{{ query.createdon }}</span><br>
+          <span style="font-size: 24px; color: #307ef8">{{ query.name }}</span
+          ><br />
+          <span style="font-size: 15px">等级：lv{{ query.memgrade }}</span
+          ><br />
+          <span style="font-size: 15px">手机：{{ query.tel }}</span
+          ><br />
+          <span style="font-size: 15px">积分：{{ query.points }}</span
+          ><br />
+          <span style="font-size: 15px">时间：{{ query.createdon }}</span
+          ><br />
         </div>
-        <el-button
-          type="primary"
-          style="float: right"
-          size="mini"
-          @click="toOpen(query)"
-        >编辑</el-button>
-        <el-button
-          type="primary"
-          style="float: right;margin-right:20px"
-          size="mini"
-          @click="tjgjjl"
-        >添加跟进记录</el-button>
+        <el-button type="primary" style="float: right" @click="toOpen(query)" size="mini"
+          >编辑</el-button
+        >
+        <el-button type="primary" style="float: right;margin-right:20px" @click="tjgjjl" size="mini"
+          >添加跟进记录</el-button
+        >
       </el-tab-pane>
     </el-tabs>
 
-    <el-tabs id="hyxq_1" type="border-card" style="margin-top: 10px">
+    <el-tabs type="border-card" style="margin-top: 10px" id="hyxq_1">
 
       <el-tab-pane label="会员分析">
         <div style="width: 100%; padding: 20px">
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">消费总金额</span><br><br><br>
-            <span style="font-size: 22px">￥{{ amount.sum }}元</span><br>
+            <span style="font-size: 18px">消费总金额</span><br /><br /><br />
+            <span style="font-size: 22px">￥{{ amount.sum }}元</span><br />
           </div>
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">上课数</span><br><br><br>
-            <span style="font-size: 22px">{{ courseAmount.count }}节</span><br>
+            <span style="font-size: 18px">上课数</span><br /><br /><br />
+            <span style="font-size: 22px">{{ courseAmount.count }}节</span
+            ><br />
           </div>
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">有效会员卡</span><br><br><br>
-            <span style="font-size: 22px">{{ cardamount.count }}张</span><br>
+            <span style="font-size: 18px">有效会员卡</span><br /><br /><br />
+            <span style="font-size: 22px">{{ cardamount.count }}张</span><br />
           </div>
         </div>
       </el-tab-pane>
 
       <el-tab-pane label="会员卡信息">
-        <el-button type="primary" size="mini" style="float:right" @click="sxhyk">失效会员卡</el-button>
-        <el-button type="primary" size="mini" style="float:right;margin-right:25px" @click="yxhyk">有效会员卡</el-button>
-        <br>
+        <el-button type="primary" size="mini" @click="sxhyk" style="float:right">失效会员卡</el-button>
+        <el-button type="primary" size="mini" @click="yxhyk" style="float:right;margin-right:25px">有效会员卡</el-button>
+        <br/>
         <el-table
           v-loading="listLoading" 
           :data="bindCardList"
@@ -297,7 +293,7 @@
           </el-table-column>
           <el-table-column align="center" label="购卡金额" width="80">
             <template slot-scope="scope">
-              <span>{{ scope.row.sellingfee }}</span>
+               <span>{{scope.row.sellingfee}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="余额" width="150">
@@ -308,7 +304,8 @@
 
           <el-table-column align="center" label="期限" width="250">
             <template slot-scope="scope">
-              <span>{{ scope.row.cardbegin }}</span>~
+              <span>{{ scope.row.cardbegin }}</span
+              >~
               <span>{{ scope.row.cardend }}</span>
             </template>
           </el-table-column>
@@ -326,45 +323,44 @@
                   v-if="scope.row.state == 1"
                   type="text"
                   @click="opencard(scope.row)"
-                >停卡</el-button>
+                  >停卡</el-button
+                >
                 <el-button
                   v-if="scope.row.state == 0"
                   type="text"
                   @click="changestate(scope.row.cardno)"
-                >恢复</el-button>
+                  >恢复</el-button
+                >
                 <el-button type="text" @click="openqixian(scope.row)">期限变更</el-button>
-                <el-button
-                  type="text"
-                  @click="tpingzhang(scope.row)"
-                >平账</el-button>
+                <el-button type="text" @click="tpingzhang(scope.row)"
+                  >平账</el-button
+                >
               </div>
               <div v-if="scope.row.cardtype == 'S'">
-                <el-button
-                  type="text"
-                  @click="openxuka(scope.row)"
-                >续卡</el-button>
-                <el-button
-                  type="text"
-                  @click="openrecard(scope.row)"
-                >扣卡</el-button>
+                <el-button type="text" @click="openxuka(scope.row)"
+                  >续卡</el-button
+                >
+                <el-button type="text" @click="openrecard(scope.row)"
+                  >扣卡</el-button
+                >
                 <el-button
                   v-if="scope.row.state == 1"
                   type="text"
                   @click="opencard(scope.row)"
-                >停卡</el-button>
+                  >停卡</el-button
+                >
                 <el-button
                   v-if="scope.row.state == 0"
                   type="text"
                   @click="changestate(scope.row.cardno)"
-                >恢复</el-button>
-                <el-button
-                  type="text"
-                  @click="openqixian(scope.row)"
-                >期限变更</el-button>
-                <el-button
-                  type="text"
-                  @click="tpingzhang(scope.row)"
-                >平账</el-button>
+                  >恢复</el-button
+                >
+                <el-button type="text" @click="openqixian(scope.row)"
+                  >期限变更</el-button
+                >
+                <el-button type="text" @click="tpingzhang(scope.row)"
+                  >平账</el-button
+                >
               </div>
             </template>
           </el-table-column>
@@ -375,164 +371,158 @@
         <!-- 预约记录 -->
         <div style="width:100%;height:270px;">
           <div style="width:100%;height:30px;">
-            <span style="font-size:18px;line-height:30px">预约记录</span>
-            <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_2')">更多</el-button>
+              <span style="font-size:18px;line-height:30px">预约记录</span>
+              <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_2')">更多</el-button>
           </div>
-          <hr>
-          <el-table
-            :data="yuyuejilu4"
-            style="width: 100%;font-size:13px;"
-          >
-            <el-table-column
-              prop="date"
-              label="上课时间"
-              width="200"
-            >
-              <template slot-scope="scope">
-                {{ scope.row.coursedate+' '+scope.row.coursetime }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="coursename"
-              label="课程名称"
-              width="200"
-            />
-            <el-table-column
-              prop="name"
-              label="类型"
-              width="120"
-            >
-              <template slot-scope="scope">
-                {{ scope.row.cardtype=='T'?'团课':'私教' }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="coachname"
-              label="教练"
-              width="120"
-            />
-            <el-table-column
-              prop="courseprice"
-              label="课程价格"
-              width="150"
-            />
-            <el-table-column
-              prop="remarks"
-              label="备注"
-            />
-            <el-table-column
-              prop="name"
-              label="预约状态"
-              width="150"
-            >
-              <template slot-scope="scope">
-                <span v-if="scope.row.ordstate==1" style="color:green">
-                  已预约
-                </span>
-                <span v-if="scope.row.ordstate==2" style="color:red">
-                  已取消
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="name"
-              label="签到状态"
-              width="150"
-            >
-              <template slot-scope="scope">
-                <span v-if="scope.row.signstate==1" style="color:green">
-                  已签到
-                </span>
-                <span v-if="scope.row.signstate==0" style="color:red">
-                  未签到
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="createdon"
-              label="预约时间"
-              width="200"
-            />
-          </el-table>   
-        </div>
-        <br><br>
-        <!-- 操作记录 -->
-        <div style="width:100%;height:270px;">
-          <div style="width:100%;height:30px;">
-            <span style="font-size:18px;line-height:30px">操作记录</span>
-            <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_3')">更多</el-button>
-          </div>
-          <hr>
-          <el-table
-            :data="caozuojilu4"
-            style="width: 100%;font-size:13px;"
-          >
-            <el-table-column
-              prop="operatingtime"
-              label="时间"
-              width="200"
-            />
-            <el-table-column
-              prop="vipcard"
-              label="会员卡"
-              width="300"
-            />
-            <el-table-column
-              prop="operatingtype"
-              label="操作项"
-              width="120"
-            />
-            <el-table-column
-              prop="operatingchange"
-              label="变更"
-              width="120"
-            >
-              <template slot-scope="scope">
-                <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
-                  +{{ scope.row.operatingchange }}
-                </span>
-                <span v-else style="color:red">
-                  {{ scope.row.operatingchange }}
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="operatingfee"
-              label="金额"
-              width="150"
-            >
-              <template slot-scope="scope">
-                <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
-                  +{{ scope.row.operatingfee }}
-                </span>
-                <span v-else style="color:red">
-                  {{ scope.row.operatingfee }}
-                </span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="operatingtheterm"
-              label="期限"
-              width="300"
-            />
-            <el-table-column
-              prop="operatingpeople"
-              label="操作人"
-              width="150"
-            />
-            <el-table-column
-              prop="operatingremarks"
-              label="备注"
-            />
-          </el-table>   
-        </div>
-      </el-tab-pane>
+          <hr/>
+      <el-table
+      :data="yuyuejilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="date"
+        label="上课时间"
+        width="200">
+        <template slot-scope="scope">
+        {{ scope.row.coursedate+' '+scope.row.coursetime }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coursename"
+        label="课程名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="类型"
+        width="120">
+        <template slot-scope="scope">
+        {{ scope.row.cardtype=='T'?'团课':'私教'}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coachname"
+        label="教练"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="courseprice"
+        label="课程价格"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="remarks"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="预约状态"
+        width="150">
+        <template slot-scope="scope">
+        <span v-if="scope.row.ordstate==1" style="color:green">
+            已预约
+          </span>
+          <span v-if="scope.row.ordstate==2" style="color:red">
+            已取消
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="签到状态"
+        width="150">
+        <template slot-scope="scope">
+        <span v-if="scope.row.signstate==1" style="color:green">
+            已签到
+          </span>
+          <span v-if="scope.row.signstate==0" style="color:red">
+            未签到
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createdon"
+        label="预约时间"
+        width="200">
+      </el-table-column>
+    </el-table>   
+    </div>
+    <br/><br/>
+    <!-- 操作记录 -->
+    <div style="width:100%;height:270px;">
+      <div style="width:100%;height:30px;">
+        <span style="font-size:18px;line-height:30px">操作记录</span>
+        <el-button type="text" style="float:right;line-height:10px;font-size:16px" @click="gengduo('#hyxq_3')">更多</el-button>
+      </div>
+    <hr/>
+      <el-table
+      :data="caozuojilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="operatingtime"
+        label="时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="vipcard"
+        label="会员卡"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingtype"
+        label="操作项"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="operatingchange"
+        label="变更"
+        width="120">
+         <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
+            +{{scope.row.operatingchange}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingchange}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingfee"
+        label="金额"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
+            +{{scope.row.operatingfee}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingfee}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingtheterm"
+        label="期限"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingpeople"
+        label="操作人"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="operatingremarks"
+        label="备注">
+      </el-table-column>
+    </el-table>   
+    </div>
+    </el-tab-pane>
 
       <el-tab-pane label="跟进记录">
         <el-table :data="genjinall" style="width: 100%">
-          <el-table-column prop="remarks" label="跟进内容" />
-          <el-table-column prop="createdname" label="跟进人" width="380" />
-          <el-table-column prop="createdon" label="跟进时间" width="380" />
+          <el-table-column prop="remarks" label="跟进内容"> </el-table-column>
+          <el-table-column prop="createdname" label="跟进人" width="380">
+          </el-table-column>
+          <el-table-column prop="createdon" label="跟进时间" width="380">
+          </el-table-column>
         </el-table>
       </el-tab-pane>
 
@@ -555,7 +545,7 @@
                 text-align: center;
                 line-height: 255px;
               "
-            />
+            ></div>
           </el-tab-pane>
           <el-tab-pane label="基础代谢">
             <span
@@ -630,191 +620,192 @@
             />
           </el-tab-pane>
         </el-tabs>
-        <br>
+        <br />
         <el-button
           style="float: right"
           size="mini"
           type="primary"
           @click="tianjiatice()"
-        >添加体测</el-button>
-        <br>
+          >添加体测</el-button
+        >
+        <br />
         <el-table :data="ticeliebiao" style="width: 100%">
-          <el-table-column prop="时间" label="体测时间" width="200" />
-          <el-table-column prop="身高" label="身高(cm)" width="150" />
-          <el-table-column prop="体重" label="体重(kg)" width="150" />
-          <el-table-column prop="基础代谢" label="基础代谢(cal)" width="180" />
-          <el-table-column prop="体脂率" label="体脂率(%)" width="150" />
-          <el-table-column prop="脂肪含量" label="脂肪含量(kg)" width="180" />
-          <el-table-column prop="骨骼肌含量" label="骨骼肌含量(kg)" width="180" />
-          <el-table-column prop="胸围" label="胸围(cm)" width="150" />
-          <el-table-column prop="腰围" label="腰围(cm)" width="150" />
+          <el-table-column prop="时间" label="体测时间" width="200">
+          </el-table-column>
+          <el-table-column prop="身高" label="身高(cm)" width="150">
+          </el-table-column>
+          <el-table-column prop="体重" label="体重(kg)" width="150">
+          </el-table-column>
+          <el-table-column prop="基础代谢" label="基础代谢(cal)" width="180">
+          </el-table-column>
+          <el-table-column prop="体脂率" label="体脂率(%)" width="150">
+          </el-table-column>
+          <el-table-column prop="脂肪含量" label="脂肪含量(kg)" width="180">
+          </el-table-column>
+          <el-table-column prop="骨骼肌含量" label="骨骼肌含量(kg)" width="180">
+          </el-table-column>
+          <el-table-column prop="胸围" label="胸围(cm)" width="150">
+          </el-table-column>
+          <el-table-column prop="腰围" label="腰围(cm)" width="150">
+          </el-table-column>
           <el-table-column prop="name" label="操作">
             <template slot-scope="scope">
               <el-button type="text" @click="bianjitice(scope.row)">编辑</el-button>
-              <el-button
-                type="text"
-                @click="shanchutice(scope.row)"
-              >删除</el-button>
+              <el-button type="text" @click="shanchutice(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
-        <br>
+        <br />
       </el-tab-pane>
     </el-tabs>
 
     <div id="hyxq_2" style="display:none">
-      <div style="width:100%;height:50px;">
-        <span style="font-size:18px;line-height:60px">预约记录</span>
-        <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_2')">返回</el-button>
-      </div>
-      <hr>
+          <div style="width:100%;height:50px;">
+              <span style="font-size:18px;line-height:60px">预约记录</span>
+              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_2')">返回</el-button>
+          </div>
+          <hr/>
       <el-table
-        :data="yuyuejilu4"
-        style="width: 100%;font-size:13px;"
-      >
-        <el-table-column
-          prop="date"
-          label="上课时间"
-          width="200"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.coursedate+' '+scope.row.coursetime }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="coursename"
-          label="课程名称"
-          width="200"
-        />
-        <el-table-column
-          prop="name"
-          label="类型"
-          width="120"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.cardtype=='T'?'团课':'私教' }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="coachname"
-          label="教练"
-          width="120"
-        />
-        <el-table-column
-          prop="courseprice"
-          label="课程价格"
-          width="150"
-        />
-        <el-table-column
-          prop="remarks"
-          label="备注"
-        />
-        <el-table-column
-          prop="name"
-          label="预约状态"
-          width="150"
-        >
-          <template slot-scope="scope">
-            <span v-if="scope.row.ordstate==1" style="color:green">
-              已预约
-            </span>
-            <span v-if="scope.row.ordstate==2" style="color:red">
-              已取消
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="签到状态"
-          width="150"
-        >
-          <template slot-scope="scope">
-            <span v-if="scope.row.signstate==1" style="color:green">
-              已签到
-            </span>
-            <span v-if="scope.row.signstate==0" style="color:red">
-              未签到
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="createdon"
-          label="预约时间"
-          width="200"
-        />
-      </el-table> 
-      <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getyuyuejilu()" /> 
+      :data="yuyuejilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="date"
+        label="上课时间"
+        width="200">
+        <template slot-scope="scope">
+        {{ scope.row.coursedate+' '+scope.row.coursetime }}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coursename"
+        label="课程名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="类型"
+        width="120">
+        <template slot-scope="scope">
+        {{ scope.row.cardtype=='T'?'团课':'私教'}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="coachname"
+        label="教练"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="courseprice"
+        label="课程价格"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="remarks"
+        label="备注">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="预约状态"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="scope.row.ordstate==1" style="color:green">
+            已预约
+          </span>
+          <span v-if="scope.row.ordstate==2" style="color:red">
+            已取消
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="签到状态"
+        width="150">
+        <template slot-scope="scope">
+         <span v-if="scope.row.signstate==1" style="color:green">
+            已签到
+          </span>
+          <span v-if="scope.row.signstate==0" style="color:red">
+            未签到
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createdon"
+        label="预约时间"
+        width="200">
+      </el-table-column>
+    </el-table> 
+    <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getyuyuejilu()"/> 
     </div>
 
     <div id="hyxq_3" style="display:none">
-      <div style="width:100%;height:50px;">
-        <span style="font-size:18px;line-height:60px">操作记录</span>
-        <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_3')">返回</el-button>
-      </div>
-      <hr>
+          <div style="width:100%;height:50px;">
+              <span style="font-size:18px;line-height:60px">操作记录</span>
+              <el-button type="primary" style="float:right;margin-top:15px" size="mini" @click="fanhui('#hyxq_3')">返回</el-button>
+          </div>
+          <hr/>
       <el-table
-        :data="caozuojilu4"
-        style="width: 100%;font-size:13px;"
-      >
-        <el-table-column
-          prop="operatingtime"
-          label="时间"
-          width="200"
-        />
-        <el-table-column
-          prop="vipcard"
-          label="会员卡"
-          width="300"
-        />
-        <el-table-column
-          prop="operatingtype"
-          label="操作项"
-          width="120"
-        />
-        <el-table-column
-          prop="operatingchange"
-          label="变更"
-          width="120"
-        >
-          <template slot-scope="scope">
-            <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
-              +{{ scope.row.operatingchange }}
-            </span>
-            <span v-else style="color:red">
-              {{ scope.row.operatingchange }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="operatingfee"
-          label="金额"
-          width="150"
-        >
-          <template slot-scope="scope">
-            <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
-              +{{ scope.row.operatingfee }}
-            </span>
-            <span v-else style="color:red">
-              {{ scope.row.operatingfee }}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="operatingtheterm"
-          label="期限"
-          width="300"
-        />
-        <el-table-column
-          prop="operatingpeople"
-          label="操作人"
-          width="150"
-        />
-        <el-table-column
-          prop="operatingremarks"
-          label="备注"
-        />
-      </el-table>   
-      <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getcaozuojilu()" /> 
+      :data="caozuojilu4"
+      style="width: 100%;font-size:13px;">
+      <el-table-column
+        prop="operatingtime"
+        label="时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="vipcard"
+        label="会员卡"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingtype"
+        label="操作项"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="operatingchange"
+        label="变更"
+        width="120">
+         <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingchange)" style="color:green">
+            +{{scope.row.operatingchange}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingchange}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingfee"
+        label="金额"
+        width="150">
+        <template slot-scope="scope">
+          <span v-if="getFirstcharacter(scope.row.operatingfee)" style="color:green">
+            +{{scope.row.operatingfee}}
+          </span>
+          <span v-else style="color:red">
+             {{scope.row.operatingfee}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="operatingtheterm"
+        label="期限"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="operatingpeople"
+        label="操作人"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="operatingremarks"
+        label="备注">
+      </el-table-column>
+    </el-table>   
+    <pagination :total="total" :page.sync="fenye.page" :limit.sync="fenye.limit" style="float:right;" @pagination="getcaozuojilu()"/> 
     </div>
 
     <el-dialog
@@ -823,7 +814,7 @@
       width="30%"
       :before-close="quxiao"
     >
-      <el-input v-model="gjjltext" placeholder="跟进记录" />
+      <el-input v-model="gjjltext" placeholder="跟进记录"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="quxiao">取 消</el-button>
         <el-button type="primary" @click="addgjjl">确 定</el-button>
@@ -845,170 +836,155 @@
           v-model="tice.tizhi"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         身高：<el-input
           v-model="tice.shengao"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         体重：<el-input
           v-model="tice.tizhong"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         基础代谢：<el-input
           v-model="tice.jichudaixie"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         大腿围L：<el-input
           v-model="tice.datuiweil"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         大腿围R：<el-input
           v-model="tice.datuiweir"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         小腿L：<el-input
           v-model="tice.xiaotuil"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         小腿R：<el-input
           v-model="tice.xiaotuir"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         手臂L：<el-input
           v-model="tice.shoubil"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         手臂R：<el-input
           v-model="tice.shoubir"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         胸围：<el-input
           v-model="tice.xiongwei"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         脂肪含量：<el-input
           v-model="tice.zhifang"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         骨骼肌含量：<el-input
           v-model="tice.gugeji"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         腰围：<el-input
           v-model="tice.yaowei"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br />
         臀围：<el-input
           v-model="tice.tunwei"
           placeholder="请输入数字"
           style="width: 300px; margin-top: 5px"
-          onkeyup="if(isNaN(value))execCommand('undo')"
-          onafterpaste="if(isNaN(value))execCommand('undo')"
-        />
-        <br><br>
+          onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"
+        ></el-input>
+        <br /><br />
         <el-button @click="quxiaoaddtice">取 消</el-button>
         <el-button type="primary" @click="addtice">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="会员编辑" :visible.sync="dialogFormVisible6" style="width:1200px;margin:0 auto">
-      <el-form :model="form">
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" style="width:270px;float:left" />
-        </el-form-item>
-        <el-form-item label="性别" :label-width="formLabelWidth">
-          <el-radio v-model="form.sex" label="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
-          <el-radio v-model="form.sex" label="1" style="float:left;margin-top:10px;">女</el-radio>
-        </el-form-item>
-        <el-form-item label="电话" :label-width="formLabelWidth">
-          <el-input v-model="form.tel" style="width:270px;float:left" />
-        </el-form-item>
-        <el-form-item label="场馆" :label-width="formLabelWidth">
-          <el-select v-model="form.storeId" style="width:270px;float:left">
-            <el-option v-for="item in theAllStores" :key="item.id" :label="item.name" :value="item.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="来源" :label-width="formLabelWidth">
-          <el-select v-model="form.sourcetype" style="width:270px;float:left">
-            <el-option v-for="item in sources" :key="item.id" :label="item.name" :value="item.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="销售" :label-width="formLabelWidth">
-          <el-select v-model="form.xsid" style="width:270px;float:left">
-            <el-option v-for="item in bjxs" :key="item.userid" :label="item.name" :value="item.userid" />
-          </el-select>
-        </el-form-item>
+ <el-dialog title="会员编辑" :visible.sync="dialogFormVisible6" style="width:1200px;margin:0 auto">
+          <el-form :model="form">
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.name" style="width:270px;float:left" />
+            </el-form-item>
+            <el-form-item label="性别" :label-width="formLabelWidth">
+              <el-radio v-model="form.sex" label="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
+              <el-radio v-model="form.sex" label="1" style="float:left;margin-top:10px;">女</el-radio>
+            </el-form-item>
+            <el-form-item label="电话" :label-width="formLabelWidth">
+              <el-input v-model="form.tel" style="width:270px;float:left" />
+            </el-form-item>
+            <el-form-item label="场馆" :label-width="formLabelWidth">
+              <el-select v-model="form.storeId" style="width:270px;float:left">
+                <el-option v-for="item in theAllStores" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="来源" :label-width="formLabelWidth">
+              <el-select v-model="form.sourcetype" style="width:270px;float:left">
+                <el-option v-for="item in sources" :key="item.id" :label="item.name" :value="item.id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="销售" :label-width="formLabelWidth">
+              <el-select v-model="form.xsid" style="width:270px;float:left">
+                <el-option v-for="item in bjxs" :key="item.userid" :label="item.name" :value="item.userid" />
+              </el-select>
+            </el-form-item>
                   
-        <el-form-item label="备注" :label-width="formLabelWidth">
-          <el-input
-            v-model="form.remarks"
-            style="width:270px;float:left;height:100px"
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            :placeholder="form.remarks"
-          />
-        </el-form-item>
+            <el-form-item label="备注" :label-width="formLabelWidth">
+              <el-input
+                v-model="form.remarks"
+                style="width:270px;float:left;height:100px"
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :placeholder="form.remarks"
+              />
+            </el-form-item>
                   
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible6 = false">取 消</el-button>
-        <el-button type="primary" @click="toTrueClose()">确 定</el-button>
-      </div>
-    </el-dialog>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible6 = false">取 消</el-button>
+            <el-button type="primary" @click="toTrueClose()">确 定</el-button>
+          </div>
+        </el-dialog>
   </div>
 </template>
 
@@ -1071,13 +1047,13 @@ export default {
         { label: "刷卡", value: "3" },
         { label: "扫码支付", value: "1" },
         { label: "转账", value: "2" },
-        { label: "其他", value: "4" }
+        { label: "其他", value: "4" },
       ],
       dialogFormVisible4: false,
       recard: {},
       xuka: {
         sz: false,
-        mydate: []
+        mydate: [],
       },
       dialogFormVisible5: false,
       theAllStores: [],
@@ -1129,7 +1105,7 @@ export default {
   },
   methods: {
     getFirstcharacter(e){
-      if(String(e).substr(0, 1)!='-'){
+      if(String(e).substr(0,1)!='-'){
         return true
       }
       return false
@@ -1150,7 +1126,7 @@ export default {
     getAllStore2() {
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
           this.theAllStores = res.data.rows;
@@ -1294,7 +1270,7 @@ export default {
           this.pingzhangobj = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1350,7 +1326,7 @@ export default {
           this.qixianobj = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1368,6 +1344,8 @@ export default {
       if(this.stopcard.stoptype=='T'){
         this.stopcard.disablebegin=this.stoptime[0]
         this.stopcard.disableend=this.stoptime[1]
+      }else{
+        this.stopcard.fee=this.stopcard.fee-(this.stopcard.fee*2)
       }
       this.$axios
         .post(
@@ -1381,7 +1359,7 @@ export default {
           this.stopcard = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1409,7 +1387,7 @@ export default {
           this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1446,7 +1424,7 @@ export default {
           this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1503,7 +1481,7 @@ export default {
           this.dialogFormVisible5 = false;
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1524,7 +1502,7 @@ export default {
           this.dialogFormVisible5 = false;
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1567,7 +1545,7 @@ export default {
         .then((res) => {
           this.$message({
             message: "操作成功",
-            type: "success"
+            type: "success",
           });
           this.genjinjilu();
         });
@@ -1620,135 +1598,135 @@ export default {
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: tizhong,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb2 = this.$echarts.init(document.getElementById("tb2"));
         tb2.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: jichudaixie,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb3 = this.$echarts.init(document.getElementById("tb3"));
         tb3.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: tizhilv,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb4 = this.$echarts.init(document.getElementById("tb4"));
         tb4.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: zhifang,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb5 = this.$echarts.init(document.getElementById("tb5"));
         tb5.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: gugeji,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
       }
     },
@@ -1773,14 +1751,14 @@ export default {
       if(this.ticetype=='insert'){
         this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/inserttice",
+          "https://www.facebodyfitness.com/web/CCourse/inserttice",
           this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
           this.$message({
             message: "添加成功",
-            type: "success"
+            type: "success",
           });
           this.getticeliebiao();
           this.quxiaoaddtice();
@@ -1788,19 +1766,23 @@ export default {
       }else if(this.ticetype=='update'){
         this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/updatetice",
+          "https://www.facebodyfitness.com/web/CCourse/updatetice",
           this.$qs.stringify(this.tice),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
           this.$message({
             message: "修改成功",
-            type: "success"
+            type: "success",
           });
           this.getticeliebiao();
           this.quxiaoaddtice();
+          
         });
       }
+
+
+      
     },
     quxiaoaddtice() {
       this.dialogVisible2 = false;
@@ -1826,7 +1808,7 @@ export default {
       data.userid = this.query.userid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/deletetice",
+          "https://www.facebodyfitness.com/web/CCourse/deletetice",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1834,7 +1816,7 @@ export default {
           this.getticeliebiao();
           this.$message({
             message: "已删除",
-            type: "success"
+            type: "success",
           });
         });
     },
@@ -1842,7 +1824,7 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           this.deletetice(e);
@@ -1874,13 +1856,14 @@ export default {
       this.dialogVisible2 = true;
     },
     gengduo(e){
+      
       if(e=='#hyxq_2'){
         this.getyuyuejilu()
       }else if(e=='#hyxq_3'){
         this.getcaozuojilu()
       }
-        $("#hyxq_1").css("display", "none")
-        $(e).css("display", "block")
+        $("#hyxq_1").css("display","none")
+        $(e).css("display","block")
     },
     fanhui(e){
       if(e=='#hyxq_2'){
@@ -1888,8 +1871,8 @@ export default {
       }else if(e=='#hyxq_3'){
         this.getcaozuojilu4()
       }
-        $("#hyxq_1").css("display", "block")
-        $(e).css("display", "none")
+        $("#hyxq_1").css("display","block")
+        $(e).css("display","none")
     },
     getyuyuejilu4(){
       var data={}
@@ -1966,11 +1949,12 @@ export default {
         .then((res) => {
           this.total=res.data.rows.length
         });
+            
         }
         });
     }
 
-  }
+  },
 };
 </script>
 
