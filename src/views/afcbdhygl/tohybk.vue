@@ -76,11 +76,11 @@
         <el-form-item label="是否开卡">
           <template>
             <div>
-              <el-radio v-model="xuka.isopen" style="display:block;margin-top:10px" label="0">
+              <el-radio v-model="xuka.isopen" value="0" style="display:block;margin-top:10px" label="0">
                 <span>暂不开卡</span>&nbsp;&nbsp;&nbsp;
               </el-radio>
-
-              <el-radio v-model="xuka.isopen" label="1" style="display:block;margin-top:10px">
+ 
+              <el-radio v-model="xuka.isopen" value="1"  label="1" style="display:block;margin-top:10px">
                 <span>开卡日期</span>&nbsp;&nbsp;&nbsp;<br>
                 <el-date-picker
                   v-model="xuka.mydate"
@@ -146,7 +146,9 @@ export default {
         ],
         theAllStores:[],
         bjxs:[],
-        xuka:{},
+        xuka:{
+          isopen:'0',
+        },
         tidu:[]
       }
     },
