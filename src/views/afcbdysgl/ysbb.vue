@@ -29,7 +29,6 @@
 
         <el-button type="success" style="margin-top:5px" @click="getFxlist">查询</el-button>
         <el-button type="success" style="margin-top:5px" @click="daochu">导出Excel</el-button>
-
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px" id="out-table">
           <el-table-column align="center" label="时间" width="150">
             <template slot-scope="scope">
