@@ -1368,8 +1368,6 @@ export default {
       if(this.stopcard.stoptype=='T'){
         this.stopcard.disablebegin=this.stoptime[0]
         this.stopcard.disableend=this.stoptime[1]
-      }else{
-        this.stopcard.fee=this.stopcard.fee-(this.stopcard.fee*2)
       }
       this.$axios
         .post(

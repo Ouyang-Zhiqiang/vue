@@ -294,7 +294,6 @@ export default {
         this.dayRange.unshift(year + "-" + month + "-" + day);
         startTime.setDate(startTime.getDate() + 1);
       }
-      console.log(this.dayRange);
     },
     getDate(datestr) {
       var temp = datestr.split("-");
@@ -326,7 +325,6 @@ export default {
           this.list.forEach((item) => {
             item.users = JSON.parse(item.users);
           });
-          console.log(this.list.users)
           this.listLoading = false;
         });
         }else{
@@ -337,7 +335,6 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          console.log(res.data)
           this.list = res.data.rows;
           this.total = res.data.rows[0].counts;
           this.list.forEach((item) => {
@@ -370,8 +367,6 @@ export default {
         });
     },
     clickSearch() {
-      // console.log(this.value6[0].toLocaleDateString().replace(/\//g, '-'))
-      // console.log(this.value6[1].toLocaleDateString().replace(/\//g, '-'))
       this.listLoading = true;
       this.getAllTeam();
     },
@@ -460,7 +455,6 @@ export default {
             })
     },
     toUrl(e, type) {
-      // console.log(e)
       this.$router.push({
         path: "/afcbdyyqd/yy",
         query: {
@@ -470,7 +464,6 @@ export default {
       });
     },
     getyysl(e) {
-      console.log(e)
       var i = 0;
       if (e != null) {
         for (var j = 0; j < e.length; j++) {
