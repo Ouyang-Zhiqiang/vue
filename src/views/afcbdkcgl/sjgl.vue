@@ -91,7 +91,7 @@
             {{ data.day }}
           </p>
           <div v-for="(item,index) in list" :key="index" style="width:98%;margin:0 auto;text-align:left">
-            <div v-if="data.day==item.scheduledate" @click="sjUrl(item)"  style="height:95px;background:#16a951;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
+            <div v-if="data.day==item.scheduledate" style="height:95px;background:#16a951;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px" @click="sjUrl(item)">
               <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
               <span style="padding-bottom:5px">{{ item.coursename }}</span><br><br>
               <span style="padding-bottom:5px">{{ item.reservednumber }}/{{ item.reservednumber }}</span><br>
@@ -124,7 +124,7 @@ export default {
             },
             allCourse:[],
             startHourse:['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-            startMinute:['00','05', '15', '30', '45'],
+            startMinute:['00', '05', '15', '30', '45'],
             formLabelWidth:'150px',
             dialogFormVisible:false,
             allDate:[]
@@ -291,8 +291,7 @@ export default {
                      console.log("data------"+ localStorage.getItem('resurl'))
                     this.insertPreCourse(obj)
                 })
-            }  
-           
+            }
         },
         insertPreCourse(data){
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG2B8E', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{

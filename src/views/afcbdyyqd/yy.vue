@@ -84,7 +84,6 @@ export default {
     created(){
         this.query=this.$route.query.item
         this.type=this.$route.query.type
-
     },
     mounted() {
       this.restaurants = this.loadAll();
@@ -145,8 +144,6 @@ export default {
           }else{
             this.yycourse(this.form)
           }
-
-          
       },
       querySearchAsync(queryString, cb) {
         // var restaurants = this.restaurants;

@@ -1,7 +1,7 @@
 <template>
   <div id="container" style="padding:15px">
     <el-button v-for="(item,index) in stores" :key="index" @click="toGetAllByStore(item.id)">{{ item.name }}</el-button>
-    <el-button v-show="isShow"  id="storeshow"   @click="toGetAllByStore(1)">未设置场馆</el-button>
+    <el-button v-show="isShow" id="storeshow" @click="toGetAllByStore(1)">未设置场馆</el-button>
     
 
     <el-row :gutter="10" style="margin-top:20px">
@@ -87,7 +87,7 @@
             </el-form-item>
             <el-form-item label="性别" :label-width="formLabelWidth" required>
               <el-radio v-model="form4.sex" label="0" value="0" style="float:left;margin-top:10px;margin-left:5px">男</el-radio>
-              <el-radio v-model="form4.sex" label="1"  value="1"  style="float:left;margin-top:10px;">女</el-radio>
+              <el-radio v-model="form4.sex" label="1" value="1" style="float:left;margin-top:10px;">女</el-radio>
             </el-form-item>
             <el-form-item label="电话" :label-width="formLabelWidth" required>
               <el-input v-model="form4.tel" style="width:270px;float:left" />
@@ -170,7 +170,7 @@
         </el-dialog>
 
 
-        <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px" id="out-table">
+        <el-table id="out-table" v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
           <el-table-column align="center" label="姓名" width="150">
             <template slot-scope="scope">
 
@@ -419,7 +419,6 @@ export default {
       this.getAllxs5()
       this.getAllStore3()
       this.storeBlock()
-
     },
     methods:{
         storeBlock(){
@@ -840,8 +839,6 @@ export default {
             }).catch(error=>{
               this.$message.error('错了哦，这是一条错误消息');
             });
-            
-
           }
         },
         createUser(){
@@ -856,7 +853,7 @@ export default {
       setTimeout(this.daochuexcel, 5000);
       this.listQuery.limit = 20;
       this.listQuery.page = 0;
-      setTimeout(this.toGetAll(this.listQuery),5500);
+      setTimeout(this.toGetAll(this.listQuery), 5500);
     },
     daochuexcel() {
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));

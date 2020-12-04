@@ -169,20 +169,20 @@
             {{ data.day }}
           </p>
           <div v-for="(item,index) in list" :key="index" style="width:98%;margin:0 auto;text-align:left">
-            <div v-if="data.day==item.scheduledate"  @click="tkUrl(item)">
-               <div v-if="item.coursename.substring(0, item.coursename.indexOf('_'))=='Game Day'"  style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px" class="GameDay" >
-              <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
-              <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
-              <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
-              <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
-              <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
+            <div v-if="data.day==item.scheduledate" @click="tkUrl(item)">
+              <div v-if="item.coursename.substring(0, item.coursename.indexOf('_'))=='Game Day'" style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px" class="GameDay">
+                <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
+                <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
+                <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
+                <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
+                <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
               </div>
-              <div v-else :class="item.coursename.substring(0, item.coursename.indexOf('_'))"  style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
-              <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
-              <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
-              <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
-              <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
-              <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
+              <div v-else :class="item.coursename.substring(0, item.coursename.indexOf('_'))" style="height:120px;font-size:13px;color:white;padding:12px;border-radius:5px;margin-bottom:5px">
+                <span style="display:block">{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
+                <span style="padding-bottom:5px">{{ item.coursename }}</span><br>
+                <span style="padding-bottom:5px">{{ item.coachname }}</span><br>
+                <span style="padding-bottom:5px">约{{ item.yyrs }}/{{ item.reservablenumber }}</span><br>
+                <span style="padding-bottom:5px">到{{ item.signednumber }}</span>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ export default {
             dialogFormVisible:false,
             formLabelWidth:'120px',
             startHourse:['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
-            startMinute:['00','05', '15', '30', '45'],
+            startMinute:['00', '05', '15', '30', '45'],
             stores:[],
             coachs:[],
             courseType:[],
