@@ -175,6 +175,8 @@ export default {
           this.user=res.data.rows[0]
           if(res.data.rows.length){
             this.showNow=true
+            this.user.CourseType=this.type=='团课'?'T':'P'
+            console.log(this.user.CourseType);
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNCEA0', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.cardlist=res.data.rows
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNDCNH', this.$qs.stringify(this.user), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{

@@ -78,7 +78,7 @@
         <el-input v-model="xm" placeholder="姓名" style="width:180px;margin-top:5px" />
 
         <el-button type="success" style="margin-top:5px;margin-left:30px" @click="toClickSearch">查询</el-button>
-        <el-button type="success" style="margin-top:5px">导出Excel</el-button>
+        <el-button type="success" style="margin-top:5px" @click="daochu">导出Excel</el-button>
         <el-button type="success" style="margin-top:5px" @click="toOpen4">新增会员</el-button>
         <el-dialog title="新增会员" :visible.sync="dialogFormVisible4" style="width:1200px;margin:0 auto">
           <el-form :model="form4">
@@ -170,7 +170,7 @@
         </el-dialog>
 
 
-        <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
+        <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px" id="out-table">
           <el-table-column align="center" label="姓名" width="150">
             <template slot-scope="scope">
 
@@ -299,7 +299,9 @@
 import data from '../pdf/content';
 import { fetchList } from '@/api/hy';
 import Pagination from '@/components/Pagination';
-import $ from 'jquery';
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
+import $ from "jquery";
 
 export default {
     components: { Pagination },
@@ -398,7 +400,7 @@ export default {
             total: 0,
             listLoading: true,
             listQuery: {
-              page: 1,
+              page: 0,
               limit:20
             }
            
@@ -468,8 +470,10 @@ export default {
         toGetAll(data){
           if(this.clickSearch){
             data.storeid=this.startStoreId
+            console.log(1)
             if(this.hykvalue=='A'){
-              data.page=data.page-1
+              console.log('无卡条件')
+              
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
               if(this.sjh==''){
@@ -506,7 +510,8 @@ export default {
                 this.listLoading=false
               });
             }else{
-              data.page=data.page-1
+              console.log('有卡条件')
+              
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
               data.cardid=this.hykvalue
@@ -541,10 +546,12 @@ export default {
               });
             }
           }else if(this.clickStore){
-            data.page=data.page-1
+            console.log(3)
+            
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              console.log(res)
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
               this.list.forEach((item, index)=>{
@@ -562,7 +569,6 @@ export default {
               this.listLoading=false
             });
           }else if(this.clickSearch==false&&this.clickStore==false){
-            data.page=data.page-1
             if(this.startStoreId==''){
               data.storeid='F'
             }else{
@@ -592,13 +598,13 @@ export default {
           this.clickStore=true
           this.clickSearch=false
           this.startStoreId=e
-          this.listQuery.page=1
+          
           this.toGetAll(this.listQuery)
         },
         toGetAllStoreUser(){
           this.clickStore=false
           this.clickSearch=false
-          this.listQuery.page=1
+          
           this.toGetAll(this.listQuery)
         },
         //获取全部销售
@@ -841,6 +847,34 @@ export default {
         createUser(){
           
         },
+
+
+    daochu() {
+      this.listQuery.limit = 9999;
+      this.listQuery.page = 0;
+      this.toGetAll(this.listQuery);
+      setTimeout(this.daochuexcel, 5000);
+      this.listQuery.limit = 20;
+      this.listQuery.page = 0;
+      setTimeout(this.toGetAll(this.listQuery),5500);
+    },
+    daochuexcel() {
+      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
+      const wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          "会员列表.xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+    },
+
         toUpdateNow(index){
           this.list(index).name=this.form.name
           this.list(index).sex=this.form.sex
@@ -858,7 +892,7 @@ export default {
         //点击搜索
         toClickSearch(){
           this.clickSearch=true
-          this.listQuery.page=1
+          
           this.toGetAll(this.listQuery)
         },
         toUrl(e){
