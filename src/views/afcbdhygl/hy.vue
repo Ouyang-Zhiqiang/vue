@@ -469,7 +469,6 @@ export default {
         toGetAll(data){
           if(this.clickSearch){
             data.storeid=this.startStoreId
-            console.log(1)
             if(this.hykvalue=='A'){
               console.log('无卡条件')
               
@@ -545,12 +544,10 @@ export default {
               });
             }
           }else if(this.clickStore){
-            console.log(3)
             
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              console.log(res)
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
               this.list.forEach((item, index)=>{
@@ -805,7 +802,6 @@ export default {
             phone.tel=this.form4.tel
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOJG9Q', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               var row=res.data.rows
-               console.log("res----"+res.data.rows)
               if(row!=null&&row!=''&&row!=undefined){
                   this.$message.error("手机号已存在");
               }else{
