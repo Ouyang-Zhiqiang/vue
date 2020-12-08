@@ -287,7 +287,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" style="float:right;" @pagination="toGetAll" />
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" style="float:right;" @pagination="toGetAll(listQuery)" />
 
       </el-tab-pane>
     </el-tabs>
@@ -316,6 +316,7 @@ export default {
             dialogFormVisible3:false,
             dialogFormVisible4:false,
             stores:[],
+            loginname:'',
             sources:[
               {id:0, name:'自然到店'},
               {id:1, name:'老带新'},
@@ -400,7 +401,7 @@ export default {
             total: 0,
             listLoading: true,
             listQuery: {
-              page: 0,
+              page: 1,
               limit:20
             }
            
@@ -422,9 +423,9 @@ export default {
     },
     methods:{
         storeBlock(){
-          var name=localStorage.getItem('username')
+          var loginname=localStorage.getItem('username')
 
-          if(name=='系统管理员'||name.equal("系统管理员")||name.equal("梅霞")){
+          if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
             this.isShow=true
           }
         },
@@ -469,7 +470,7 @@ export default {
         toGetAll(data){
           if(this.clickSearch){
             data.storeid=this.startStoreId
-            console.log(1)
+            // data.page=data.page-1
             if(this.hykvalue=='A'){
               console.log('无卡条件')
               
@@ -509,7 +510,7 @@ export default {
                 this.listLoading=false
               });
             }else{
-              console.log('有卡条件')
+              console.log('有卡条件'+data.page)
               
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
@@ -545,12 +546,10 @@ export default {
               });
             }
           }else if(this.clickStore){
-            console.log(3)
-            
+            console.log("会员列表1:"+data.page)
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              console.log(res)
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
               this.list.forEach((item, index)=>{
@@ -568,7 +567,9 @@ export default {
               this.listLoading=false
             });
           }else if(this.clickSearch==false&&this.clickStore==false){
-            if(this.startStoreId==''){
+            console.log("会员列表2:"+data.page)
+
+            if(this.startStoreId==''&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
               data.storeid='F'
             }else{
               data.storeid=this.startStoreId
@@ -597,6 +598,7 @@ export default {
           this.clickStore=true
           this.clickSearch=false
           this.startStoreId=e
+          this.listQuery.page=1
           
           this.toGetAll(this.listQuery)
         },
@@ -805,7 +807,6 @@ export default {
             phone.tel=this.form4.tel
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOJG9Q', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               var row=res.data.rows
-               console.log("res----"+res.data.rows)
               if(row!=null&&row!=''&&row!=undefined){
                   this.$message.error("手机号已存在");
               }else{
@@ -848,12 +849,12 @@ export default {
 
     daochu() {
       this.listQuery.limit = 9999;
-      this.listQuery.page = 0;
+      this.listQuery.page = 1;
       this.toGetAll(this.listQuery);
-      setTimeout(this.daochuexcel, 5000);
+      setTimeout(this.daochuexcel, 9000);
       this.listQuery.limit = 20;
-      this.listQuery.page = 0;
-      setTimeout(this.toGetAll(this.listQuery), 5500);
+      this.listQuery.page = 1;
+      setTimeout(this.toGetAll(this.listQuery), 9500);
     },
     daochuexcel() {
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
@@ -889,7 +890,6 @@ export default {
         //点击搜索
         toClickSearch(){
           this.clickSearch=true
-          
           this.toGetAll(this.listQuery)
         },
         toUrl(e){
