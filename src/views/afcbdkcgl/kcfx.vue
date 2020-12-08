@@ -773,9 +773,9 @@ export default {
     daochu() {
       this.listQuery.limit = 99999;
       this.getKCFX();
-      setTimeout(this.daochuexcel, 4500);
+      setTimeout(this.daochuexcel, 9000);
       this.listQuery.limit = 20;
-      setTimeout(this.getKCFX, 5000);
+      setTimeout(this.getKCFX,9500);
     },
     daochuexcel() {
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));

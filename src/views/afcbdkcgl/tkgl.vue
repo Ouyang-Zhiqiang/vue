@@ -54,7 +54,7 @@
               <el-select v-model="form1.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem1(form1.cid,form1.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form1.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form1.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr1" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -68,7 +68,7 @@
               <el-select v-model="form2.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem2(form2.cid,form2.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form2.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form2.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr2" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -82,7 +82,7 @@
               <el-select v-model="form3.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem3(form3.cid,form3.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form3.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form3.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr3" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -96,7 +96,7 @@
               <el-select v-model="form4.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem4(form4.cid,form4.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form4.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form4.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr4" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -110,7 +110,7 @@
               <el-select v-model="form5.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem5(form5.cid,form5.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form5.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form5.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr5" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -124,7 +124,7 @@
               <el-select v-model="form6.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem6(form6.cid,form6.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form6.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form6.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr6" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>
@@ -138,7 +138,7 @@
               <el-select v-model="form7.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem7(form7.cid,form7.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form7.sid" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+              <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
                 <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
               </el-select>
             </div>

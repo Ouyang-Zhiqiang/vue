@@ -249,7 +249,7 @@ export default {
       },
       courseType: "团课",
       selectForm: {
-        storeid: "A",
+        storeid:"",
         coachid: "B",
         status: "C",
         day1: "",
@@ -263,7 +263,6 @@ export default {
     this.toStartDate();
     this.getAllCoach();
     this.getAllStore();
-    this.getAllTeam();
     // this.getTimeRange('2020-03-04','2020-03-11')
   },
   methods: {
@@ -305,6 +304,7 @@ export default {
       data.storeid = this.selectForm.storeid;
       data.coachid = this.selectForm.coachid;
       data.status = this.selectForm.status;
+
       data.day1 = this.value6[0].toLocaleDateString().replace(/\//g, "-");
       data.day2 = this.value6[1].toLocaleDateString().replace(/\//g, "-");
       this.getTimeRange(data.day1, data.day2);
@@ -312,6 +312,12 @@ export default {
       data.page = this.listQuery.page - 1;
       data.limit = this.listQuery.limit;
       this.listLoading = true;
+      // if(data.status!=null&&data.status!=''){
+      //   if(data.status){
+
+      //   }
+      // }
+      // data.ordstate=
       if(this.courseType=='团课'){
       this.$axios
         .post(
@@ -345,14 +351,33 @@ export default {
         }
     },
     getAllStore() {
+      var loginname=localStorage.getItem('username')
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          var nostore = { name: "全部运动馆", id: "A" };
-          this.options1 = res.data.rows;
-          this.options1.unshift(nostore);
+          if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
+             var nostore = { name: "全部运动馆", id: "A" };
+             this.options1 = res.data.rows;
+             this.options1.unshift(nostore);
+             this.selectForm.storeid='A'
+          }else{
+              var userStore=localStorage.getItem('storeid').split(',')
+              var storeArr=res.data.rows
+              userStore.forEach(item1=>{
+                storeArr.forEach(item => {
+                      if(item1==item.id){
+                        this.options1.push(item)
+                    }
+                  })
+              })
+              this.selectForm.storeid=storeArr[0].id
+              console.log("1----"+this.selectForm.storeid)
+          }
+          this.listLoading = true;
+          this.getAllTeam();
+
         });
     },
     getAllCoach() {
