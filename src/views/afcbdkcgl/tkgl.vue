@@ -139,7 +139,11 @@
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
               <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
+<<<<<<< HEAD
+                <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" /> 
+=======
                 <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
+>>>>>>> 243d341d005fd0a41d0373937a1ed312777be129
               </el-select>
             </div>
           </div>
@@ -241,8 +245,7 @@ export default {
             strenthNumberArr4:[],
             strenthNumberArr5:[],
             strenthNumberArr6:[],
-            strenthNumberArr7:[]
-
+            strenthNumberArr7:[],
         }
     },
     created(){ 
@@ -368,7 +371,6 @@ export default {
             this.dialogFormVisible=true
         },
         getCourseItem1(cid, strenth, index){
-            console.log('cid:'+cid+'strenth:'+strenth+'index'+index)
             var data={}
             data.cid=cid
             data.strenth=strenth
