@@ -283,7 +283,6 @@ export default {
         // this.insertForm.resurl=file
       },
       toTrueCloseInsert(){
-        this.dialogFormVisible1=false
         if(this.insertForm.resurl==''){
           this.insertForm.storeid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
           this.insertNoImage()
@@ -292,6 +291,13 @@ export default {
           this.insertForm.resid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
           this.insertAndImage()
         }
+        this.listLoading=true
+        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVI98', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.list=res.data.rows
+          this.total=res.data.rows[0].counts
+          this.listLoading=false
+        });
+        this.dialogFormVisible1=false
       },
       insertNoImage(){
         var data = this.insertForm
@@ -334,15 +340,17 @@ export default {
         this.updateForm.oldresid=e.resid
         this.updateForm.id=e.storeid
         this.updateForm.storeid=e.storeid
-        this.updateForm.lastedby='系统管理员'
-        this.updateForm.lastedname='系统管理员'
-        this.updateForm.createdby='系统管理员'
-        this.updateForm.createdname='系统管理员'
+        this.updateForm.createdby=localStorage.getItem('userid')
+        this.updateForm.createdname=localStorage.getItem('username')
+        this.updateForm.lastedby=localStorage.getItem('userid')
+        this.updateForm.lastedname=localStorage.getItem('username')
+        this.updateForm.createdip='127.0.0.1'
         //获取图片
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1WOX', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           var mylist = res.data.rows
           mylist.forEach((item)=>{
             if(item.resurl!=null){
+              console.log("tre----"+item.resurl)
               this.updateForm.resurl=item.resurl
               this.updateForm.resid=item.resid
               return;
@@ -351,18 +359,22 @@ export default {
               this.updateForm.resid=''
             }
           })
-          console.log(this.updateForm.resurl)
         });
       },
-      toTrueClose(){
-        this.dialogFormVisible=false
+      toTrueClose(){ 
         if(this.updateForm.updateurl==this.updateForm.resurl){
           this.updateStoreNoImage()
         }else{
           this.updateForm.resid=(new Date()).valueOf();
-          console.log("ssss-----"+this.updateForm.resid)
           this.updateStoreAndImage()
         }
+        this.listLoading=true
+        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVI98', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.list=res.data.rows
+          this.total=res.data.rows[0].counts
+          this.listLoading=false
+        });
+        this.dialogFormVisible=false
       },
       updateStoreNoImage(){
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVIEB', this.$qs.stringify(this.updateForm), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{

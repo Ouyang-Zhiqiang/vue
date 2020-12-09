@@ -1,6 +1,6 @@
 <template>
   <div id="container" style="padding: 15px">
-    <el-button @click="toGetAllStoreUser()">全部运动馆</el-button>
+    <el-button v-if="allstore" @click="toGetAllStoreUser()">全部运动馆</el-button>
     <el-button
       v-for="(item, index) in theAllstores"
       :key="index"
@@ -311,6 +311,7 @@ export default {
       list: [],
       formLabelWidth: "150px",
       listLoading: false,
+      allstore:false,
       listQuery: {
         page: 1,
         limit: 20
@@ -434,6 +435,7 @@ export default {
         data.CourseDatestart = this.date2[0];
         data.CourseDateend = this.date2[1];
         data.storeid = this.storeid;
+        console.log("this.storeid--"+this.storeid)
         data.coachid = this.coachid2;
         data.page = this.listQuery.page;
         data.limit = this.listQuery.limit;
@@ -478,7 +480,7 @@ export default {
             }
             // console.log(res)
           });
-      }
+      }            
     },
 
     dateChange1() {
@@ -487,12 +489,29 @@ export default {
       this.getTest();
     },
     getAllStore() {
+      var loginname=localStorage.getItem('username')
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          this.theAllstores = res.data.rows;
+           if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞"||loginname=="金慧慧")){
+             this.allstore=true
+             this.theAllstores = res.data.rows;
+            }else{
+                var userStore=localStorage.getItem('storeid').split(',')
+                var storeArr=res.data.rows
+                userStore.forEach(item1=>{
+                  storeArr.forEach(item => {
+                        if(item1==item.id){
+                          this.theAllstores.push(item)
+                      }
+                    })
+                })
+                this.storeid=this.theAllstores[0].id
+            this.getKCFX()
+            }
+            
         });
     },
     getAllCoach() {

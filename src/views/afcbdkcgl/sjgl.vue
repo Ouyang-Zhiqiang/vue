@@ -173,11 +173,26 @@ export default {
             this.getWeek(this.nexDay)
             this.getCources()
         },
-        getAllStore(){
+         getAllStore(){
+          var loginname=localStorage.getItem('username')
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            this.allStores=res.data.rows
-            this.storeid=this.allStores[0].id
-            // console.log("this.allStores"+this.allStores)
+            if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞"||loginname=="金慧慧")){
+             this.allStores=res.data.rows
+             this.storeid=this.allStores[0].id
+            }else{
+                var userStore=localStorage.getItem('storeid').split(',')
+                var storeArr=res.data.rows
+                userStore.forEach(item1=>{
+                  storeArr.forEach(item => {
+                        if(item1==item.id){
+                          this.allStores.push(item)
+                      }
+                    })
+                })
+                this.storeid=this.allStores[0].id
+            }
+            // console.log(this.allStores)
+            // setTimeout(this.getAllCourse(),1000)
           });
         },
         getAllCoach(){
@@ -205,7 +220,6 @@ export default {
                 data.storeid=res.data.rows[0].id
                 data.coachid=this.coachid
                 this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                    console.log(res.data)
                     this.list=res.data
                 });
             })
@@ -213,7 +227,6 @@ export default {
         getDate(datestr){
             var temp = datestr.split("-");
             var date = new Date(temp[0], temp[1]-1, temp[2]);
-            console.log(date);
             return date;
         },
         getAllDate(start, end){
@@ -264,7 +277,6 @@ export default {
                     this.allStores.forEach((item1)=>{
                         if(this.form.storeid==item1.id){
                             obj.storename=item1.name
-                            console.log("item1.name"+item1.name)
                         }
                     })
                     this.allCourse.forEach((item2)=>{
@@ -288,7 +300,6 @@ export default {
                     obj.createdby=userid
                     obj.createdname=username
                     // console.log(obj)
-                     console.log("data------"+ localStorage.getItem('resurl'))
                     this.insertPreCourse(obj)
                 })
             }
