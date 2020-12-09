@@ -294,10 +294,23 @@ export default {
             this.getCources()
         },
         getAllStore(){
+          var loginname=localStorage.getItem('username')
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            this.allStores=res.data.rows
-            this.storeid=this.allStores[0].id
-            console.log(this.storeid)
+            if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
+             this.allStores=res.data.rows
+             this.storeid=this.allStores[0].id
+            }else{
+                var userStore=localStorage.getItem('storeid').split(',')
+                var storeArr=res.data.rows
+                userStore.forEach(item1=>{
+                  storeArr.forEach(item => {
+                        if(item1==item.id){
+                          this.allStores.push(item)
+                      }
+                    })
+                })
+                this.storeid=this.allStores[0].id
+            }
             // console.log(this.allStores)
             // setTimeout(this.getAllCourse(),1000)
           });

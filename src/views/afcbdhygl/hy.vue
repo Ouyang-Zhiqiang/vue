@@ -510,7 +510,7 @@ export default {
                 this.listLoading=false
               });
             }else{
-              console.log('有卡条件'+data.page)
+              console.log('有卡条件')
               
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
@@ -528,6 +528,9 @@ export default {
               this.listLoading=true
               //有卡条件
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1U6C', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                 if(res.data.total==0){
+                  alert('查询暂无数据')
+                }else{
                 this.list=res.data.rows
                 this.total=res.data.rows[0].counts
                 this.list.forEach((item, index)=>{
@@ -543,13 +546,18 @@ export default {
                   }
                 })
                 this.listLoading=false
+                  }
               });
+            
             }
           }else if(this.clickStore){
-            console.log("会员列表1:"+data.page)
+
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               if(res.data.total==0){
+                  alert('查询暂无数据')
+                }else{
               this.list=res.data.rows
               this.total=res.data.rows[0].counts
               this.list.forEach((item, index)=>{
@@ -565,10 +573,9 @@ export default {
                 }
               })
               this.listLoading=false
+                }
             });
           }else if(this.clickSearch==false&&this.clickStore==false){
-            console.log("会员列表2:"+data.page)
-
             if(this.startStoreId==''&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
               data.storeid='F'
             }else{
