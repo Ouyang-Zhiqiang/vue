@@ -348,58 +348,61 @@
 
           <el-table-column align="center" label="操作" width="300">
             <template slot-scope="scope">
-              <div v-if="scope.row.cardtype == 'P'">
-                <el-button
-                  v-if="scope.row.state == 1"
-                  type="text"
-                  @click="opencard(scope.row)"
-                  >停卡</el-button
-                >
-                <el-button
-                  v-if="scope.row.state == 0"
-                  type="text"
-                  @click="changestate(scope.row.cardno)"
-                  >恢复</el-button
-                >
-                <el-button type="text" @click="openqixian(scope.row)"
-                  >期限变更</el-button
-                >
-                <el-button type="text" @click="tpingzhang(scope.row)"
-                  >平账</el-button
-                >
-                <el-button type="text" @click="zhuanka(scope.row)"
-                  >转卡</el-button
-                >
+              <div v-if="scope.row.lastedby != '转卡'">
+                <div v-if="scope.row.cardtype == 'P'">
+                  <el-button
+                    v-if="scope.row.state == 1"
+                    type="text"
+                    @click="opencard(scope.row)"
+                    >停卡</el-button
+                  >
+                  <el-button
+                    v-if="scope.row.state == 0"
+                    type="text"
+                    @click="changestate(scope.row.cardno)"
+                    >恢复</el-button
+                  >
+                  <el-button type="text" @click="openqixian(scope.row)"
+                    >期限变更</el-button
+                  >
+                  <el-button type="text" @click="tpingzhang(scope.row)"
+                    >平账</el-button
+                  >
+                  <el-button type="text" @click="zhuanka(scope.row)"
+                    >转卡</el-button
+                  >
+                </div>
+                <div v-if="scope.row.cardtype == 'S'">
+                  <el-button type="text" @click="openxuka(scope.row)"
+                    >续卡</el-button
+                  >
+                  <el-button type="text" @click="openrecard(scope.row)"
+                    >扣卡</el-button
+                  >
+                  <el-button
+                    v-if="scope.row.state == 1"
+                    type="text"
+                    @click="opencard(scope.row)"
+                    >停卡</el-button
+                  >
+                  <el-button
+                    v-if="scope.row.state == 0"
+                    type="text"
+                    @click="changestate(scope.row.cardno)"
+                    >恢复</el-button
+                  >
+                  <el-button type="text" @click="openqixian(scope.row)"
+                    >期限变更</el-button
+                  >
+                  <el-button type="text" @click="tpingzhang(scope.row)"
+                    >平账</el-button
+                  >
+                  <el-button type="text" @click="zhuanka(scope.row)"
+                    >转卡</el-button
+                  >
+                </div>
               </div>
-              <div v-if="scope.row.cardtype == 'S'">
-                <el-button type="text" @click="openxuka(scope.row)"
-                  >续卡</el-button
-                >
-                <el-button type="text" @click="openrecard(scope.row)"
-                  >扣卡</el-button
-                >
-                <el-button
-                  v-if="scope.row.state == 1"
-                  type="text"
-                  @click="opencard(scope.row)"
-                  >停卡</el-button
-                >
-                <el-button
-                  v-if="scope.row.state == 0"
-                  type="text"
-                  @click="changestate(scope.row.cardno)"
-                  >恢复</el-button
-                >
-                <el-button type="text" @click="openqixian(scope.row)"
-                  >期限变更</el-button
-                >
-                <el-button type="text" @click="tpingzhang(scope.row)"
-                  >平账</el-button
-                >
-                <el-button type="text" @click="zhuanka(scope.row)"
-                  >转卡</el-button
-                >
-              </div>
+              <div v-else>此卡已转，无法操作</div>
             </template>
           </el-table-column>
         </el-table>
@@ -1011,29 +1014,31 @@
         <el-button type="primary" @click="toTrueClose()">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="转卡" :visible.sync="zkdialogVisible" width="25%">
+    <el-dialog title="转卡" :visible.sync="zkdialogVisible" width="26%">
       <el-form label-width="100px">
         <el-form-item label="姓名">
           <el-autocomplete
-            v-model="zk.zkid"
+            v-model="state"
             :fetch-suggestions="querySearchAsync"
             placeholder="请输入内容"
             style="width: 300px"
             @select="handleSelect"
           />
         </el-form-item>
-        <el-form-item label="有效期">
+        <el-form-item label="日期">
           <el-date-picker
             v-model="zk.zkyxq"
             type="daterange"
             range-separator="-"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            style="width: 300px"
+            value-format="yyyy-MM-dd"
           >
           </el-date-picker>
         </el-form-item>
       </el-form>
-      <el-button type="primary" @click="qdzk"
+      <el-button type="primary" @click="qdzk" style="margin-left: 71%"
         >确 定</el-button
       >
     </el-dialog>
@@ -1076,11 +1081,13 @@ export default {
         { id: 5, name: "其他" },
       ],
       dialogFormVisible6: false,
-      zkdialogVisible: false,      
-      zk:{
-        zkid: '',
-        zkyxq:''
+      zkdialogVisible: false,
+      state: "",
+      zk: {
+        zkid: "",
+        zkyxq: "",
       },
+      zkclass: {},
       yuyuejilu4: [],
       dialogFormVisible: false,
       formLabelWidth: "150px",
@@ -2018,6 +2025,7 @@ export default {
     },
     zhuanka(e) {
       this.zkdialogVisible = true;
+      this.zkclass = e;
     },
     querySearchAsync(queryString, cb) {
       var data = {};
@@ -2030,7 +2038,6 @@ export default {
         )
         .then((res) => {
           var results = res.data.rows;
-          // console.log(results)
           cb(results);
         });
     },
@@ -2042,11 +2049,131 @@ export default {
       };
     },
     handleSelect(e) {
-      this.zk.zkid=e
+      this.zk.zkid = e;
     },
-    qdzk(){
-      console.log(this.zk)
-    }
+    guid() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          var r = (Math.random() * 16) | 0;
+          var v = c == "x" ? r : (r & 0x3) | 0x8;
+          return v.toString(16);
+        }
+      );
+    },
+    qdzk() {
+      var createdname = localStorage.getItem("username");
+      var createdby = localStorage.getItem("userid");
+      var data = {};
+      data.cardno = this.zkclass.cardno;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOPBHI",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.$axios
+            .post(
+              "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOPEC1",
+              this.$qs.stringify(data),
+              {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+              }
+            )
+            .then((res2) => {
+              //转卡停卡
+              var zktk = {};
+              zktk.createdby = createdby;
+              zktk.createdname = createdname;
+              zktk.cardno = res.data.rows[0].cardno;
+              zktk.userid = this.query.userid;
+              zktk.cardid = res.data.rows[0].cardid;
+              zktk.cardname = res.data.rows[0].cardname;
+              zktk.typeid = res.data.rows[0].typeid;
+              zktk.curtimes = res.data.rows[0].curtimes;
+              zktk.stoptype = "P";
+              zktk.beginend = "2099-01-01";
+              if(res.data.rows[0].cardtype=='S'){
+                console.log(res.data.rows[0].totalfee)
+                console.log(res.data.rows[0].curtimes)
+                console.log(res.data.rows[0].timefee)
+                zktk.fee = res.data.rows[0].totalfee-(res.data.rows[0].totalfee-res.data.rows[0].curtimes*res.data.rows[0].timefee);
+              }else{
+                zktk.fee = res.data.rows[0].totalfee;
+              }
+              zktk.remarks = "转卡至" + this.zk.zkid.value.slice(0, -11);
+              zktk.timefee = res.data.rows[0].timefee;
+              this.$axios
+                .post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOP8ZN",
+                  this.$qs.stringify(zktk),
+                  { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+                )
+                .then((res) => {
+                  this.$message({
+                    message: "原卡停卡成功",
+                    type: "success",
+                  });
+                });
+              //转卡绑卡
+              var zkbk = {};
+              zkbk.cardno = this.guid();
+              zkbk.cardid = res.data.rows[0].cardid;
+              zkbk.cardname = res.data.rows[0].cardname;
+              zkbk.cardtype = res.data.rows[0].cardtype;
+              zkbk.isfree = res.data.rows[0].isfree;
+              zkbk.typeid = res.data.rows[0].typeid;
+              zkbk.originalfee = res.data.rows[0].originalfee;
+              zkbk.isopen = res.data.rows[0].isopen;
+              zkbk.cardbegin = this.zk.zkyxq[0];
+              zkbk.cardend = this.zk.zkyxq[1];
+              zkbk.periodvalidity = res.data.rows[0].periodvalidity;
+              zkbk.curtimes = this.zkclass.curtimes;
+              zkbk.totaltimes = res.data.rows[0].curtimes;
+              zkbk.totalfee = zktk.fee
+              zkbk.disablebegin = res.data.rows[0].disablebegin;
+              zkbk.times = res.data.rows[0].times;
+              zkbk.disableend = res.data.rows[0].disableend;
+              zkbk.remarks = "来自" + this.query.name + "转卡";
+              zkbk.createdby = createdby;
+              zkbk.createdname = createdname;
+              zkbk.lastedby = createdby;
+              zkbk.lastedname = createdname;
+              zkbk.timefee = res.data.rows[0].timefee;
+              zkbk.userid = this.zk.zkid.address;
+              zkbk.payment = res2.data.rows[0].payment;
+              zkbk.storeid = res2.data.rows[0].storeid;
+              zkbk.storename = res2.data.rows[0].storename;
+              zkbk.saleid = res2.data.rows[0].saleid;
+              zkbk.salename = res2.data.rows[0].salename;
+              zkbk.cardbegin = this.zk.zkyxq[0];
+              zkbk.cardend = this.zk.zkyxq[1];
+              this.$axios
+                .post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNE921",
+                  this.$qs.stringify(zkbk),
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                  }
+                )
+                .then((res) => {
+                  this.$message({
+                    message: "转卡完成",
+                    type: "success",
+                  });
+                });
+            });
+        });
+      this.yxhyk();
+      this.sxhyk();
+      this.getAmount();
+      this.zkdialogVisible = false;
+    },
   },
 };
 </script>
