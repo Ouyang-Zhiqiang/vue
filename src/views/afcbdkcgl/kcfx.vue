@@ -435,7 +435,6 @@ export default {
         data.CourseDatestart = this.date2[0];
         data.CourseDateend = this.date2[1];
         data.storeid = this.storeid;
-        console.log("this.storeid--"+this.storeid)
         data.coachid = this.coachid2;
         data.page = this.listQuery.page;
         data.limit = this.listQuery.limit;
@@ -495,7 +494,8 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-           if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞"||loginname=="金慧慧")){
+          var roleid=localStorage.getItem('roleid')
+           if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1)){
              this.allstore=true
              this.theAllstores = res.data.rows;
             }else{

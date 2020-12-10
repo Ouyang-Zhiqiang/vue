@@ -139,11 +139,7 @@
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
               <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
-<<<<<<< HEAD
-                <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" /> 
-=======
                 <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
->>>>>>> 243d341d005fd0a41d0373937a1ed312777be129
               </el-select>
             </div>
           </div>
@@ -245,14 +241,15 @@ export default {
             strenthNumberArr4:[],
             strenthNumberArr5:[],
             strenthNumberArr6:[],
-            strenthNumberArr7:[],
+            strenthNumberArr7:[]
+
         }
     },
     created(){ 
         this.getAllStore()
         this.getWeek(Date.parse(new Date()))
         this.getAllCoach()
-        this.getStartCources()
+        // this.getStartCources()
         this.getAllCoachs()
         this.getAllCourse();//获取课程大类
     },
@@ -295,8 +292,9 @@ export default {
         },
         getAllStore(){
           var loginname=localStorage.getItem('username')
+          var roleid=localStorage.getItem('roleid')
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
+            if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
              this.allStores=res.data.rows
              this.storeid=this.allStores[0].id
             }else{
@@ -311,6 +309,7 @@ export default {
                 })
                 this.storeid=this.allStores[0].id
             }
+           this.getCources()
             // console.log(this.allStores)
             // setTimeout(this.getAllCourse(),1000)
           });
@@ -371,6 +370,7 @@ export default {
             this.dialogFormVisible=true
         },
         getCourseItem1(cid, strenth, index){
+            console.log('cid:'+cid+'strenth:'+strenth+'index'+index)
             var data={}
             data.cid=cid
             data.strenth=strenth

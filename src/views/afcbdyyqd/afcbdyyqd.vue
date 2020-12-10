@@ -357,7 +357,8 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞"||loginname=="金慧慧")){
+          var roleid=localStorage.getItem('roleid')
+          if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
              var nostore = { name: "全部运动馆", id: "A" };
              this.options1 = res.data.rows;
              this.options1.unshift(nostore);
@@ -372,7 +373,7 @@ export default {
                     }
                   })
               })
-              this.selectForm.storeid=storeArr[0].id
+              this.selectForm.storeid=this.options1[0].id
           }
           this.listLoading = true;
           this.getAllTeam();

@@ -430,7 +430,8 @@ export default {
           }
         },
         getAllStore3(){
-            if(localStorage.getItem('username')=='系统管理员'){
+           var roleid=localStorage.getItem('roleid')
+            if(localStorage.getItem('username')=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1){
                 this.startStoreId='F'
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.stores=res.data.rows
@@ -440,6 +441,7 @@ export default {
                     this.stores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
+               console.log(localStorage.getItem('storenumber'))
                this.startStoreId='F'
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.stores=res.data.rows
@@ -449,6 +451,7 @@ export default {
                     this.stores.unshift(obj)
                 })
             }else{
+                console.log(localStorage.getItem('storeid'))
                 this.startStoreId=localStorage.getItem('storeid').split(',')[0]
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     var userStore=localStorage.getItem('storeid').split(',')
@@ -551,7 +554,7 @@ export default {
             
             }
           }else if(this.clickStore){
-
+            
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -817,7 +820,7 @@ export default {
               if(row!=null&&row!=''&&row!=undefined){
                   this.$message.error("手机号已存在");
               }else{
-                                this.form4.createdby=localStorage.getItem('userid')
+                this.form4.createdby=localStorage.getItem('userid')
                 this.form4.createdname=localStorage.getItem('username')
                 this.form4.lastedby=localStorage.getItem('userid')
                 this.form4.lastedname=localStorage.getItem('username')

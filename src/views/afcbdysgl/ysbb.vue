@@ -124,7 +124,7 @@ export default {
             saleid:'',
             name:'',
             theAllstores:[],
-            xsvalue:'',
+            xsvalue:'', 
             listLoading:false,
             listQuery: {
               page: 1,
@@ -136,7 +136,7 @@ export default {
     created(){
       this.getAllStore2()
       this.getAllxs5()
-      this.getFxlist()
+      // this.getFxlist()
     },
     mounted() {
     },
@@ -150,7 +150,8 @@ export default {
         this.getFxlist()
       },
       getAllStore2(){
-            if(localStorage.getItem('username')=='系统管理员'||localStorage.getItem('username')=='金慧慧'){
+        var roleid=localStorage.getItem('roleid')
+            if(localStorage.getItem('username')=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1){
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.theAllstores=res.data.rows
                     var obj={}
@@ -183,6 +184,7 @@ export default {
                     this.storeid=this.theAllstores[0].id
                 })
             }    
+            this.getFxlist()
         },
       getAllxs5(){
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFT1UZ', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -197,7 +199,6 @@ export default {
           this.datetimerange=[]
           this.datetimerange[1]=new Date().toLocaleDateString().replace(/\//g, '-')
           this.datetimerange[0]=new Date(new Date().getTime()-1000*60*60*24*6).toLocaleDateString().replace(/\//g, '-')
-          console.log(this.datetimerange)
           data.datebegin=this.datetimerange[0]
           data.dateend=this.datetimerange[1]
         }else if(typeof this.datetimerange[0]==='string'){

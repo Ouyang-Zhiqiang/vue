@@ -134,7 +134,7 @@ export default {
         this.getWeek(Date.parse(new Date()))
         this.getAllStore()
         this.getAllCoach()
-        this.getStartCources()
+        // this.getStartCources()
         this.getPreCourse()
     },
     methods:{
@@ -175,8 +175,9 @@ export default {
         },
          getAllStore(){
           var loginname=localStorage.getItem('username')
+          var roleid=localStorage.getItem('roleid')
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞"||loginname=="金慧慧")){
+            if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
              this.allStores=res.data.rows
              this.storeid=this.allStores[0].id
             }else{
@@ -191,6 +192,7 @@ export default {
                 })
                 this.storeid=this.allStores[0].id
             }
+            this.getCources()
             // console.log(this.allStores)
             // setTimeout(this.getAllCourse(),1000)
           });
