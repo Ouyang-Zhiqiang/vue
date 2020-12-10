@@ -253,6 +253,7 @@ export default {
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
+            localStorage.setItem("roleid", res.data.rows[0].roleid);
             this.$axios
               .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
                 headers: {
