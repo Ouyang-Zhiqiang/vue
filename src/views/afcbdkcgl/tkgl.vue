@@ -139,11 +139,7 @@
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
               <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
-<<<<<<< HEAD
                 <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" /> 
-=======
-                <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
->>>>>>> 243d341d005fd0a41d0373937a1ed312777be129
               </el-select>
             </div>
           </div>
@@ -309,6 +305,7 @@ export default {
                       }
                     })
                 })
+                console.log(res)
                 this.storeid=this.allStores[0].id
             }
             // console.log(this.allStores)
@@ -328,6 +325,7 @@ export default {
             });
         },
         getCources(){
+          console.log('getCources:'+this.storeid)
             var data={}
             data.day1=this.dateRange[0]
             data.day2=this.dateRange[1]
@@ -339,6 +337,7 @@ export default {
             });
         },
         getStartCources(){
+          console.log('getStartCources:'+this.storeid)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 var data={}
                 data.day1=this.dateRange[0]
