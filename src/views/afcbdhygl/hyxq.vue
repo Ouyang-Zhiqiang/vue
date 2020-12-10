@@ -2159,6 +2159,11 @@ export default {
                   }
                 )
                 .then((res) => {
+                  this.yxhyk();
+                  this.sxhyk();
+                  this.getAmount();
+                  this.zk.zkid=''
+                  this.zk.zkyxq=''
                   this.$message({
                     message: "转卡完成",
                     type: "success",
@@ -2166,9 +2171,6 @@ export default {
                 });
             });
         });
-      this.yxhyk();
-      this.sxhyk();
-      this.getAmount();
       this.zkdialogVisible = false;
     },
   },
