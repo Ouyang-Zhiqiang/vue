@@ -163,7 +163,6 @@ export default {
         });
     },
     cancleThenSend(obj){
-       console.log(obj)
        this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
             message: "短信发送成功",

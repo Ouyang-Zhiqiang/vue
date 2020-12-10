@@ -172,7 +172,6 @@ export default {
         getAllxs(){
           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFT1UZ', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.bjxs=res.data.rows
-            console.log(this.bjxs)
           });
         },
       getAllStore2(){

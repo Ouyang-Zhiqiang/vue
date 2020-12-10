@@ -583,7 +583,6 @@ export default {
             
 
             data.sid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
-            console.log(data)
             
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG24E0', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.$message({

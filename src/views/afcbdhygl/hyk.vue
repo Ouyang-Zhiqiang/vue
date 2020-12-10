@@ -402,7 +402,6 @@ export default {
                 })
                 item.storesjson=stores
               })
-              console.log(this.list)
               this.listLoading=false
             });
           }else{
@@ -439,7 +438,6 @@ export default {
                 })
                 item.storesjson=stores
               })
-              console.log(this.list)
               this.listLoading=false
             });
           }
