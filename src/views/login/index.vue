@@ -301,6 +301,7 @@ export default {
       }, {});
     },
     wxlogin() {
+      
       const s = document.createElement("script");
       s.type = "text/javascript";
       s.src = "https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js";
@@ -345,6 +346,7 @@ export default {
               localStorage.setItem("storeid", res.data.storeid);
               localStorage.setItem("resurl", res.data.resurl);
               localStorage.setItem("createdon", res.data.createdon);
+              localStorage.setItem("roleid", res.data.roleid);
               this.loading = true;
               this.loginForm.username = "admin";
               this.$store

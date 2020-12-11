@@ -441,7 +441,6 @@ export default {
                     this.stores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
-               console.log(localStorage.getItem('storenumber'))
                this.startStoreId='F'
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.stores=res.data.rows
@@ -451,7 +450,6 @@ export default {
                     this.stores.unshift(obj)
                 })
             }else{
-                console.log(localStorage.getItem('storeid'))
                 this.startStoreId=localStorage.getItem('storeid').split(',')[0]
                 this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     var userStore=localStorage.getItem('storeid').split(',')

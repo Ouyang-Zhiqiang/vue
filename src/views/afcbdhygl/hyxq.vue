@@ -2097,9 +2097,6 @@ export default {
               zktk.stoptype = "P";
               zktk.beginend = "2099-01-01";
               if(res.data.rows[0].cardtype=='S'){
-                console.log(res.data.rows[0].totalfee)
-                console.log(res.data.rows[0].curtimes)
-                console.log(res.data.rows[0].timefee)
                 zktk.fee = res.data.rows[0].totalfee-(res.data.rows[0].totalfee-res.data.rows[0].curtimes*res.data.rows[0].timefee);
               }else{
                 zktk.fee = res.data.rows[0].totalfee;
