@@ -29,13 +29,13 @@
               <el-input v-model="item1.specification" placeholder="战术" style="width:100px;padding-right:5px" />
                             
               <div v-for="(item11,index11) in updateForm.partsjson[index1].actions" :key="index11" style="width:100%">
-                <el-select v-model="item11.category" placeholder="类别" style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
+                <el-select v-model="item11.category" placeholder="类别" filterable style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
                   <el-option v-for="item in categorys" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-select v-model="item11.strength" placeholder="强度" style="width:100px;float:left;padding-right:5px" @change="strengthChange1(index1,index11)">
                   <el-option v-for="item in strengths" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
-                <el-select v-model="item11.name" placeholder="动作" style="width:100px;float:left;padding-right:5px">
+                <el-select v-model="item11.name" filterable placeholder="动作" style="width:100px;float:left;padding-right:5px">
                   <el-option v-for="item in courseItems" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-input v-model="item11.number" style="width:100px;float:left;padding-right:5px" />
@@ -108,13 +108,13 @@
               <el-input v-model="item1.time" placeholder="时长" style="width:100px;padding-right:5px" />
               <el-input v-model="item1.specification" placeholder="战术" style="width:100px;padding-right:5px" />
               <div v-for="(item11,index11) in updateForm.partsjson[index1].actions" :key="index11" style="width:100%">
-                <el-select v-model="item11.category" placeholder="类别" style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
+                <el-select v-model="item11.category" placeholder="类别" filterable style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
                   <el-option v-for="item in categorys" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-select v-model="item11.strength" placeholder="强度" style="width:100px;float:left;padding-right:5px" @change="strengthChange1(index1,index11)">
                   <el-option v-for="item in strengths" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
-                <el-select v-model="item11.name" placeholder="动作" style="width:100px;float:left;padding-right:5px">
+                <el-select v-model="item11.name" filterable placeholder="动作" style="width:100px;float:left;padding-right:5px">
                   <el-option v-for="item in courseItems" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-input v-model="item11.number" style="width:100px;float:left;padding-right:5px" />
@@ -193,13 +193,13 @@
               <el-input v-model="item1.time" placeholder="时长" style="width:100px;padding-right:5px" />
               <el-input v-model="item1.specification" placeholder="战术" style="width:100px;padding-right:5px" />
               <div v-for="(item11,index11) in updateForm.partsjson[index1].actions" :key="index11" style="width:100%">
-                <el-select v-model="item11.category" placeholder="类别" style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
+                <el-select v-model="item11.category" placeholder="类别" filterable style="width:100px;float:left;padding-right:5px;" @change="categoryChange1(index1,index11)">
                   <el-option v-for="item in categorys" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-select v-model="item11.strength" placeholder="强度" style="width:100px;float:left;padding-right:5px" @change="strengthChange1(index1,index11)">
                   <el-option v-for="item in strengths" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
-                <el-select v-model="item11.name" placeholder="动作" style="width:100px;float:left;padding-right:5px">
+                <el-select v-model="item11.name" filterable placeholder="动作" style="width:100px;float:left;padding-right:5px">
                   <el-option v-for="item in courseItems" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-input v-model="item11.number" style="width:100px;float:left;padding-right:5px" />
@@ -281,13 +281,13 @@
               <el-input v-model="item1.specification" placeholder="战术" style="width:100px;padding-right:5px" />
                         
               <div v-for="(item11,index11) in form.partsjson[index1].actions" :key="index11" style="width:100%">
-                <el-select v-model="item11.category" placeholder="类别" style="width:100px;float:left;padding-right:5px;" @change="categoryChange(index1,index11)">
+                <el-select v-model="item11.category" placeholder="类别" filterable style="width:100px;float:left;padding-right:5px;" @change="categoryChange(index1,index11)">
                   <el-option v-for="item in categorys" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-select v-model="item11.strength" placeholder="强度" style="width:100px;float:left;padding-right:5px" @change="strengthChange(index1,index11)">
                   <el-option v-for="item in strengths" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
-                <el-select v-model="item11.name" placeholder="动作" style="width:100px;float:left;padding-right:5px">
+                <el-select v-model="item11.name" filterable placeholder="动作" style="width:100px;float:left;padding-right:5px">
                   <el-option v-for="item in courseItems" :key="item.name" :label="item.name" :value="item.name" />
                 </el-select>
                 <el-input v-model="item11.number" style="width:100px;float:left;padding-right:5px" />
