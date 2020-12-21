@@ -2090,6 +2090,8 @@ export default {
               zktk.createdname = createdname;
               zktk.cardno = res.data.rows[0].cardno;
               zktk.userid = this.query.userid;
+              zktk.name=this.query.name
+              zktk.tel=this.query.tel
               zktk.cardid = res.data.rows[0].cardid;
               zktk.cardname = res.data.rows[0].cardname;
               zktk.typeid = res.data.rows[0].typeid;
@@ -2157,6 +2159,35 @@ export default {
                   }
                 )
                 .then((res) => {
+                  // 转卡表
+                  var value={}
+                  value.userid=zktk.userid//转卡会员
+                  value.username=zktk.name
+                  value.userphone=zktk.tel
+                  value.cardno=zktk.cardno
+                  value.cardid= zkbk.cardid 
+                  value.cardname=zktk.cardname 
+                  value.typeid=zktk.typeid 
+                  value.curtimes=zktk.curtimes
+                  value.newuserid= zkbk.userid
+                  value.newuserame=this.zk.zkid.value.slice(0, -11)
+                  value.newUserphone=this.zk.zkid.value.slice(-11)
+                  value.fee=0
+                  value.payments=4
+                  value.createdname=createdname
+                  value.createdby=createdby
+                  value.createdip='127.1.1'
+                  this.$axios.post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLORPPQ",
+                  this.$qs.stringify(value),
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                  }
+                )
+                .then((res) => {
+                })
                   this.yxhyk();
                   this.sxhyk();
                   this.getAmount();

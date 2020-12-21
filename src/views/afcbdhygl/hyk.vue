@@ -34,12 +34,19 @@
 
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-tab-pane label="会员卡种类列表">
+<<<<<<< HEAD
         <el-select
           v-model="searhForm.cardtype"
           placeholder="会员卡类型"
           style="margin-top: 5px"
         >
           <el-option
+=======
+                
+               
+        <el-select v-model="searhForm.cardtype" placeholder="会员卡类型" style="margin-top:5px;">
+          <el-optiel-selecton
+>>>>>>> e3cb5ded340b7726ba93ee03bd8130b5f9a5c69b
             v-for="item in options1"
             :key="item.value"
             :label="item.label"

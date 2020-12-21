@@ -6,6 +6,7 @@
     <el-button>泗泾馆</el-button>
     <el-button>开元馆</el-button>
     <el-button>亚繁馆</el-button>
+    <el-button>江阴馆</el-button>
 
     <el-tabs type="border-card" style="margin-top:20px">
       <el-tab-pane label="收入增势">

@@ -20,10 +20,21 @@
       <div>
         预约人数:{{ this.getyysl(this.users) }}/1
       </div>
-      <div>
+    <div class="jg">
+       <div>
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="toUrl()">预约</el-button>
       </div>
+
+      <div v-if="isremoved()">
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="deletesj()">删除</el-button>
+      </div>
+
+      <div v-if="isShow()">
+        <el-button type="primary" size="mini" style="margin-top:-6px" @click="updateCoach()">编辑</el-button>
+      </div>
     </div>
+    </div>
+
     <br />
     <el-table :data="users" style="width: 100%">
       <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
@@ -68,6 +79,43 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog title="编辑" :visible.sync="dialogVisible1" style="width:1200px;margin:0 auto"> 
+      <el-form :model="form">
+        <el-form-item label="运动馆:" :label-width="formLabelWidth" required>
+          <span>{{ form.storename }}</span>
+        </el-form-item>
+
+          <el-form-item label="选择课程" :label-width="formLabelWidth" required>
+            <el-select v-model="form.courseid" style="width:200px;float:left">
+              <el-option v-for="item in allCourse" :key="item.mycourseid" :label="item.coursename" :value="item.mycourseid" />
+            </el-select>
+          </el-form-item>
+         
+        <el-form-item label="上课开始时间" :label-width="formLabelWidth" required>
+          <el-select v-model="form.hourse" style="width:100px;float:left">
+            <el-option v-for="item in startHourse" :key="item" :label="item" :value="item" />
+          </el-select><span style="float:left;padding:0 5px">点</span>
+          <el-select v-model="form.minutes" style="width:100px;float:left">
+            <el-option v-for="item in startMinute" :key="item" :label="item" :value="item" />
+          </el-select><span style="float:left;padding:0 5px">分</span>
+        </el-form-item>
+        <el-form-item label="课程时长:" :label-width="formLabelWidth" required>
+          <el-input v-model="form.courseduration" style="width:270px;float:left" />&nbsp;&nbsp;&nbsp;&nbsp;min
+        </el-form-item>
+        <el-form-item label="已约人数:" :label-width="formLabelWidth" required>
+          <span>{{ form.reservednumber}}</span>
+        </el-form-item>
+        <el-form-item label="可预约人数:" :label-width="formLabelWidth" required>
+         <span>1</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="toTrueClose()">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -77,12 +125,32 @@ export default {
     return {
       query: {},
       users: [],
-      reservablenumber: "",
+      allCourse:[],
+      
+      formLabelWidth: '150px',
+      startHourse:['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+      startMinute:['00', '15', '30', '45'],
+      dialogVisible1:false,
+      form:{
+        storename:'',
+        coursename:'',
+        hourse:'',
+        courseduration:'60',
+        minutes:'',
+        reservednumber:'',
+        isopened:'',
+        scheduleid:'',
+        schedulebegin:'',
+        scheduleend:'',
+        courseid:'',
+        reservablenumber: ""
+      },
     };
   },
   created() {
     this.query = this.$route.query.item
     this.getusers()
+    this.getPreCourse()
   },
   methods: {
       getusers() {
@@ -159,7 +227,7 @@ export default {
           });
         })
         .catch((error) => {
-          this.$message.error("222错了哦，这是一条错误消息");
+          this.$message.error("错了哦，这是一条错误消息");
         });
     },
     cancleThenSend(obj){
@@ -174,6 +242,99 @@ export default {
             })
     }
     ,
+     getPreCourse(){
+            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG2AR4', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.allCourse=res.data.rows
+            });
+        },
+    toTrueClose(){
+          if(this.form.hourse==""||this.form.hourse==null||this.form.hourse==undefined||this.form.minutes==''||this.form.minutes==null||this.form.minutes==undefined){
+            this.$message.warning("请选择课程时间！");
+          }else{
+            var data={}
+            data=this.form
+            data.scheduleid=this.query.scheduleid
+            data.schedulebegin=data.hourse+":"+data.minutes
+            this.allCourse.forEach((item2)=>{
+                        if(this.form.courseid==item2.mycourseid){
+                            data.coursename=item2.coursename
+                        }
+                    })
+                this.$axios
+                .post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOS5KV",
+                  this.$qs.stringify(data),
+                  { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+                )
+                .then((res) => {
+                  this.$message({
+                  message: '编辑成功！',
+                  type: 'success'
+                });
+                this.$router.push({
+                path: "/afcbdkcgl/sjgl"
+              });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+          }
+    },
+    isremoved(){
+      if(this.users.length<=0){
+        return true
+      }
+      for(var i=0;i<this.users.length;i++){
+        if(this.users[i].ordstate==1){
+          return false
+        }
+      }
+      return true
+    },
+        // 修改本次课程教练
+    updateCoach(){
+        this.form.courseid=this.query.courseid
+        this.form.coursename=this.query.coursename
+        this.form.storename=this.query.storename
+        this.form.reservednumber=this.query.reservednumber
+        this.form.reservablenumber=this.query.reservablenumber
+        this.form.isopened=this.query.isopened=true?'0':'1'
+        this.form.hourse=this.query.schedulebegin.split(':')[0]
+        this.form.minutes=this.query.schedulebegin.split(':')[1]
+        this.form.scheduleend=this.query.scheduleend
+        this.form.courseduration=this.form.courseduration
+        
+        this.dialogVisible1=true
+    },
+    isShow(){
+      if(this.query.reservednumber==0){
+        return true
+      }else{
+        return false
+      }
+    },
+    deletesj(){
+       var data={}
+      data.scheduleid=this.query.scheduleid
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOS51R",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.$message({
+          message: '删除成功！',
+          type: 'success'
+        });
+        this.$router.push({
+        path: "/afcbdkcgl/sjgl"
+      });
+        })
+        .catch((error) => {
+          this.$message.error("错了哦，这是一条错误消息");
+        });
+    },
     toUrl() {
       // console.log(e)
       this.$router.push({
@@ -202,5 +363,9 @@ export default {
   margin-left: 100px;
   font-size: 16px;
   font-weight: bold;
+}
+.jg div{
+  float: left;
+  margin-left: 20px;
 }
 </style>

@@ -4,7 +4,7 @@
       <el-tab-pane label="教练信息列表">
         <el-button type="success">导出Excel</el-button>
         <el-button type="success" @click="toOpen1">新增运动馆</el-button>
-        <el-dialog title="新增场馆" :visible.sync="dialogFormVisible1" style="width:1200px;margin:0 auto">
+        <el-dialog title="新增场馆" :visible.sync="dialogFormVisible1" style="width:1527px;margin:0 auto">
           <el-form :model="updateForm">
             <el-form-item label="场馆名称" :label-width="formLabelWidth">
               <el-input v-model="insertForm.name" style="width:270px;float:left" />
@@ -12,11 +12,33 @@
             <el-form-item label="场馆电话" :label-width="formLabelWidth">
               <el-input v-model="insertForm.tel" style="width:270px;float:left" />
             </el-form-item>
-            <el-form-item label="省市区" :label-width="formLabelWidth">
-              <el-input v-model="insertForm.provincename" style="width:85px;float:left;padding-right:8px" />
-              <el-input v-model="insertForm.cityname" style="width:85px;float:left;padding-right:8px" />
-              <el-input v-model="insertForm.countyname" style="width:85px;float:left;padding-right:8px" />
+             <el-form-item label="省市区" :label-width="formLabelWidth">
+              <el-select  label="省" v-model="insertForm.provincename" placeholder="请选择" style="margin-top:0px;width:29%"  @change="onChangeStripe">
+                  <el-option
+                    v-for="item in province"
+                    :key="item.geoid"
+                    :label="item.chinaname"
+                    :value="item.chinaname"
+                  />
+                </el-select> 
+                <el-select  label="市" v-model="insertForm.cityname" placeholder="请选择" style="margin-top:0px;width:31%"    @change="onChangeCity">
+                <el-option
+                  v-for="item in county"
+                  :key="item.geoid"
+                  :label="item.chinaname"
+                  :value="item.chinaname"
+                />
+                </el-select> 
+                <el-select  label="区" v-model="insertForm.countyname" placeholder="请选择" style="margin-top:0px;width:30%"      @change="onChangeCounty">
+                <el-option
+                  v-for="item in city"
+                  :key="item.geoid"
+                  :label="item.chinaname"
+                  :value="item.chinaname"
+                />
+            </el-select> 
             </el-form-item>
+
             <el-form-item label="地址" :label-width="formLabelWidth">
               <el-input v-model="insertForm.address" style="width:270px;float:left" />
             </el-form-item>
@@ -96,7 +118,7 @@
             <template slot-scope="scope">
               <el-button type="text" @click="toOpen(scope.row)">编辑</el-button>
 
-              <el-dialog title="场馆编辑" :visible.sync="dialogFormVisible" style="width:1200px;margin:0 auto">
+              <el-dialog title="场馆编辑" :visible.sync="dialogFormVisible" style="width:1527px;margin:0 auto">
                 <el-form :model="updateForm">
                   <el-form-item label="场馆名称" :label-width="formLabelWidth">
                     <el-input v-model="updateForm.name" style="width:270px;float:left" />
@@ -105,9 +127,30 @@
                     <el-input v-model="updateForm.tel" style="width:270px;float:left" />
                   </el-form-item>
                   <el-form-item label="省市区" :label-width="formLabelWidth">
-                    <el-input v-model="updateForm.provincename" style="width:85px;float:left;padding-right:8px" />
-                    <el-input v-model="updateForm.cityname" style="width:85px;float:left;padding-right:8px" />
-                    <el-input v-model="updateForm.countyname" style="width:85px;float:left;padding-right:8px" />
+                    <el-select  label="省" v-model="updateForm.provincename" placeholder="请选择" style="margin-top:0px;width:29%;margin-left: -46px;"  @change="onChangeStripe">
+                        <el-option
+                          v-for="item in province"
+                          :key="item.geoid"
+                          :label="item.chinaname"
+                          :value="item.chinaname"
+                        />
+                      </el-select> 
+                      <el-select  label="市" v-model="updateForm.cityname" placeholder="请选择" style="margin-top:0px;width:31%"    @change="onChangeCity">
+                      <el-option
+                        v-for="item in county"
+                        :key="item.geoid"
+                        :label="item.chinaname"
+                        :value="item.chinaname"
+                      />
+                      </el-select> 
+                      <el-select  label="区" v-model="updateForm.countyname" placeholder="请选择" style="margin-top:0px;width:30%"      @change="onChangeCounty">
+                      <el-option
+                        v-for="item in city"
+                        :key="item.geoid"
+                        :label="item.chinaname"
+                        :value="item.chinaname"
+                      />
+                  </el-select> 
                   </el-form-item>
                   <el-form-item label="地址" :label-width="formLabelWidth">
                     <el-input v-model="updateForm.address" style="width:270px;float:left" />
@@ -187,6 +230,9 @@ export default {
         return{ 
           list:[],
           total:0,
+          province:[],
+          county:[],
+          city:[],
           listQuery: {
             page: 1,
             limit:20
@@ -198,10 +244,17 @@ export default {
           obj:{},
           fileList:[],
           fileList2:[],
+          form:{
+            cityid:'',
+            cityname:''
+          },
           insertForm:{
             storeid:'',
             resid:'',
             name:'',
+            provinceid:'',
+            cityid:'',
+            countyid:'',
             provincename:'',
             cityname:'',
             countyname:'',
@@ -213,13 +266,20 @@ export default {
             longitude:'',
             latitude:'',
             resurl:'',
-            lastedby:'系统管理员',
-            lastedname:'系统管理员',
-            createdby:'系统管理员',
-            createdname:'系统管理员'
+            ressuffixname:'',
+            companyid:'0',
+            lastedby:localStorage.getItem('username'),
+            lastedname:localStorage.getItem('username'),
+            createdby:localStorage.getItem('username'),
+            createdname:localStorage.getItem('username')
           },
           updateForm:{
+            storeid:'',
+            resid:'',
             name:'',
+            provinceid:'',
+            cityid:'',
+            countyid:'',
             provincename:'',
             cityname:'',
             countyname:'',
@@ -231,7 +291,12 @@ export default {
             longitude:'',
             latitude:'',
             resurl:'',
-            oldresid:'',
+            ressuffixname:'',
+            companyid:'0',
+            lastedby:localStorage.getItem('username'),
+            lastedname:localStorage.getItem('username'),
+            createdby:localStorage.getItem('username'),
+            createdname:localStorage.getItem('username'),
             updateurl:'',
             yuanurl:''
           }
@@ -241,13 +306,15 @@ export default {
     },
     created(){
       this.getAllStores(this.listQuery)
+      
     },
     methods:{
       //场馆增加  对象实例错误
       toOpen1(){
         this.dialogFormVisible1=true
+        this.getProvince('province','142')
       },
-       insertimg(){
+    insertimg(){
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEC0X7H', this.$qs.stringify(this.obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.$message({
             message: '恭喜你，操作成功',
@@ -278,14 +345,14 @@ export default {
         this.obj.urlname=filearr[1]
         this.obj.url=filearr[0]
         this.obj.name=filearr[1]
-        this.fileList.push(this.obj)
-        this.insertimg(this.obj)
-        // this.insertForm.resurl=file
+        var ressuffixname=filearr[1].split('.')
+        // this.fileList.push(this.obj)
+        this.insertForm.resurl=filearr[0]
+        this.insertForm.ressuffixname=ressuffixname[1]
       },
       toTrueCloseInsert(){
         if(this.insertForm.resurl==''){
-          this.insertForm.storeid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
-          this.insertNoImage()
+          this.$message.warning('请添加图片');
         }else{
           this.insertForm.storeid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
           this.insertForm.resid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000)
@@ -299,17 +366,17 @@ export default {
         });
         this.dialogFormVisible1=false
       },
-      insertNoImage(){
-        var data = this.insertForm
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVIAH', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          this.$message({
-            message: '恭喜你，操作成功',
-            type: 'success'
-          })
-        }).catch(error=>{
-          this.$message.error('错了哦，这是一条错误消息');
-        });
-      },
+      // insertNoImage(){
+      //   var data = this.insertForm
+      //   this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVIAH', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+      //     this.$message({
+      //       message: '恭喜你，操作成功',
+      //       type: 'success'
+      //     })
+      //   }).catch(error=>{
+      //     this.$message.error('错了哦，这是一条错误消息');
+      //   });
+      // },
       insertAndImage(){
         var data = this.insertForm
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1WWQ', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -323,6 +390,7 @@ export default {
       },
       //wxd系统管理员 修改图片问题
       toOpen(e){
+        this.getProvince('province','142')
         var data={}
         data.storeid=e.storeid //获取图片
         this.dialogFormVisible=true
@@ -350,7 +418,6 @@ export default {
           var mylist = res.data.rows
           mylist.forEach((item)=>{
             if(item.resurl!=null){
-              console.log("tre----"+item.resurl)
               this.updateForm.resurl=item.resurl
               this.updateForm.resid=item.resid
               return;
@@ -398,10 +465,14 @@ export default {
       },
      handleSuccess(file){
         // this.updateForm.updateurl=file
-         var filearr=file.split(',')
-        this.updateForm.urlname=filearr[1]
-        this.updateForm.url=filearr[0]
-        this.fileList2.push(this.updateForm)
+        var filearr=file.split(',')
+        this.obj.urlname=filearr[1]
+        this.obj.url=filearr[0]
+        this.obj.name=filearr[1]
+        var ressuffixname=filearr[1].split('.')
+        // this.fileList.push(this.obj)
+        this.updateForm.resurl=filearr[0]
+        this.updateForm.ressuffixname=ressuffixname[1]
       },
      handleRemoveMu2(file) {
         this.fileList.forEach((item, index)=>{
@@ -427,6 +498,59 @@ export default {
           this.total=res.data.rows[0].counts
           this.listLoading=false
         });
+      },
+      onChangeStripe(e){
+        this.province.forEach(item=>{
+              if(e==item.chinaname){
+                this.insertForm.provinceid=item.geoid
+              }
+          })
+        this.getCounty('city',this.insertForm.provinceid);
+        this.insertForm.countyname=''
+        this.insertForm.cityname=''
+        this.updateForm.countyname=''
+        this.updateForm.cityname=''
+      },
+      onChangeCity(e){
+        this.county.forEach(item=>{
+              if(e==item.chinaname){
+                this.insertForm.cityid=item.geoid
+              }
+          })
+          this.getcity('county',this.insertForm.cityid)
+          this.insertForm.countyname=''
+          this.updateForm.countyname=''
+      },
+      onChangeCounty(e){
+        this.city.forEach(item=>{
+              if(e==item.chinaname){
+                this.insertForm.countyid=item.geoid
+              }
+          })
+      },
+      getProvince(geotype,geopid){
+        var ss={}
+        ss.geotype=geotype
+        ss.geopid=geopid
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOU632', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.province=res.data.rows
+        });
+      },
+      getCounty(geotype,geopid){
+          var ss={}
+          ss.geotype=geotype
+          ss.geopid=geopid
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOU632', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.county=res.data.rows
+        });
+      },
+      getcity(geotype,geopid){
+          var ss={}
+          ss.geotype=geotype
+          ss.geopid=geopid
+          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOU632', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+               this.city=res.data.rows
+          });
       },
       //禁用恢复
       updateToDisEn(e, id, index){
