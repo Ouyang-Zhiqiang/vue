@@ -2146,8 +2146,6 @@ export default {
               zkbk.storename = res2.data.rows[0].storename;
               zkbk.saleid = res2.data.rows[0].saleid;
               zkbk.salename = res2.data.rows[0].salename;
-              zkbk.cardbegin = this.zk.zkyxq[0];
-              zkbk.cardend = this.zk.zkyxq[1];
               this.$axios
                 .post(
                   "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNE921",

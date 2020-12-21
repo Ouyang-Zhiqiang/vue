@@ -774,12 +774,14 @@ export default {
             this.form2.points=this.form2.add
             this.form2.actionstate='+'
             this.form2.surpluspoints=parseInt(this.form2.add)+parseInt(this.form2.currentpoints)
+            console.log(this.form2)
             this.updateJf(this.form2)
             this.dialogFormVisible2 = false
           }else if(this.form2.add==0&&this.form2.pre>0){
             this.form2.points=this.form2.pre
             this.form2.actionstate='-'
             this.form2.surpluspoints=parseInt(this.form2.currentpoints)-parseInt(this.form2.points)
+            console.log(this.form2)
             this.updateJf(this.form2)
             this.dialogFormVisible2 = false
           }else if(this.form2.add<0||this.form2.pre<0){

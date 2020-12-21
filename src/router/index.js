@@ -299,12 +299,6 @@ export const constantRoutes = [
         component: () => import('@/views/afcbdyggl/yglb'),
         name: '员工列表',
         meta: { title: '员工列表' }
-      },
-      {
-        path: 'jlsz',
-        component: () => import('@/views/afcbdyggl/jlsz'),
-        name: '教练设置',
-        meta: { title: '教练设置' }
       }
     ]
   },
@@ -514,6 +508,12 @@ export const constantRoutes = [
         component: () => import('@/views/afcbdxtsz/gzhlist'),
         name: '合伙申请列表',
         meta: { title: '合伙申请列表'}
+      },
+      {
+        path: 'jlsz',
+        component: () => import('@/views/afcbdxtsz/jlsz'),
+        name: '教练设置',
+        meta: { title: '教练设置'}
       }
     ]
   },

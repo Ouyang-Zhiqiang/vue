@@ -6,37 +6,27 @@
         <el-button type="success">新增教练</el-button>
 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" label="教练" width="200">
-            <template slot-scope="scope">
-              <span>{{ scope.row.name }}</span>
-            </template>
+          <el-table-column prop="name" align="center" label="教练" width="200">
           </el-table-column>
-
+          <el-table-column prop="tel" align="center" width="250" label="手机">
+          </el-table-column>
           <el-table-column align="center" width="150" label="照片数量">
             <template>
               <span>1</span>
             </template>
           </el-table-column>
-
-          <el-table-column width="400" align="center" label="简介">
-            <template slot-scope="scope">
-              <span>{{ scope.row.intrtext }}</span>
-            </template>
+          <el-table-column prop="intrtext" align="center" label="简介">
           </el-table-column>
-
-          <el-table-column width="150" label="评价数量" align="center">
-            <template>
-              <span>0</span>
-            </template>
+          <el-table-column width="300" label="操作" align="center">
+            
           </el-table-column>
-
         </el-table>
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" style="float:right;" @pagination="getAllCoach" />
 
       </el-tab-pane>
     </el-tabs>
-
+    {{list}}
   </div>
 </template>
 
