@@ -424,8 +424,8 @@ export default {
     methods:{
         storeBlock(){
           var loginname=localStorage.getItem('username')
-
-          if(loginname!=null&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
+          var roleid=localStorage.getItem('roleid')
+          if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
             this.isShow=true
           }
         },
@@ -488,6 +488,7 @@ export default {
                 data.name=this.xm
               }
               this.listLoading=true 
+              console.log()
               //无卡条件
               this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1U3F', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 if(res.data.total==0){
@@ -577,7 +578,9 @@ export default {
                 }
             });
           }else if(this.clickSearch==false&&this.clickStore==false){
-            if(this.startStoreId==''&&(loginname=='系统管理员'||loginname=="系统管理员"||loginname=="梅霞")){
+            console.log(this.startStoreId)
+            var roleid=localStorage.getItem('roleid')
+            if(this.startStoreId==''&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
               data.storeid='F'
             }else{
               data.storeid=this.startStoreId
@@ -806,6 +809,7 @@ export default {
         toTrueClose(){
           this.dialogFormVisible=false
           this.updateUser()
+          this.toGetAll(this.listQuery)
         },
         toTrue4(){
           if(this.form4.name==''||this.form4.sex==''||this.form4.tel==''||this.form4.storeId==''){
@@ -822,6 +826,10 @@ export default {
                 this.form4.createdname=localStorage.getItem('username')
                 this.form4.lastedby=localStorage.getItem('userid')
                 this.form4.lastedname=localStorage.getItem('username')
+                if( this.form4.saleuserid==null|| this.form4.saleuserid==''||this.form4.saleuserid==undefined){
+                  alert("ok")
+                   this.form4.saleuserid=0
+                }
                 this.form4.createdip='127.0.0.1'
                 var date = new Date();
                 var year = date.getFullYear();

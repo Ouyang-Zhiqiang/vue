@@ -2189,7 +2189,6 @@ export default {
                   }
                 )
                 .then((res) => {
-
                 })
                   this.yxhyk();
                   this.sxhyk();

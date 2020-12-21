@@ -31,7 +31,7 @@
                 
                
         <el-select v-model="searhForm.cardtype" placeholder="会员卡类型" style="margin-top:5px;">
-          <el-option
+          <el-optiel-selecton
             v-for="item in options1"
             :key="item.value"
             :label="item.label"
