@@ -42,7 +42,7 @@
               <span>{{ scope.row.rolename }}</span>
             </template>
           </el-table-column>
-          <el-table-column align="left" width="900" label="员工">
+          <el-table-column align="left" label="员工">
             <template slot-scope="scope">
               <span>{{ scope.row.usernames }}</span>
             </template>
