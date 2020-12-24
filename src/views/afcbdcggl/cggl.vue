@@ -393,7 +393,7 @@ export default {
         this.getProvince('province','142')
         var data={}
         data.storeid=e.storeid //获取图片
-        this.dialogFormVisible=true
+        
         this.updateForm.name=e.name
         this.updateForm.provincename=e.provincename
         this.updateForm.cityname=e.cityname
@@ -427,6 +427,7 @@ export default {
             }
           })
         });
+        this.dialogFormVisible=true
       },
       toTrueClose(){ 
         if(this.updateForm.updateurl==this.updateForm.resurl){
@@ -483,7 +484,7 @@ export default {
     },
     handlePreviewMu2(file) {
         console.log(file);
-    },
+    }, 
     handleExceedMu2(files, fileList) {
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },

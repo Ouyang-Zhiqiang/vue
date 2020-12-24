@@ -307,7 +307,6 @@ export default {
                       }
                     })
                 })
-                console.log(res)
                 this.storeid=this.allStores[0].id
             }
            this.getCources()
@@ -328,7 +327,6 @@ export default {
             });
         },
         getCources(){
-          console.log('getCources:'+this.storeid)
             var data={}
             data.day1=this.dateRange[0]
             data.day2=this.dateRange[1]
@@ -340,7 +338,6 @@ export default {
             });
         },
         getStartCources(){
-          console.log('getStartCources:'+this.storeid)
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 var data={}
                 data.day1=this.dateRange[0]
@@ -440,7 +437,6 @@ export default {
             data.cid=cid
             data.sid=sid
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG254G', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                console.log('aa'+res.data.rows)
             });
         },
         toFalse(){

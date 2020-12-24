@@ -777,14 +777,12 @@ export default {
             this.form2.points=this.form2.add
             this.form2.actionstate='+'
             this.form2.surpluspoints=parseInt(this.form2.add)+parseInt(this.form2.currentpoints)
-            console.log(this.form2)
             this.updateJf(this.form2)
             this.dialogFormVisible2 = false
           }else if(this.form2.add==0&&this.form2.pre>0){
             this.form2.points=this.form2.pre
             this.form2.actionstate='-'
             this.form2.surpluspoints=parseInt(this.form2.currentpoints)-parseInt(this.form2.points)
-            console.log(this.form2)
             this.updateJf(this.form2)
             this.dialogFormVisible2 = false
           }else if(this.form2.add<0||this.form2.pre<0){
@@ -829,7 +827,6 @@ export default {
                 this.form4.lastedby=localStorage.getItem('userid')
                 this.form4.lastedname=localStorage.getItem('username')
                 if( this.form4.saleuserid==null|| this.form4.saleuserid==''||this.form4.saleuserid==undefined){
-                  alert("ok")
                    this.form4.saleuserid=0
                 }
                 this.form4.createdip='127.0.0.1'
