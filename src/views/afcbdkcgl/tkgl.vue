@@ -624,4 +624,7 @@ export default {
     .GameDay{
        background:#82c3db;
     }
+    .Team{
+       background:#82c3db;
+    }
 </style>

@@ -12,31 +12,31 @@
             <el-form-item label="场馆电话" :label-width="formLabelWidth">
               <el-input v-model="insertForm.tel" style="width:270px;float:left" />
             </el-form-item>
-             <el-form-item label="省市区" :label-width="formLabelWidth">
-              <el-select  label="省" v-model="insertForm.provincename" placeholder="请选择" style="margin-top:0px;width:29%"  @change="onChangeStripe">
-                  <el-option
-                    v-for="item in province"
-                    :key="item.geoid"
-                    :label="item.chinaname"
-                    :value="item.chinaname"
-                  />
-                </el-select> 
-                <el-select  label="市" v-model="insertForm.cityname" placeholder="请选择" style="margin-top:0px;width:31%"    @change="onChangeCity">
+            <el-form-item label="省市区" :label-width="formLabelWidth">
+              <el-select v-model="insertForm.provincename" label="省" placeholder="请选择" style="margin-top:0px;width:29%" @change="onChangeStripe">
+                <el-option
+                  v-for="item in province"
+                  :key="item.geoid"
+                  :label="item.chinaname"
+                  :value="item.chinaname"
+                />
+              </el-select> 
+              <el-select v-model="insertForm.cityname" label="市" placeholder="请选择" style="margin-top:0px;width:31%" @change="onChangeCity">
                 <el-option
                   v-for="item in county"
                   :key="item.geoid"
                   :label="item.chinaname"
                   :value="item.chinaname"
                 />
-                </el-select> 
-                <el-select  label="区" v-model="insertForm.countyname" placeholder="请选择" style="margin-top:0px;width:30%"      @change="onChangeCounty">
+              </el-select> 
+              <el-select v-model="insertForm.countyname" label="区" placeholder="请选择" style="margin-top:0px;width:30%" @change="onChangeCounty">
                 <el-option
                   v-for="item in city"
                   :key="item.geoid"
                   :label="item.chinaname"
                   :value="item.chinaname"
                 />
-            </el-select> 
+              </el-select> 
             </el-form-item>
 
             <el-form-item label="地址" :label-width="formLabelWidth">
@@ -127,30 +127,30 @@
                     <el-input v-model="updateForm.tel" style="width:270px;float:left" />
                   </el-form-item>
                   <el-form-item label="省市区" :label-width="formLabelWidth">
-                    <el-select  label="省" v-model="updateForm.provincename" placeholder="请选择" style="margin-top:0px;width:29%;margin-left: -46px;"  @change="onChangeStripe">
-                        <el-option
-                          v-for="item in province"
-                          :key="item.geoid"
-                          :label="item.chinaname"
-                          :value="item.chinaname"
-                        />
-                      </el-select> 
-                      <el-select  label="市" v-model="updateForm.cityname" placeholder="请选择" style="margin-top:0px;width:31%"    @change="onChangeCity">
+                    <el-select v-model="updateForm.provincename" label="省" placeholder="请选择" style="margin-top:0px;width:29%;margin-left: -46px;" @change="onChangeStripe">
+                      <el-option
+                        v-for="item in province"
+                        :key="item.geoid"
+                        :label="item.chinaname"
+                        :value="item.chinaname"
+                      />
+                    </el-select> 
+                    <el-select v-model="updateForm.cityname" label="市" placeholder="请选择" style="margin-top:0px;width:31%" @change="onChangeCity">
                       <el-option
                         v-for="item in county"
                         :key="item.geoid"
                         :label="item.chinaname"
                         :value="item.chinaname"
                       />
-                      </el-select> 
-                      <el-select  label="区" v-model="updateForm.countyname" placeholder="请选择" style="margin-top:0px;width:30%"      @change="onChangeCounty">
+                    </el-select> 
+                    <el-select v-model="updateForm.countyname" label="区" placeholder="请选择" style="margin-top:0px;width:30%" @change="onChangeCounty">
                       <el-option
                         v-for="item in city"
                         :key="item.geoid"
                         :label="item.chinaname"
                         :value="item.chinaname"
                       />
-                  </el-select> 
+                    </el-select> 
                   </el-form-item>
                   <el-form-item label="地址" :label-width="formLabelWidth">
                     <el-input v-model="updateForm.address" style="width:270px;float:left" />
@@ -176,7 +176,7 @@
                     />
                   </el-form-item>
                   <el-form-item label="门店图片" :label-width="formLabelWidth">
-                    <img :src="updateForm.resurl" style="height:150px;width:250px;float:left">
+                    <img :src="updateForm.oldresurl" style="height:150px;width:250px;float:left">
                   </el-form-item>
                   <el-form-item label="图片修改" :label-width="formLabelWidth">
                     <el-upload
@@ -290,6 +290,7 @@ export default {
             intrtext:'',
             longitude:'',
             latitude:'',
+            oldresurl:'',
             resurl:'',
             ressuffixname:'',
             companyid:'0',
@@ -306,13 +307,12 @@ export default {
     },
     created(){
       this.getAllStores(this.listQuery)
-      
     },
     methods:{
       //场馆增加  对象实例错误
       toOpen1(){
         this.dialogFormVisible1=true
-        this.getProvince('province','142')
+        this.getProvince('province', '142')
       },
     insertimg(){
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEC0X7H', this.$qs.stringify(this.obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -390,7 +390,7 @@ export default {
       },
       //wxd系统管理员 修改图片问题
       toOpen(e){
-        this.getProvince('province','142')
+        this.getProvince('province', '142')
         var data={}
         data.storeid=e.storeid //获取图片
         
@@ -418,11 +418,11 @@ export default {
           var mylist = res.data.rows
           mylist.forEach((item)=>{
             if(item.resurl!=null){
-              this.updateForm.resurl=item.resurl
+              this.updateForm.oldresurl=item.resurl
               this.updateForm.resid=item.resid
               return;
-            }else{
-              this.updateForm.resurl=''
+            }else{ 
+              this.updateForm.oldresurl=''
               this.updateForm.resid=''
             }
           })
@@ -433,7 +433,6 @@ export default {
         if(this.updateForm.updateurl==this.updateForm.resurl){
           this.updateStoreNoImage()
         }else{
-          this.updateForm.resid=(new Date()).valueOf();
           this.updateStoreAndImage()
         }
         this.listLoading=true
@@ -455,6 +454,7 @@ export default {
         });
       },
       updateStoreAndImage(){
+        console.log(this.updateForm)
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1WVH', this.$qs.stringify(this.updateForm), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
             message: '恭喜你，操作成功',
@@ -506,7 +506,7 @@ export default {
                 this.insertForm.provinceid=item.geoid
               }
           })
-        this.getCounty('city',this.insertForm.provinceid);
+        this.getCounty('city', this.insertForm.provinceid);
         this.insertForm.countyname=''
         this.insertForm.cityname=''
         this.updateForm.countyname=''
@@ -518,7 +518,7 @@ export default {
                 this.insertForm.cityid=item.geoid
               }
           })
-          this.getcity('county',this.insertForm.cityid)
+          this.getcity('county', this.insertForm.cityid)
           this.insertForm.countyname=''
           this.updateForm.countyname=''
       },
@@ -529,7 +529,7 @@ export default {
               }
           })
       },
-      getProvince(geotype,geopid){
+      getProvince(geotype, geopid){
         var ss={}
         ss.geotype=geotype
         ss.geopid=geopid
@@ -537,7 +537,7 @@ export default {
           this.province=res.data.rows
         });
       },
-      getCounty(geotype,geopid){
+      getCounty(geotype, geopid){
           var ss={}
           ss.geotype=geotype
           ss.geopid=geopid
@@ -545,7 +545,7 @@ export default {
           this.county=res.data.rows
         });
       },
-      getcity(geotype,geopid){
+      getcity(geotype, geopid){
           var ss={}
           ss.geotype=geotype
           ss.geopid=geopid
