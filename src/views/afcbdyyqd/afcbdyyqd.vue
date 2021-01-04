@@ -458,7 +458,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.cancleThenSend(obj)
+          // this.cancleThenSend(obj)
           this.getAllTeam();
           this.$message({
             message: "恭喜你，操作成功",

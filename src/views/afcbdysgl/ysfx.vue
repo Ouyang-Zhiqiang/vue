@@ -1,12 +1,8 @@
 <template>
   <div id="container" style="padding:15px">
-    <el-button>全部运动馆</el-button>
-    <el-button>万达馆</el-button>
-    <el-button>东鼎馆</el-button>
-    <el-button>泗泾馆</el-button>
-    <el-button>开元馆</el-button>
-    <el-button>亚繁馆</el-button>
-    <el-button>江阴馆</el-button>
+    <div>
+      <el-button v-for="(item,index) in theAllstores" :key="index" v-model="storeid" @click="storeSearch(item.id)">{{ item.name }}</el-button>
+    </div>
 
     <el-tabs type="border-card" style="margin-top:20px">
       <el-tab-pane label="收入增势">
@@ -89,28 +85,70 @@ export default {
                 value: '续卡',
                 label: '续卡'
             }],
+            dateArray:[],
             xsvalue:'',
+            theAllstores:[],
+            storeid:'',
             jdvalue:''
         }
     },
     mounted() {
+        this.getAllStore2()
        this.srzs();
        this.zsr();
        this.hykxs();
     },
     methods:{
+        //获取前几天
+       getDay(day) {
+            var myDate = new Date(); //获取今天日期
+            myDate.setDate(myDate.getDate() - (day-1));//setDate() 方法用于设置一个月的某一天。
+            var dateArray = [];
+            var dateTemp;
+            var flag = 1;
+            for (var i = 1; i < day; i++) {
+                dateTemp =myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+ myDate.getDate();
+                dateArray.push(dateTemp);
+                myDate.setDate(myDate.getDate() + flag);
+                console.log(dateTemp)
+            }
+            dateArray.push(myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate());
+            this.dateArray=dateArray
+            return dateArray;
+        },
+        
         srzs(){
+           this.getDay(30)
             const srzss = this.$echarts.init(document.getElementById('tab1-1'))
+            var obj={}
+            obj.StoreId=this.storeid
+             this.$axios.post('http://locahost:8081/GetRevenueStatistics', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                 
+             }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            })
             srzss.setOption({
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: this.dateArray,
+                    axisLabel:{
+                         interval:1
+                    }
                 },
                 yAxis: {
                     type: 'value'
                 },
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: [820, 932, 901, 934, 1290, 6000, 1320],
                     type: 'line'
                 }]
             })
@@ -197,9 +235,45 @@ export default {
                     }
                 ]
             })
-        }
+        },
+        getAllStore2(){
+            if(localStorage.getItem('username')=='系统管理员'){
+                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.theAllstores=res.data.rows
+                    var obj={}
+                    obj.id=''
+                    obj.name='全部运动馆'
+                    this.theAllstores.unshift(obj)
+                })
+            }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
+                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.theAllstores=res.data.rows
+                    var obj={}
+                    obj.id=''
+                    obj.name='全部运动馆'
+                    this.theAllstores.unshift(obj)
+                })
+            }else{
+                this.storeid=localStorage.getItem('storeid').split(',')[0]
+                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    var userStore=localStorage.getItem('storeid').split(',')
+                    var storeArr=res.data.rows
+                    var mystore=[]
+                    userStore.forEach(item1=>{
+                        storeArr.forEach(item => {
+                            if(item1==item.id){
+                                mystore.push(item)
+                            }
+                        })
+                    })
+                    this.theAllstores=mystore
+                    this.storeid=this.theAllstores[0].id
+                })
+            }    
+        },
 
     }
+    
 }
 </script>
 
