@@ -138,13 +138,11 @@
               <el-select v-model="form7.strenth" style="width:90%;margin-top:10px;margin-left:5px;" placeholder="强度" @change="getCourseItem7(form7.cid,form7.strenth,0)"> 
                 <el-option v-for="item in strenth" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
-              <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">
-                <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />
+              <el-select v-model="form7.sid" filterable style="width:90%;margin-top:10px;margin-left:5px;" placeholder="课件">   
+                <el-option v-for="item in strenthNumberArr7" :key="item.mysid" :label="item.strengthnumber" :value="item.mysid" />  
               </el-select>
             </div>
           </div>
-            
-        
         </el-form>
 
         <div slot="footer" class="dialog-footer">
