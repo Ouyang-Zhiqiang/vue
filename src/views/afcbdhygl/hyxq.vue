@@ -1015,32 +1015,71 @@
       </div>
     </el-dialog>
     <el-dialog title="转卡" :visible.sync="zkdialogVisible" width="26%">
-      <el-form label-width="100px">
-        <el-form-item label="姓名">
-          <el-autocomplete
-            v-model="state"
-            :fetch-suggestions="querySearchAsync"
-            placeholder="请输入内容"
-            style="width: 300px"
-            @select="handleSelect"
-          />
-        </el-form-item>
-        <el-form-item label="日期">
-          <el-date-picker
-            v-model="zk.zkyxq"
-            type="daterange"
-            range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            style="width: 300px"
-            value-format="yyyy-MM-dd"
+      <el-tabs>
+        <el-tab-pane label="全部转出">
+          <el-form label-width="100px">
+            <el-form-item label="姓名">
+              <el-autocomplete
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入内容"
+                style="width: 300px"
+                @select="handleSelect"
+              />
+            </el-form-item>
+            <el-form-item label="日期">
+              <el-date-picker
+                v-model="zk.zkyxq"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width: 300px"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="qdzk(1)" style="margin-left: 71%"
+            >确 定</el-button
           >
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <el-button type="primary" @click="qdzk" style="margin-left: 71%"
-        >确 定</el-button
-      >
+        </el-tab-pane>
+        <el-tab-pane label="部分转出" v-if="zktype == 'S'">
+          <el-form label-width="100px">
+            <el-form-item label="姓名">
+              <el-autocomplete
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入内容"
+                style="width: 300px"
+                @select="handleSelect"
+              />
+            </el-form-item>
+            <el-form-item label="次数">
+              <el-input-number
+                v-model="zkcs"
+                :min="1"
+                :max="1000"
+              ></el-input-number>
+            </el-form-item>
+            <el-form-item label="日期">
+              <el-date-picker
+                v-model="zk.zkyxq"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                style="width: 300px"
+                value-format="yyyy-MM-dd"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="qdzk(2)" style="margin-left: 71%"
+            >确 定</el-button
+          >
+        </el-tab-pane>
+      </el-tabs>
     </el-dialog>
   </div>
 </template>
@@ -1088,6 +1127,8 @@ export default {
         zkyxq: "",
       },
       zkclass: {},
+      zkcs: 1,
+      zktype: "",
       yuyuejilu4: [],
       dialogFormVisible: false,
       formLabelWidth: "150px",
@@ -2024,6 +2065,7 @@ export default {
         });
     },
     zhuanka(e) {
+      this.zktype = e.cardtype;
       this.zkdialogVisible = true;
       this.zkclass = e;
     },
@@ -2061,11 +2103,21 @@ export default {
         }
       );
     },
-    qdzk() {
+    qdzk(e) {
       var createdname = localStorage.getItem("username");
       var createdby = localStorage.getItem("userid");
       var data = {};
       data.cardno = this.zkclass.cardno;
+      console.log(this.zk.zkid);
+      console.log(this.zk.zkyxq);
+      if (this.zk.zkid == "" || this.zk.zkyxq == "" || this.zkcs == "") {
+        this.$message.error("信息填写不完整");
+        return;
+      }
+      if (this.zkcs > this.zkclass.curtimes && this.zktype == "S") {
+        this.$message.error("转卡次数大于剩余次数");
+        return;
+      }
       this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOPBHI",
@@ -2090,33 +2142,66 @@ export default {
               zktk.createdname = createdname;
               zktk.cardno = res.data.rows[0].cardno;
               zktk.userid = this.query.userid;
-              zktk.name=this.query.name
-              zktk.tel=this.query.tel
+              zktk.name = this.query.name;
+              zktk.tel = this.query.tel;
               zktk.cardid = res.data.rows[0].cardid;
               zktk.cardname = res.data.rows[0].cardname;
               zktk.typeid = res.data.rows[0].typeid;
-              zktk.curtimes = res.data.rows[0].curtimes;
-              zktk.stoptype = "P";
-              zktk.beginend = "2099-01-01";
-              if(res.data.rows[0].cardtype=='S'){
-                zktk.fee = res.data.rows[0].totalfee-(res.data.rows[0].totalfee-res.data.rows[0].curtimes*res.data.rows[0].timefee);
-              }else{
+              if (e == 1) {
+                zktk.curtimes = res.data.rows[0].curtimes;
+              } else if (e == 2) {
+                zktk.curtimes = this.zkcs;
+                zktk.pzremarks = "转卡"+this.zkcs+"次至" + this.zk.zkid.value.slice(0, -11);
+              }
+              if (res.data.rows[0].cardtype == "S") {
+                zktk.fee =
+                  res.data.rows[0].totalfee -
+                  (res.data.rows[0].totalfee -
+                    zktk.curtimes * res.data.rows[0].timefee);
+              } else {
                 zktk.fee = res.data.rows[0].totalfee;
               }
-              zktk.remarks = "转卡至" + this.zk.zkid.value.slice(0, -11);
               zktk.timefee = res.data.rows[0].timefee;
-              this.$axios
-                .post(
-                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOP8ZN",
-                  this.$qs.stringify(zktk),
-                  { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-                )
-                .then((res) => {
-                  this.$message({
-                    message: "原卡停卡成功",
-                    type: "success",
+              zktk.remarks = "转卡至" + this.zk.zkid.value.slice(0, -11);
+              zktk.stoptype = "P";
+              zktk.beginend = "2099-01-01";
+              console.log(zktk);
+              if (e == 1) {
+                this.$axios
+                  .post(
+                    "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOP8ZN",
+                    this.$qs.stringify(zktk),
+                    {
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    this.$message({
+                      message: "原卡停卡成功",
+                      type: "success",
+                    });
                   });
-                });
+              } else if (e == 2) {
+                this.$axios
+                  .post(
+                    "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP1UJD",
+                    this.$qs.stringify(zktk),
+                    {
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
+                    }
+                  )
+                  .then((res) => {
+                    this.$message({
+                      message: "原卡扣次成功",
+                      type: "success",
+                    });
+                  });
+              }
+
               //转卡绑卡
               var zkbk = {};
               zkbk.cardno = this.guid();
@@ -2130,9 +2215,9 @@ export default {
               zkbk.cardbegin = this.zk.zkyxq[0];
               zkbk.cardend = this.zk.zkyxq[1];
               zkbk.periodvalidity = res.data.rows[0].periodvalidity;
-              zkbk.curtimes = this.zkclass.curtimes;
-              zkbk.totaltimes = res.data.rows[0].curtimes;
-              zkbk.totalfee = zktk.fee
+              zkbk.curtimes = this.zkcs;
+              zkbk.totaltimes = this.zkcs;
+              zkbk.totalfee = zktk.fee;
               zkbk.disablebegin = res.data.rows[0].disablebegin;
               zkbk.times = res.data.rows[0].times;
               zkbk.disableend = res.data.rows[0].disableend;
@@ -2148,6 +2233,7 @@ export default {
               zkbk.storename = res2.data.rows[0].storename;
               zkbk.saleid = res2.data.rows[0].saleid;
               zkbk.salename = res2.data.rows[0].salename;
+              console.log(zkbk);
               this.$axios
                 .post(
                   "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNE921",
@@ -2160,39 +2246,39 @@ export default {
                 )
                 .then((res) => {
                   // 转卡表
-                  var value={}
-                  value.userid=zktk.userid//转卡会员
-                  value.username=zktk.name
-                  value.userphone=zktk.tel
-                  value.cardno=zktk.cardno
-                  value.cardid= zkbk.cardid 
-                  value.cardname=zktk.cardname 
-                  value.typeid=zktk.typeid 
-                  value.curtimes=zktk.curtimes
-                  value.newuserid= zkbk.userid
-                  value.newuserame=this.zk.zkid.value.slice(0, -11)
-                  value.newUserphone=this.zk.zkid.value.slice(-11)
-                  value.fee=0
-                  value.payments=4
-                  value.createdname=createdname
-                  value.createdby=createdby
-                  value.createdip='127.1.1'
-                  this.$axios.post(
-                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLORPPQ",
-                  this.$qs.stringify(value),
-                  {
-                    headers: {
-                      "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                  }
-                )
-                .then((res) => {
-                })
+                  var value = {};
+                  value.userid = zktk.userid; //转卡会员
+                  value.username = zktk.name;
+                  value.userphone = zktk.tel;
+                  value.cardno = zktk.cardno;
+                  value.cardid = zkbk.cardid;
+                  value.cardname = zktk.cardname;
+                  value.typeid = zktk.typeid;
+                  value.curtimes = zktk.curtimes;
+                  value.newuserid = zkbk.userid;
+                  value.newuserame = this.zk.zkid.value.slice(0, -11);
+                  value.newUserphone = this.zk.zkid.value.slice(-11);
+                  value.fee = 0;
+                  value.payments = 4;
+                  value.createdname = createdname;
+                  value.createdby = createdby;
+                  value.createdip = "127.1.1";
+                  this.$axios
+                    .post(
+                      "https://www.facebodyfitness.com/hi/main?hi=24CQRLLORPPQ",
+                      this.$qs.stringify(value),
+                      {
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                      }
+                    )
+                    .then((res) => {});
                   this.yxhyk();
                   this.sxhyk();
                   this.getAmount();
-                  this.zk.zkid=''
-                  this.zk.zkyxq=''
+                  this.zk.zkid = "";
+                  this.zk.zkyxq = "";
                   this.$message({
                     message: "转卡完成",
                     type: "success",

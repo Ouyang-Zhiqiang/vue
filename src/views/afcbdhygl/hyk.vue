@@ -37,12 +37,12 @@
                 
                
         <el-select v-model="searhForm.cardtype" placeholder="会员卡类型" style="margin-top:5px;">
-          <el-optiel-selecton
+          <el-option
             v-for="item in options1"
             :key="item.value"
             :label="item.label"
             :value="item.value"
-          />
+          ></el-option>
         </el-select>
 
         <el-select
@@ -81,7 +81,7 @@
           >查询</el-button
         >
         <el-button type="success" style="margin-top: 5px">导出Excel</el-button>
-        <el-button type="success" style="margin-top: 5px" @click="toOpen"
+        <el-button type="success" style="margin-top: 5px" @click="toOpen(null,1)"
           >新建会员卡</el-button
         >
         <el-dialog
@@ -329,7 +329,7 @@
           <el-table-column align="center" label="操作" width="290">
             <template slot-scope="scope">
               <!-- 会员编辑按钮 -->
-              <el-button type="text" @click="toOpen(scope.row)">编辑</el-button>
+              <el-button type="text" @click="toOpen(scope.row,2)">编辑</el-button>
               <el-button
                 v-if="scope.row.state == 1"
                 type="text"
@@ -663,7 +663,8 @@ export default {
           this.$message.error("新增会员(基础)卡失败");
         });
     },
-    toOpen() {
+    toOpen(e,x) {
+      console.log(x)
       this.dialogFormVisible = true;
     },
     handleCheckAllChange(val) {
