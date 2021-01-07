@@ -173,7 +173,7 @@ export default {
             obj.EndDate=this.date1[1]
             obj.days=this.day
             this.$axios.post(
-          "http://localhost:8081/web/RevenueAnalysis/GetRevenueStatistics",
+          "http://localhost:8081/web/RevenueAnalysis/DrawChart1",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
             )
@@ -221,7 +221,7 @@ export default {
             });
             this.daySearch=false
         },
-        zsr(){
+         zsr(){
             const zsrs = this.$echarts.init(document.getElementById('tab1-2'))
             zsrs.setOption({
                 title: {
@@ -259,6 +259,45 @@ export default {
                 }
             ]
             })
+            
+        
+            // zsrs.setOption({
+            //     title: {
+            //     text: '总收入',
+            //     subtext: ''
+            //     },
+            // tooltip: {
+            //     trigger: 'axis',
+            //     axisPointer: {
+            //         type: 'shadow'
+            //     }
+            // },
+            // legend: {
+              
+            // },
+            // grid: {
+            //     left: '3%',
+            //     right: '4%',
+            //     bottom: '3%',
+            //     containLabel: true
+            // },
+            // xAxis: {
+            //     type: 'value',
+            //     boundaryGap: [0, 0.01]
+            // },
+            // yAxis: {
+            //     type: 'category',
+            //     data: ['小程序支付', '其他', '刷卡', '扫码支付', '转账']
+            // },
+            // series: [
+            //     {
+            //         name: '',
+            //         type: 'bar',
+            //         data: [18203, 23489, 29034, 104970, 131744]
+            //     }
+            // ]
+            // })\
+    
         },
         hykxs(){
             const hykxss = this.$echarts.init(document.getElementById('tab2-1'))
