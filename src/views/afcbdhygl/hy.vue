@@ -397,7 +397,7 @@ export default {
             clickStore:false,
             clickStoreId:'',
 
-            list: null,
+            list: [],
             total: 0,
             listLoading: true,
             listQuery: {
@@ -473,8 +473,7 @@ export default {
             data.storeid=this.startStoreId
             // data.page=data.page-1
             if(this.hykvalue=='A'){
-              console.log('无卡条件')
-              
+              console.log('条件一')
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
               if(this.sjh==''){
@@ -512,8 +511,7 @@ export default {
                 this.listLoading=false
               });
             }else{
-              console.log('有卡条件')
-              
+              console.log('条件二')
               data.saleuserid=this.xsvalue
               data.status=this.ztvalue
               data.cardid=this.hykvalue
@@ -553,7 +551,7 @@ export default {
             
             }
           }else if(this.clickStore){
-            
+            console.log('条件三')
             data.storeid=this.startStoreId
             this.listLoading=true
             this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24B21OYFSUYV', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -578,7 +576,7 @@ export default {
                 }
             });
           }else if(this.clickSearch==false&&this.clickStore==false){
-            console.log(this.startStoreId)
+            console.log('条件四')
             var roleid=localStorage.getItem('roleid')
             if(this.startStoreId==''&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
               data.storeid='F'

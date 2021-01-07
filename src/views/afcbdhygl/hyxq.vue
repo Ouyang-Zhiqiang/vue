@@ -2110,7 +2110,8 @@ export default {
       data.cardno = this.zkclass.cardno;
       console.log(this.zk.zkid);
       console.log(this.zk.zkyxq);
-      if (this.zk.zkid == "" || this.zk.zkyxq == "" || this.zkcs == "") {
+      console.log(this.zkcs);
+      if (this.zk.zkid == "" || this.zk.zkyxq == "" || this.zkcs == ""|| this.zkcs ==undefined) {
         this.$message.error("信息填写不完整");
         return;
       }
