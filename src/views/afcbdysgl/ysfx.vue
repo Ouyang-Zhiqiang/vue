@@ -6,16 +6,17 @@
 
     <el-tabs type="border-card" style="margin-top:20px">
       <el-tab-pane label="收入增势">
-        <el-button style="margin-top:5px">近7天</el-button>
-        <el-button style="margin-top:5px">近15天</el-button>
-        <el-button style="margin-top:5px">近30天</el-button>
+        <el-button style="margin-top:5px" @click="changeDays(7)" v-model="sevenday">近7天</el-button>
+        <el-button style="margin-top:5px"  @click="changeDays(15)">近15天</el-button>
+        <el-button style="margin-top:5px"  @click="changeDays(30)">近30天</el-button>
         <el-date-picker
-          v-model="datevalue1"
+          v-model="date1"
           style="margin-top:5px"
-          type="datetimerange"
+          type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          @change="dateChange1"
         />
 
         <div id="tab1-1" style="width:1500px;height:300px" />
@@ -28,14 +29,25 @@
         <el-button>近7天</el-button>
         <el-button>近15天</el-button>
         <el-button>近30天</el-button>
-        <el-date-picker
-          v-model="datevalue1"
-          style="margin-top:5px"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
+          <!-- <el-form-item label="活动开始时间" > -->
+            <el-date-picker
+              v-model="datevalue2"
+              type="daterange"
+              placeholder="开始时间"
+              style="width:270px;"
+              @change="topase1()"
+            />
+          <!-- </el-form-item> -->
+
+          <!-- <el-form-item label="结束时间" > -->
+            <el-date-picker
+              v-model="datevalue2"
+              type="daterange"
+              placeholder="结束时间"
+              style="width:270px;"
+              @change="topase2()"
+            />
+          <!-- </el-form-item> -->
 
         <el-select v-model="xsvalue" placeholder="销售人员" style="margin-top:5px">
           <el-option
@@ -67,6 +79,8 @@ export default {
     data(){
         return{ 
             datevalue1:'',
+            date1:[],
+            date2:[],
             datevalue2:'',
             options1: [{
                 value: '唐莉',
@@ -86,19 +100,39 @@ export default {
                 label: '续卡'
             }],
             dateArray:[],
+            daySearch:false,
             xsvalue:'',
             theAllstores:[],
             storeid:'',
-            jdvalue:''
+            day:'',
+            sevenday:7,
+            jdvalue:'',
+            amount:[],
         }
     },
+    created(){
+        this.date1[1] = new Date().toLocaleDateString().replace(/\//g, "-");
+        this.date1[0] = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 6)
+        .toLocaleDateString()
+        .replace(/\//g, "-");
+    },
     mounted() {
-        this.getAllStore2()
+       this.getAllStore2();
        this.srzs();
        this.zsr();
        this.hykxs();
     },
     methods:{
+        changeDays(a){
+            this.day=a
+            this.daySearch=true
+            this.srzs();
+        },
+        dateChange1() {
+            this.date1[0] = this.date1[0].toLocaleDateString().replace(/\//g, "-");
+            this.date1[1] = this.date1[1].toLocaleDateString().replace(/\//g, "-");
+            this.srzs();
+        },
         //获取前几天
        getDay(day) {
             var myDate = new Date(); //获取今天日期
@@ -110,48 +144,82 @@ export default {
                 dateTemp =myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+ myDate.getDate();
                 dateArray.push(dateTemp);
                 myDate.setDate(myDate.getDate() + flag);
-                console.log(dateTemp)
             }
             dateArray.push(myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate());
             this.dateArray=dateArray
-            return dateArray;
         },
-        
+        datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式  
+            var dateSpan,
+                tempDate,
+                iDays;
+            sDate1 = Date.parse(sDate1);
+            sDate2 = Date.parse(sDate2);
+            dateSpan = sDate2 - sDate1;
+            dateSpan = Math.abs(dateSpan);
+            iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+            return iDays+2
+        },
         srzs(){
-           this.getDay(30)
+            if(this.daySearch==false){
+                var day=this.datedifference(this.date1[0] ,this.date1[1] )
+                this.day=day
+                console.log("rwerijojei")
+            }
+            this.getDay(this.day)
             const srzss = this.$echarts.init(document.getElementById('tab1-1'))
             var obj={}
-            obj.StoreId=this.storeid
-             this.$axios.post('http://locahost:8081/GetRevenueStatistics', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                 
-             }).catch(error=>{
-                this.$message.error('错了哦，这是一条错误消息');
-            })
+            obj.StoreId=''
+            obj.StartDate=this.date1[0]
+            obj.EndDate=this.date1[1]
+            obj.days=this.day
+            this.$axios.post(
+          "http://localhost:8081/web/RevenueAnalysis/GetRevenueStatistics",
+          this.$qs.stringify(obj),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+            )
+            .then((res) => {
+                this.amount=res.data
             srzss.setOption({
-                xAxis: {
-                    type: 'category',
-                    data: this.dateArray,
-                    axisLabel:{
-                         interval:1
-                    }
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis',
+                        formatter: "{b}<br/>{a}:{c} 元"
+                    },
+                    legend: {
+                        data: ['营收金额']
+                    },
+                    calculable: false,
                     axisPointer: {
                         type: 'cross',
                         label: {
                             backgroundColor: '#6a7985'
                         }
-                    }
+                    },
+                xAxis: {
+                    name: '日期',
+                    type: 'category',
+                    data: this.dateArray,
+                    boundaryGap: false,
                 },
+                yAxis: {
+                    type: 'value'
+                },
+                // tooltip : {
+                //     trigger: 'axis',
+                //     axisPointer: {
+                //         type: 'cross',
+                //         label: {
+                //             backgroundColor: '#6a7985'
+                //         }
+                //     }
+                // },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 6000, 1320],
-                    type: 'line'
+                    name: '营收金额',
+                    data: this.amount,
+                    type: 'line',
                 }]
             })
+            });
+            this.daySearch=false
         },
         zsr(){
             const zsrs = this.$echarts.init(document.getElementById('tab1-2'))
