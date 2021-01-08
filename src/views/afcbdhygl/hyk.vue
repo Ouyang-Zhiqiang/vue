@@ -31,7 +31,6 @@
         />
       </el-tab-pane>
     </el-tabs>
-
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-tab-pane label="会员卡种类列表">
         <el-select
