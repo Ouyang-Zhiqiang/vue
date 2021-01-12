@@ -112,7 +112,7 @@ export const constantRoutes = [
         component: () => import('@/views/afcbdyyqd/yy'),
         name: '预约',
         meta: { title: '预约', icon: 'documentation', affix: true },
-        hidden:true
+        // hidden:true
       }
     ]
   },

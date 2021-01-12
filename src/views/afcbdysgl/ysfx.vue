@@ -108,6 +108,8 @@ export default {
             sevenday:7,
             jdvalue:'',
             amount:[],
+            allamount:0,
+            sumamount:0
         }
     },
     created(){
@@ -123,15 +125,29 @@ export default {
        this.hykxs();
     },
     methods:{
+        storeSearch(id){
+            this.storeid=id
+            this.allamount=0
+            this.sumamount=0
+             this.srzs()
+             this.zsr()
+        },
         changeDays(a){
             this.day=a
             this.daySearch=true
-            this.srzs();
+            this.allamount=0
+            this.sumamount=0
+            this.srzs()
+            this.zsr()
         },
         dateChange1() {
             this.date1[0] = this.date1[0].toLocaleDateString().replace(/\//g, "-");
             this.date1[1] = this.date1[1].toLocaleDateString().replace(/\//g, "-");
+            this.allamount=0
+            this.sumamount=0
             this.srzs();
+             this.zsr();
+             this.hykxs(); 
         },
         //获取前几天
        getDay(day) {
@@ -163,22 +179,20 @@ export default {
             if(this.daySearch==false){
                 var day=this.datedifference(this.date1[0] ,this.date1[1] )
                 this.day=day
-                console.log("rwerijojei")
             }
             this.getDay(this.day)
             const srzss = this.$echarts.init(document.getElementById('tab1-1'))
             var obj={}
-            obj.StoreId=''
+            obj.StoreId=this.storeid
             obj.StartDate=this.date1[0]
             obj.EndDate=this.date1[1]
             obj.days=this.day
-            this.$axios.post(
-          "http://localhost:8081/web/RevenueAnalysis/DrawChart1",
-          this.$qs.stringify(obj),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-            )
-            .then((res) => {
+            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart1",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                 this.amount=res.data
+                 for (var row in  this.amount) {
+                           this.sumamount=this.sumamount+this.amount[row]
+                        }
+                        
             srzss.setOption({
                 tooltip: {
                     trigger: 'axis',
@@ -201,6 +215,7 @@ export default {
                     boundaryGap: false,
                 },
                 yAxis: {
+                     name: '营收总金额'+this.sumamount,
                     type: 'value'
                 },
                 // tooltip : {
@@ -223,24 +238,40 @@ export default {
         },
         zsr(){
             const zsrs = this.$echarts.init(document.getElementById('tab1-2'))
-             zsrs.showLoading({
-                text: "图表数据正在努力加载..."
-            });
-            zsrs.hideLoading();
-                 this.$axios.post("http://localhost:8081/web/Satistic/Revenue/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
-                    if (res.data.success) {
-                        var accuontJsons = data.resultdata;
+            //  zsrs.showLoading({
+            //     text: "图表数据正在努力加载..."
+            // });
+            // zsrs.hideLoading();
+                var obj={}
+                obj.StoreId=this.storeid
+                obj.StartDate=this.date1[0]
+                obj.EndDate=this.date1[1]
+                obj.days=this.day
+                 this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+                        var accuontJsons =[]
+                        accuontJsons = res.data;
                         var category = new Array();
                         var incomeArray = new Array();
-                        for (row in accuontJsons) {
-                            category[row] = accuontJsons[row]['DateTime'];
-                            incomeArray[row] = accuontJsons[row]['Amount'];
+                        for (var row in  accuontJsons) {
+                            if(accuontJsons[row].dateTime==1){
+                                category[row] ='刷卡'
+                            }else if(accuontJsons[row].dateTime==2){
+                                category[row] ='转账'
+                            }else if(accuontJsons[row].dateTime==3){
+                                 category[row] ='线上支付'
+                            }else if(accuontJsons[row].dateTime==4){
+                                category[row] ='现金'
+                            }else{
+                                 category[row] ='其它'
+                            }
+                            incomeArray[row] = accuontJsons[row].amount;
                         }
-                        var amount = 0;
+                        
                         for (var i = 0; i < incomeArray.length; i++) {
-                            amount += incomeArray[i];
+                            this.allamount =this.allamount+ parseInt(incomeArray[i]);
                         }
-                        var option = {
+                       
+                       zsrs.setOption({
                             tooltip: {
                                 trigger: 'axis',    
                                 formatter: "{b}<br/>{c} 元"
@@ -253,7 +284,7 @@ export default {
                             ],
                             yAxis: [
                                 {
-                                    name: "总收入：" + amount.toFixed(2) + "元",
+                                    name: "总收入：" + this.allamount+ "元",
                                     type: 'category',
                                     data: category
                                 }
@@ -261,22 +292,15 @@ export default {
                             series: [
                                 {
                                     type: 'bar',
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#1caf9a'
-                                        }
-                                    },
-                                   
                                     data: incomeArray
                                 }
                             ]
-                        };
-                        myChart.setOption(option);
-                    }
-                }).catch(error=>{
-            this.$message.error('错了哦，这是一条错误消息');
-          });
-            }
+                        });
+                    
+                })
+        //         .catch(error=>{
+        //     this.$message.error('错了哦，这是一条错误消息');
+        //   });
         
             // zsrs.setOption({
             //     title: {
@@ -317,47 +341,66 @@ export default {
         },
         hykxs(){
             const hykxss = this.$echarts.init(document.getElementById('tab2-1'))
+            var obj={}
+            obj.StoreId=this.storeid
+            obj.StartDate=this.date1[0]
+            obj.EndDate=this.date1[1]
+            obj.days=this.day
+            obj.SalerId=''
+            obj.BuyType=''
+            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/BarChar2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+             var accuontJsons = res.data
+                        var nameArray = new Array();
+                        var amountArray = new Array();
+                        var countArray = new Array();
+                        for (var row in  accuontJsons) {
+                            nameArray[row] = accuontJsons[row].cardname;
+                            amountArray[row] = accuontJsons[row].sellingfeeTotal;
+                            countArray[row] = accuontJsons[row].cardcount;
+                        }
             hykxss.setOption({
-                title: {
-                    text: '',
-                    subtext: ''
-                },
                 tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                legend: {
-                    data: ['卡数', '金额']
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 0.01]
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['总会员卡', '标准训练卡', '私人定制1v1', '七天七次单人卡', '员工福利卡', '团课无限课时', '小团课68课时', '小团课38课时', '私教(拉伸)', '私教1v1']
-                },
-                series: [
-                    {
-                        name: '卡数',
-                        type: 'bar',
-                        data: [11111, 11111, 11111, 11111, 18203, 23489, 29034, 104970, 131744, 630230]
-                    },
-                    {
-                        name: '金额',
-                        type: 'bar',
-                        data: [11111, 11111, 11111, 11111, 19325, 23438, 31000, 121594, 134141, 681807]
-                    }
-                ]
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data: ['卡数', '金额']
+                            },
+                            toolbox: {
+                                show: true,
+                            },
+                            calculable: false,
+                            xAxis: [
+                                {
+                                    type: 'value',
+                                    boundaryGap: [0, 0.01]
+                                }
+                            ],
+                            yAxis: [
+                                {
+                                    type: 'category',
+                                    data: nameArray,
+                                }
+                            ],
+                            series: [
+                                {
+                                    name: '卡数',
+                                    type: 'bar',
+                                    data: countArray,
+
+                                },
+                                {
+                                    name: '金额',
+                                    type: 'bar',
+                                    data: amountArray,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#2f5395'
+                                        }
+                                    },
+                                }
+                            ]
             })
+             })
         },
         getAllStore2(){
             if(localStorage.getItem('username')=='系统管理员'){
