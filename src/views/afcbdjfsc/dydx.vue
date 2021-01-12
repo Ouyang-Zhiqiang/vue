@@ -18,19 +18,19 @@
         <el-button type="success" style="margin-top:5px;">导出Excel</el-button>
 
         <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="margin-top:20px">
-          <el-table-column align="center" width="150" label="积分商品图片">
+          <el-table-column align="center" width="200" label="积分商品图片">
             <template slot-scope="scope">
               <img :src="scope.row.imgurl" width="30" height="30">
             </template>
           </el-table-column>
 
-          <el-table-column width="150" align="center" label="已兑换商品">
+          <el-table-column width="200" align="center" label="已兑换商品">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="150" label="会员" align="center">
+          <el-table-column width="200" label="会员" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.username }}</span>
             </template>
@@ -61,7 +61,13 @@
               <span>{{ scope.row.lastedon }}</span>
             </template>
           </el-table-column>
-
+        <el-table-column class-name="status-col" label="操作" width="200">
+            <template slot-scope="scope">
+              <span v-if="scope.row.state==0"><el-button type="text" style="margin-top:5px;" @click="clerkExchange(scope.row.orderid)">店员兑换</el-button></span>
+              <span v-if="scope.row.state==1">已使用</span>
+              <span v-if="scope.row.state==2">已失效</span>
+            </template>
+          </el-table-column>
         </el-table>
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" style="float:right;" @pagination="getAllSp" />
@@ -142,7 +148,30 @@ export default {
       clickSearch(){
         this.listQuery.page=1
         this.getAllSp(this.listQuery)
-      } 
+      } ,
+      clerkExchange(orderid){
+        this.$confirm("是否继续兑换积分?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+      }) .then(() => {
+        var obj={}
+        obj.orderId=orderid
+        obj.createdby= localStorage.getItem("userid");
+        obj.createdname=localStorage.getItem("username");
+        obj.ip='127.01';
+        this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/spmGoodChange', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            if(res.data=='操作成功！'){
+               this.getAllSp(this.listQuery)
+               this.$message( {
+                 message: '恭喜你，操作成功',
+                 type: 'success'});
+            }else{
+                this.$message.error('错了哦，这是一条错误消息');
+            }
+          })
+        })
+      }
     }
 }
 </script>

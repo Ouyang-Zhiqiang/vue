@@ -187,7 +187,7 @@ export default {
             obj.StartDate=this.date1[0]
             obj.EndDate=this.date1[1]
             obj.days=this.day
-            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart1",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart1",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                 this.amount=res.data
                  for (var row in  this.amount) {
                            this.sumamount=this.sumamount+this.amount[row]
@@ -247,7 +247,7 @@ export default {
                 obj.StartDate=this.date1[0]
                 obj.EndDate=this.date1[1]
                 obj.days=this.day
-                 this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+                 this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                         var accuontJsons =[]
                         accuontJsons = res.data;
                         var category = new Array();
@@ -348,7 +348,7 @@ export default {
             obj.days=this.day
             obj.SalerId=''
             obj.BuyType=''
-            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/BarChar2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/BarChar2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
              var accuontJsons = res.data
                         var nameArray = new Array();
                         var amountArray = new Array();

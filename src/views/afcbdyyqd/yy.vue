@@ -358,7 +358,7 @@ export default {
         //   console.log(param);
         //   this.$axios
         //     .post(
-        //       "http://localhost:8081/web/wxremind/geiWxRemind",
+        //       "https://www.facebodyfitness.com/web/wxremind/geiWxRemind",
         //       this.$qs.stringify(param),
         //       {
         //         headers: {
