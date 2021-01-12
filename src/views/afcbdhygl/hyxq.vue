@@ -2108,10 +2108,7 @@ export default {
       var createdby = localStorage.getItem("userid");
       var data = {};
       data.cardno = this.zkclass.cardno;
-      console.log(this.zk.zkid);
-      console.log(this.zk.zkyxq);
-      console.log(this.zkcs);
-      if (this.zk.zkid == "" || this.zk.zkyxq == "" || this.zkcs == ""|| this.zkcs ==undefined) {
+      if (this.zk.zkid == "" || this.zk.zkyxq == "" || (this.zkcs == ""&&e==2)|| (this.zkcs ==undefined&&e==2)) {
         this.$message.error("信息填写不完整");
         return;
       }
@@ -2216,8 +2213,8 @@ export default {
               zkbk.cardbegin = this.zk.zkyxq[0];
               zkbk.cardend = this.zk.zkyxq[1];
               zkbk.periodvalidity = res.data.rows[0].periodvalidity;
-              zkbk.curtimes = this.zkcs;
-              zkbk.totaltimes = this.zkcs;
+              zkbk.curtimes = zktk.curtimes;
+              zkbk.totaltimes = zktk.curtimes;
               zkbk.totalfee = zktk.fee;
               zkbk.disablebegin = res.data.rows[0].disablebegin;
               zkbk.times = res.data.rows[0].times;

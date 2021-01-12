@@ -1,6 +1,5 @@
 <template>
   <div id="container" style="padding:15px;padding-top:25px;">
-    
     <div style="width:650px;margin-left:25%;margin-top:40px;">
       <el-form label-width="100px">
         <el-form-item label="姓名">
