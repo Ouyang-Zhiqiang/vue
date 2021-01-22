@@ -1864,7 +1864,7 @@ export default {
       if (this.ticetype == "insert") {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/CCourse/inserttice",
+            "http://localhost:8081/web/CCourse/inserttice",
             this.$qs.stringify(this.tice),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )

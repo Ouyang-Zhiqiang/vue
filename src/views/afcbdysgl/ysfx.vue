@@ -173,7 +173,7 @@ export default {
             obj.EndDate=this.date1[1]
             obj.days=this.day
             this.$axios.post(
-          "http://localhost:8081/web/RevenueAnalysis/DrawChart1",
+          "https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart1",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
             )
@@ -221,62 +221,45 @@ export default {
             });
             this.daySearch=false
         },
-        zsr(){
+         zsr(){
             const zsrs = this.$echarts.init(document.getElementById('tab1-2'))
-             zsrs.showLoading({
-                text: "图表数据正在努力加载..."
-            });
-            zsrs.hideLoading();
-                 this.$axios.post("http://localhost:8081/web/Satistic/Revenue/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
-                    if (res.data.success) {
-                        var accuontJsons = data.resultdata;
-                        var category = new Array();
-                        var incomeArray = new Array();
-                        for (row in accuontJsons) {
-                            category[row] = accuontJsons[row]['DateTime'];
-                            incomeArray[row] = accuontJsons[row]['Amount'];
-                        }
-                        var amount = 0;
-                        for (var i = 0; i < incomeArray.length; i++) {
-                            amount += incomeArray[i];
-                        }
-                        var option = {
-                            tooltip: {
-                                trigger: 'axis',    
-                                formatter: "{b}<br/>{c} 元"
-                            },
-                            calculable: true,
-                            xAxis: [
-                                {
-                                    type: 'value',
-                                }
-                            ],
-                            yAxis: [
-                                {
-                                    name: "总收入：" + amount.toFixed(2) + "元",
-                                    type: 'category',
-                                    data: category
-                                }
-                            ],
-                            series: [
-                                {
-                                    type: 'bar',
-                                    itemStyle: {
-                                        normal: {
-                                            color: '#1caf9a'
-                                        }
-                                    },
-                                   
-                                    data: incomeArray
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                    }
-                }).catch(error=>{
-            this.$message.error('错了哦，这是一条错误消息');
-          });
-            }
+            zsrs.setOption({
+                title: {
+                text: '总收入',
+                subtext: ''
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+              
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                type: 'category',
+                data: ['小程序支付', '其他', '刷卡', '扫码支付', '转账']
+            },
+            series: [
+                {
+                    name: '',
+                    type: 'bar',
+                    data: [18203, 23489, 29034, 104970, 131744]
+                }
+            ]
+            })
+            
         
             // zsrs.setOption({
             //     title: {
@@ -313,7 +296,8 @@ export default {
             //         data: [18203, 23489, 29034, 104970, 131744]
             //     }
             // ]
-            // })
+            // })\
+    
         },
         hykxs(){
             const hykxss = this.$echarts.init(document.getElementById('tab2-1'))

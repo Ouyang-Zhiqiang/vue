@@ -1,11 +1,14 @@
 <template>
   <div id="container" style="padding: 15px">
-    <el-button v-if="allstore" @click="toGetAllStoreUser()">全部运动馆</el-button>
+    <el-button v-if="allstore" @click="toGetAllStoreUser()"
+      >全部运动馆</el-button
+    >
     <el-button
       v-for="(item, index) in theAllstores"
       :key="index"
       @click="toGetAllByStore(item.id)"
-    >{{ item.name }}</el-button>
+      >{{ item.name }}</el-button
+    >
 
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-select v-model="coachid1" placeholder="全部教练" @change="getTest">
@@ -100,6 +103,7 @@
           range-separator="to"
           start-placeholder="Start date"
           end-placeholder="End date"
+          value-format="yyyy-MM-dd"
           @change="getDay2"
         />
 
@@ -311,10 +315,10 @@ export default {
       list: [],
       formLabelWidth: "150px",
       listLoading: false,
-      allstore:false,
+      allstore: false,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       total: 0,
       kcmcinput: "",
@@ -322,12 +326,12 @@ export default {
       options: [
         {
           value: "团课",
-          label: "团课"
+          label: "团课",
         },
         {
           value: "私教",
-          label: "私教"
-        }
+          label: "私教",
+        },
       ],
       kclxvalue: "",
       courseitems: {},
@@ -343,8 +347,7 @@ export default {
       skrsall: [],
       PersontimesandClassnumber: [],
       Amountoflessonssold: [],
-      datearr: [],
-      yyrsarr: []
+      yyrsarr: [],
     };
   },
   mounted() {
@@ -447,9 +450,9 @@ export default {
           .then((res) => {
             // console.log(res.data)
             this.yno = "团课";
-            if(res.data==''||res.data==null||res.data=='[]'){
-              this.total = 0
-            }else{
+            if (res.data == "" || res.data == null || res.data == "[]") {
+              this.total = 0;
+            } else {
               this.total = res.data[0].total;
             }
             this.list = res.data;
@@ -472,14 +475,14 @@ export default {
           .then((res) => {
             this.yno = "私教";
             this.list = res.data;
-            if(res.data==''||res.data==null||res.data=='[]'){
-              this.total = 0
-            }else{
+            if (res.data == "" || res.data == null || res.data == "[]") {
+              this.total = 0;
+            } else {
               this.total = res.data[0].total;
             }
             // console.log(res)
           });
-      }            
+      }
     },
 
     dateChange1() {
@@ -488,36 +491,40 @@ export default {
       this.getTest();
     },
     getAllStore() {
-      var loginname=localStorage.getItem('username')
+      var loginname = localStorage.getItem("username");
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          var roleid=localStorage.getItem('roleid')
-           if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1)){
-             this.allstore=true
-             this.theAllstores = res.data.rows;
-            }else{
-                var userStore=localStorage.getItem('storeid').split(',')
-                var storeArr=res.data.rows
-                userStore.forEach(item1=>{
-                  storeArr.forEach(item => {
-                        if(item1==item.id){
-                          this.theAllstores.push(item)
-                      }
-                    })
-                })
-                this.storeid=this.theAllstores[0].id
-            this.getKCFX()
-            }
-            
+          var roleid = localStorage.getItem("roleid");
+          if (
+            loginname != null &&
+            (loginname == "系统管理员" ||
+              roleid.search("2018053014055110006") != -1 ||
+              roleid.search("2018053014114510000") != -1)
+          ) {
+            this.allstore = true;
+            this.theAllstores = res.data.rows;
+          } else {
+            var userStore = localStorage.getItem("storeid").split(",");
+            var storeArr = res.data.rows;
+            userStore.forEach((item1) => {
+              storeArr.forEach((item) => {
+                if (item1 == item.id) {
+                  this.theAllstores.push(item);
+                }
+              });
+            });
+            this.storeid = this.theAllstores[0].id;
+            this.getKCFX();
+          }
         });
     },
     getAllCoach() {
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
           this.theAllCoach = res.data.rows;
@@ -527,36 +534,38 @@ export default {
       const yskess = this.$echarts.init(document.getElementById("tab1-1"));
       yskess.setOption({
         label: {
-            show: true,
-            position: 'right',
-            color: '#333'
+          show: true,
+          position: "right",
+          color: "#333",
         },
         title: {
-          text: "已上课程数:"+(parseInt(this.PersontimesandClassnumber.numberofgrouplessons)
-          +parseInt(this.PersontimesandClassnumber.numberofprivatelessons)),
+          text:
+            "已上课程数:" +
+            (parseInt(this.PersontimesandClassnumber.numberofgrouplessons) +
+              parseInt(this.PersontimesandClassnumber.numberofprivatelessons)),
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow"
-          }
+            type: "shadow",
+          },
         },
         legend: {
-          data: ["团课", "私教"]
+          data: ["团课", "私教"],
         },
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01]
+          boundaryGap: [0, 0.01],
         },
         yAxis: {
           type: "category",
-          data:  ["实到人次","预约人次", "总节数"]
+          data: ["实到人次", "预约人次", "总节数"],
         },
         series: [
           {
@@ -565,111 +574,109 @@ export default {
             data: [
               this.PersontimesandClassnumber.tNumberofsignin,
               this.PersontimesandClassnumber.tNumberofreservations,
-              this.PersontimesandClassnumber.numberofgrouplessons
-              
-              
-            ]
+              this.PersontimesandClassnumber.numberofgrouplessons,
+            ],
           },
           {
             name: "私教",
             type: "bar",
             data: [
               this.PersontimesandClassnumber.pNumberofsignin,
-               this.PersontimesandClassnumber.pNumberofreservations,
-              this.PersontimesandClassnumber.numberofprivatelessons
-             
-              
-            ]
-          }
-        ]
+              this.PersontimesandClassnumber.pNumberofreservations,
+              this.PersontimesandClassnumber.numberofprivatelessons,
+            ],
+          },
+        ],
       });
     },
     ckxkzje() {
       const ckxkzjes = this.$echarts.init(document.getElementById("tab1-2"));
       var coursetitle = new Array();
       var courseamount = new Array();
-      var courseamountarr=0;
+      var courseamountarr = 0;
       for (var i = 0; i < this.Amountoflessonssold.length; i++) {
         coursetitle[i] = this.Amountoflessonssold[i].coursetitle;
         courseamount[i] = this.Amountoflessonssold[i].courseamount;
-        courseamountarr+=this.Amountoflessonssold[i].courseamount;
+        courseamountarr += this.Amountoflessonssold[i].courseamount;
       }
 
       ckxkzjes.setOption({
         label: {
-            show: true,
-            position: 'right',
-            color: '#333'
+          show: true,
+          position: "right",
+          color: "#333",
         },
         title: {
-          text: "次卡销课总金额:"+courseamountarr.toFixed(2),
+          text: "次卡销课总金额:" + courseamountarr.toFixed(2),
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow"
-          }
+            type: "shadow",
+          },
         },
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01]
+          boundaryGap: [0, 0.01],
         },
         yAxis: {
           type: "category",
-          data: coursetitle
+          data: coursetitle,
         },
         series: [
           {
             name: "消课总金额",
             type: "bar",
-            data: courseamount
-          }
-        ]
+            data: courseamount,
+          },
+        ],
       });
     },
     skrs() {
       const skrss = this.$echarts.init(document.getElementById("tab1-3"));
       skrss.setOption({
         label: {
-            show: true,
-            position: 'right',
-            color: '#333'
+          show: true,
+          position: "right",
+          color: "#333",
         },
         title: {
-          text: "上课人数:"+(this.skrsall.Classes7+
-              this.skrsall.Classes6+
-              this.skrsall.Classes5+
-              this.skrsall.Classes4+
-              this.skrsall.Classes3+
-              this.skrsall.Classes2+
+          text:
+            "上课人数:" +
+            (this.skrsall.Classes7 +
+              this.skrsall.Classes6 +
+              this.skrsall.Classes5 +
+              this.skrsall.Classes4 +
+              this.skrsall.Classes3 +
+              this.skrsall.Classes2 +
               this.skrsall.Classes1),
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow"
-          }
+            type: "shadow",
+          },
         },
 
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true
+          containLabel: true,
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01]
+          boundaryGap: [0, 0.01],
         },
         yAxis: {
           type: "category",
-          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"]
+          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"],
         },
         series: [
           {
@@ -682,104 +689,85 @@ export default {
               this.skrsall.Classes4,
               this.skrsall.Classes3,
               this.skrsall.Classes2,
-              this.skrsall.Classes1
-            ]
-          }
-        ]
+              this.skrsall.Classes1,
+            ],
+          },
+        ],
       });
     },
     yyrszs() {
       const yyrszss = this.$echarts.init(document.getElementById("tab2-1"));
+      var datearr=[]
+      var numarr=[] 
+      console.log(this.yyrsarr)
+      for (var i=0;i<this.yyrsarr.length;i++){
+        datearr.push((this.yyrsarr[i].datearr).substring(0,10))
+        numarr.push(this.yyrsarr[i].numarr)
+      }
+      console.log(datearr)
+      console.log(numarr)
       yyrszss.setOption({
-         label: {
-            show: true,
-            position: 'top',
-            color: '#333'
+        label: {
+          show: true,
+          position: "top",
+          color: "#333",
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow"
-          }
+            type: "shadow",
+          },
         },
         xAxis: {
           type: "category",
-          data: this.datearr
+          data: datearr,
         },
         yAxis: {
-          type: "value"
+          type: "value",
         },
         series: [
           {
-            data: this.yyrsarr,
-            type: "line"
-          }
-        ]
+            data: numarr,
+            type: "line",
+          },
+        ],
       });
     },
     getDay(day) {
       this.datearr = [];
-      for (var i = 0; i < day; i++) {
-        var today = new Date();
-        var targetday_milliseconds = today.getTime() - 1000 * 60 * 60 * 24 * i;
-        today.setTime(targetday_milliseconds);
-        var tYear = today.getFullYear();
-        var tMonth = today.getMonth();
-        var tDate = today.getDate();
-        tMonth = this.doHandleMonth(tMonth + 1);
-        tDate = this.doHandleMonth(tDate);
-        if (new Date(tYear + "/" + tMonth + "/" + tDate) <= new Date()) {
-          this.datearr[i] = tYear + "-" + tMonth + "-" + tDate;
-        }
-      }
+      var today = new Date();
+      var myDate = new Date();
+      var targetday_milliseconds =
+        today.getTime() - 1000 * 60 * 60 * 24 * (day - 1);
+      today.setTime(targetday_milliseconds);
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      this.datevalue[1]=myDate.getFullYear()+'-'+(myDate.getMonth()+1)+'-'+myDate.getDate()
+      this.datevalue[0]=tYear + "-" + tMonth + "-" + tDate
+      console.log(this.datevalue)
       this.getyysr();
     },
     getDay2() {
-      this.datearr = [];
-      var i = 0;
-      var startTime = this.datevalue[0];
-      var endTime = this.datevalue[1];
-      while (endTime.getTime() - startTime.getTime() >= 0) {
-        var year = startTime.getFullYear();
-        var month =
-          (startTime.getMonth() + 1).toString().length == 1
-            ? "0" + (startTime.getMonth() + 1).toString()
-            : (startTime.getMonth() + 1).toString();
-        var day =
-          startTime.getDate().toString().length == 1
-            ? "0" + startTime.getDate()
-            : startTime.getDate();
-        if (new Date(year + "/" + month + "/" + day) <= new Date()) {
-          this.datearr[i] = year + "-" + month + "-" + day;
-        }
-        startTime.setDate(startTime.getDate() + 1);
-        i += 1;
-      }
-      var arr = [];
-      var j = this.datearr.length;
-      for (var i = 0; i < this.datearr.length; i++) {
-        arr[i] = this.datearr[j - 1];
-        j--;
-      }
-      this.datearr = arr;
+      console.log(this.datevalue)
       this.getyysr();
     },
     getyysr() {
-      this.datevalue[0] = this.datearr[this.datearr.length - 1];
-      this.datevalue[1] = this.datearr[0];
       var data = {};
-      data.array = JSON.stringify(this.datearr);
+      data.starttime=this.datevalue[0]
+      data.endtime=this.datevalue[1]
       data.storeid = this.storeid;
-      data.coachid = this.coachid1;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/CAnalysis/getNumberofreservation",
+          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP7Q3I",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.yyrsarr = res.data;
-          this.yyrszs();
+         this.yyrsarr=res.data.rows
+         this.yyrszs()
         });
     },
     doHandleMonth(month) {
@@ -794,14 +782,14 @@ export default {
       this.getKCFX();
       setTimeout(this.daochuexcel, 9000);
       this.listQuery.limit = 20;
-      setTimeout(this.getKCFX,9500);
+      setTimeout(this.getKCFX, 9500);
     },
     daochuexcel() {
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
       const wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
-        type: "array"
+        type: "array",
       });
       try {
         FileSaver.saveAs(
@@ -811,8 +799,8 @@ export default {
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
