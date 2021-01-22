@@ -6,9 +6,9 @@
 
     <el-tabs type="border-card" style="margin-top:20px">
       <el-tab-pane label="收入增势">
-        <el-button style="margin-top:5px" @click="changeDays(7)" v-model="sevenday">近7天</el-button>
-        <el-button style="margin-top:5px"  @click="changeDays(15)">近15天</el-button>
-        <el-button style="margin-top:5px"  @click="changeDays(30)">近30天</el-button>
+        <el-button v-model="sevenday" style="margin-top:5px" @click="changeDays(7)">近7天</el-button>
+        <el-button style="margin-top:5px" @click="changeDays(15)">近15天</el-button>
+        <el-button style="margin-top:5px" @click="changeDays(30)">近30天</el-button>
         <el-date-picker
           v-model="date1"
           style="margin-top:5px"
@@ -29,25 +29,25 @@
         <el-button>近7天</el-button>
         <el-button>近15天</el-button>
         <el-button>近30天</el-button>
-          <!-- <el-form-item label="活动开始时间" > -->
-            <el-date-picker
-              v-model="datevalue2"
-              type="daterange"
-              placeholder="开始时间"
-              style="width:270px;"
-              @change="topase1()"
-            />
-          <!-- </el-form-item> -->
+        <!-- <el-form-item label="活动开始时间" > -->
+        <el-date-picker
+          v-model="datevalue2"
+          type="daterange"
+          placeholder="开始时间"
+          style="width:270px;"
+          @change="topase1()"
+        />
+        <!-- </el-form-item> -->
 
-          <!-- <el-form-item label="结束时间" > -->
-            <el-date-picker
-              v-model="datevalue2"
-              type="daterange"
-              placeholder="结束时间"
-              style="width:270px;"
-              @change="topase2()"
-            />
-          <!-- </el-form-item> -->
+        <!-- <el-form-item label="结束时间" > -->
+        <el-date-picker
+          v-model="datevalue2"
+          type="daterange"
+          placeholder="结束时间"
+          style="width:270px;"
+          @change="topase2()"
+        />
+        <!-- </el-form-item> -->
 
         <el-select v-model="xsvalue" placeholder="销售人员" style="margin-top:5px">
           <el-option
@@ -107,7 +107,7 @@ export default {
             day:'',
             sevenday:7,
             jdvalue:'',
-            amount:[],
+            amount:[]
         }
     },
     created(){
@@ -161,7 +161,7 @@ export default {
         },
         srzs(){
             if(this.daySearch==false){
-                var day=this.datedifference(this.date1[0] ,this.date1[1] )
+                var day=this.datedifference(this.date1[0], this.date1[1] )
                 this.day=day
                 console.log("rwerijojei")
             }
@@ -198,7 +198,7 @@ export default {
                     name: '日期',
                     type: 'category',
                     data: this.dateArray,
-                    boundaryGap: false,
+                    boundaryGap: false
                 },
                 yAxis: {
                     type: 'value'
@@ -215,7 +215,7 @@ export default {
                 series: [{
                     name: '营收金额',
                     data: this.amount,
-                    type: 'line',
+                    type: 'line'
                 }]
             })
             });
@@ -297,7 +297,6 @@ export default {
             //     }
             // ]
             // })\
-    
         },
         hykxs(){
             const hykxss = this.$echarts.init(document.getElementById('tab2-1'))
@@ -377,7 +376,7 @@ export default {
                     this.storeid=this.theAllstores[0].id
                 })
             }    
-        },
+        }
 
     }
     

@@ -1,14 +1,14 @@
 <template>
   <div id="container" style="padding: 15px">
-    <el-button v-if="allstore" @click="toGetAllStoreUser()"
-      >全部运动馆</el-button
-    >
+    <el-button
+      v-if="allstore"
+      @click="toGetAllStoreUser()"
+    >全部运动馆</el-button>
     <el-button
       v-for="(item, index) in theAllstores"
       :key="index"
       @click="toGetAllByStore(item.id)"
-      >{{ item.name }}</el-button
-    >
+    >{{ item.name }}</el-button>
 
     <el-tabs type="border-card" style="margin-top: 20px">
       <el-select v-model="coachid1" placeholder="全部教练" @change="getTest">
@@ -318,7 +318,7 @@ export default {
       allstore: false,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 20
       },
       total: 0,
       kcmcinput: "",
@@ -326,12 +326,12 @@ export default {
       options: [
         {
           value: "团课",
-          label: "团课",
+          label: "团课"
         },
         {
           value: "私教",
-          label: "私教",
-        },
+          label: "私教"
+        }
       ],
       kclxvalue: "",
       courseitems: {},
@@ -347,7 +347,7 @@ export default {
       skrsall: [],
       PersontimesandClassnumber: [],
       Amountoflessonssold: [],
-      yyrsarr: [],
+      yyrsarr: []
     };
   },
   mounted() {
@@ -494,7 +494,7 @@ export default {
       var loginname = localStorage.getItem("username");
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           var roleid = localStorage.getItem("roleid");
@@ -524,7 +524,7 @@ export default {
     getAllCoach() {
       this.$axios
         .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.theAllCoach = res.data.rows;
@@ -536,36 +536,36 @@ export default {
         label: {
           show: true,
           position: "right",
-          color: "#333",
+          color: "#333"
         },
         title: {
           text:
             "已上课程数:" +
             (parseInt(this.PersontimesandClassnumber.numberofgrouplessons) +
-              parseInt(this.PersontimesandClassnumber.numberofprivatelessons)),
+              parseInt(this.PersontimesandClassnumber.numberofprivatelessons))
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
         legend: {
-          data: ["团课", "私教"],
+          data: ["团课", "私教"]
         },
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: ["实到人次", "预约人次", "总节数"],
+          data: ["实到人次", "预约人次", "总节数"]
         },
         series: [
           {
@@ -574,8 +574,8 @@ export default {
             data: [
               this.PersontimesandClassnumber.tNumberofsignin,
               this.PersontimesandClassnumber.tNumberofreservations,
-              this.PersontimesandClassnumber.numberofgrouplessons,
-            ],
+              this.PersontimesandClassnumber.numberofgrouplessons
+            ]
           },
           {
             name: "私教",
@@ -583,10 +583,10 @@ export default {
             data: [
               this.PersontimesandClassnumber.pNumberofsignin,
               this.PersontimesandClassnumber.pNumberofreservations,
-              this.PersontimesandClassnumber.numberofprivatelessons,
-            ],
-          },
-        ],
+              this.PersontimesandClassnumber.numberofprivatelessons
+            ]
+          }
+        ]
       });
     },
     ckxkzje() {
@@ -604,38 +604,38 @@ export default {
         label: {
           show: true,
           position: "right",
-          color: "#333",
+          color: "#333"
         },
         title: {
-          text: "次卡销课总金额:" + courseamountarr.toFixed(2),
+          text: "次卡销课总金额:" + courseamountarr.toFixed(2)
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: coursetitle,
+          data: coursetitle
         },
         series: [
           {
             name: "消课总金额",
             type: "bar",
-            data: courseamount,
-          },
-        ],
+            data: courseamount
+          }
+        ]
       });
     },
     skrs() {
@@ -644,7 +644,7 @@ export default {
         label: {
           show: true,
           position: "right",
-          color: "#333",
+          color: "#333"
         },
         title: {
           text:
@@ -655,28 +655,28 @@ export default {
               this.skrsall.Classes4 +
               this.skrsall.Classes3 +
               this.skrsall.Classes2 +
-              this.skrsall.Classes1),
+              this.skrsall.Classes1)
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
 
         grid: {
           left: "3%",
           right: "10%",
           bottom: "3%",
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "value",
-          boundaryGap: [0, 0.01],
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
           type: "category",
-          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"],
+          data: ["7次以上", "6次", "5次", "4次", "3次", "2次", "1次"]
         },
         series: [
           {
@@ -689,10 +689,10 @@ export default {
               this.skrsall.Classes4,
               this.skrsall.Classes3,
               this.skrsall.Classes2,
-              this.skrsall.Classes1,
-            ],
-          },
-        ],
+              this.skrsall.Classes1
+            ]
+          }
+        ]
       });
     },
     yyrszs() {
@@ -701,7 +701,7 @@ export default {
       var numarr=[] 
       console.log(this.yyrsarr)
       for (var i=0;i<this.yyrsarr.length;i++){
-        datearr.push((this.yyrsarr[i].datearr).substring(0,10))
+        datearr.push((this.yyrsarr[i].datearr).substring(0, 10))
         numarr.push(this.yyrsarr[i].numarr)
       }
       console.log(datearr)
@@ -710,27 +710,27 @@ export default {
         label: {
           show: true,
           position: "top",
-          color: "#333",
+          color: "#333"
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
-          },
+            type: "shadow"
+          }
         },
         xAxis: {
           type: "category",
-          data: datearr,
+          data: datearr
         },
         yAxis: {
-          type: "value",
+          type: "value"
         },
         series: [
           {
             data: numarr,
-            type: "line",
-          },
-        ],
+            type: "line"
+          }
+        ]
       });
     },
     getDay(day) {
@@ -789,7 +789,7 @@ export default {
       const wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
-        type: "array",
+        type: "array"
       });
       try {
         FileSaver.saveAs(
@@ -799,8 +799,8 @@ export default {
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
