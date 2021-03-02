@@ -201,6 +201,7 @@
                   <el-button type="primary" @click="toTrueClose()">确 定</el-button>
                 </div>
               </el-dialog>
+            
 
               <el-button v-if="scope.row.status==1" type="text" @click="updateToDisEn(scope.row.status,scope.row.storeid,scope.$index)">禁用</el-button>
               <el-button v-if="scope.row.status==0" type="text" @click="updateToDisEn(scope.row.status,scope.row.storeid,scope.$index)">恢复</el-button>

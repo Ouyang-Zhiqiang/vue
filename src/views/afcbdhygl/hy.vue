@@ -275,7 +275,6 @@
                     <el-radio v-model="form3.memgrade" label="3">Lv3</el-radio>
                     <el-radio v-model="form3.memgrade" label="4">Lv4</el-radio>
                   </el-form-item>
-                  
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisible3 = false">取 消</el-button>
@@ -548,7 +547,6 @@ export default {
                 this.listLoading=false
                   }
               });
-            
             }
           }else if(this.clickStore){
             console.log('条件三')
