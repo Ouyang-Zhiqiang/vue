@@ -89,7 +89,7 @@
               margin-top: 2px;
             "
           >
-            {{ item.reservablenumber }}/{{ item.reservablenumber }}
+            {{ item.reservednumber }}/{{ item.reservablenumber }}
           </span>
         </div>
         <el-table

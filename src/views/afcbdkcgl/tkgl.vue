@@ -458,7 +458,6 @@ export default {
             this.formList.push(this.form5)
             this.formList.push(this.form6)
             this.formList.push(this.form7)
-            console.log(this.form)
             if(this.form.storeid==''||this.form.hourse==''||this.form.minutes==''){
                 alert('请检查未填信息')
             }else{
@@ -624,5 +623,8 @@ export default {
     }
     .Team{
        background:#82c3db;
+    }
+    .舞蹈工作坊{
+      background:#d7699b;
     }
 </style>
