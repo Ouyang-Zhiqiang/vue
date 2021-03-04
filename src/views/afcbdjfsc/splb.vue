@@ -192,8 +192,7 @@ export default {
       insertimg(){
         console.log(this.obj);
         this.obj.resid=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000);
-      this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEC0X7H', this.$qs.stringify(this.obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-        alert("2")
+        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEC0X7H', this.$qs.stringify(this.obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.$message({
             message: '恭喜你，操作成功',
             type: 'success'
@@ -204,27 +203,29 @@ export default {
     },
       toTrueCloseInsert(){
         this.insertimg();
-        // if(this.spmGoodList.resurl==''){
-        //   this.$message.warning('请添加图片');
-        // }else{
-          // this.spmGoodList.goodscode=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000);
+        if(this.spmGoodList.resurl==''){
+          this.$message.warning('请添加图片');
+        }else{
+          this.spmGoodList.goodscode=(new Date()).valueOf()+''+Math.ceil(Math.random()*10000);
           
-          //  this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLPM575', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          //    console.log(res.data.goodscode)
-                // this.spmGoodList.sequm=res.data.goodscode
-                  // this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLPM30R', this.$qs.stringify( this.spmGoodList), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                  //   this.$message({
-                  //       message: '恭喜你，操作成功',
-                  //       type: 'success'
-                  //     })
-                  //   }).catch(error=>{
-                  //     this.$message.error('错了哦，这是一条错误消息');
-                  // });
-            // }).catch(error=>{
-            //     this.$message.error('错了哦，这是一条错误消息');
-            // });
+           this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLPM575', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+             console.log(res.data.goodscode)
+                this.spmGoodList.sequm=res.data.goodscode
+                this.spmGoodList.resid=this.obj.resid
+                this.spmGoodList.imgurl=this.obj.imgurl
+                  this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLPM30R', this.$qs.stringify( this.spmGoodList), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.$message({
+                        message: '恭喜你，操作成功',
+                        type: 'success'
+                      })
+                    }).catch(error=>{
+                      this.$message.error('错了哦，这是一条错误消息');
+                  });
+            }).catch(error=>{
+                this.$message.error('错了哦，这是一条错误消息');
+            });
           
-        // }
+        }
         // this.dialogFormVisible1=false
       },
       getAllSp(data){
