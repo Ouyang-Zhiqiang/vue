@@ -17,13 +17,17 @@
           :value="item.userid"
         />
       </el-select>
-      <el-button type="success" style="margin-left: 30px" @click="toClickSearch"
-        >查询</el-button
-      >
+      <el-button
+        type="success"
+        style="margin-left: 30px"
+        @click="toClickSearch"
+      >查询</el-button>
 
-      <el-button type="success" style="margin-left: 30px" @click="toOpen"
-        >排课</el-button
-      >
+      <el-button
+        type="success"
+        style="margin-left: 30px"
+        @click="toOpen"
+      >排课</el-button>
       <el-dialog
         title="排课"
         :visible.sync="dialogFormVisible"
@@ -56,16 +60,14 @@
                 :key="item"
                 :label="item"
                 :value="item"
-              /> </el-select
-            ><span style="float: left; padding: 0 5px">点</span>
+              /> </el-select><span style="float: left; padding: 0 5px">点</span>
             <el-select v-model="form.minutes" style="width: 100px; float: left">
               <el-option
                 v-for="item in startMinute"
                 :key="item"
                 :label="item"
                 :value="item"
-              /> </el-select
-            ><span style="float: left; padding: 0 5px">分</span>
+              /> </el-select><span style="float: left; padding: 0 5px">分</span>
           </el-form-item>
 
           <div style="width: 100%; height: 300px">
@@ -467,10 +469,11 @@
         </div>
       </el-dialog>
 
-      <br />
-      <el-button style="margin-top: 15px; float: left" @click="preWeek()"
-        >上周</el-button
-      >
+      <br>
+      <el-button
+        style="margin-top: 15px; float: left"
+        @click="preWeek()"
+      >上周</el-button>
       <el-button
         style="
           margin-top: 15px;
@@ -479,8 +482,7 @@
           margin-left: 20px;
         "
         @click="nextWeek()"
-        >下周</el-button
-      >
+      >下周</el-button>
       <div style="clear: both" />
 
       <el-calendar
@@ -507,7 +509,7 @@
               <div
                 v-if="
                   item.coursename.substring(0, item.coursename.indexOf('_')) ==
-                  'Game Day'
+                    'Game Day'
                 "
                 style="
                   height: 120px;
@@ -519,19 +521,17 @@
                 "
                 class="GameDay"
               >
-                <span style="display: block"
-                  >{{ item.schedulebegin }}-{{ item.scheduleend }}</span
-                ><br />
-                <span style="padding-bottom: 5px">{{ item.coursename }}</span
-                ><br />
-                <span style="padding-bottom: 5px">{{ item.coachname }}</span
-                ><br />
-                <span style="padding-bottom: 5px"
-                  >约{{ item.reservednumber }}/{{ item.reservablenumber }}</span
-                ><br />
-                <span style="padding-bottom: 5px"
-                  >到{{ item.signednumber }}</span
-                >
+                <span
+                  style="display: block"
+                >{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
+                <span style="padding-bottom: 5px">{{ item.coursename }}</span><br>
+                <span style="padding-bottom: 5px">{{ item.coachname }}</span><br>
+                <span
+                  style="padding-bottom: 5px"
+                >约{{ item.reservednumber }}/{{ item.reservablenumber }}</span><br>
+                <span
+                  style="padding-bottom: 5px"
+                >到{{ item.signednumber }}</span>
               </div>
               <div
                 v-else
@@ -547,19 +547,17 @@
                   margin-bottom: 5px;
                 "
               >
-                <span style="display: block"
-                  >{{ item.schedulebegin }}-{{ item.scheduleend }}</span
-                ><br />
-                <span style="padding-bottom: 5px">{{ item.coursename }}</span
-                ><br />
-                <span style="padding-bottom: 5px">{{ item.coachname }}</span
-                ><br />
-                <span style="padding-bottom: 5px"
-                  >约{{ item.reservednumber }}/{{ item.reservablenumber }}</span
-                ><br />
-                <span style="padding-bottom: 5px"
-                  >到{{ item.signednumber }}</span
-                >
+                <span
+                  style="display: block"
+                >{{ item.schedulebegin }}-{{ item.scheduleend }}</span><br>
+                <span style="padding-bottom: 5px">{{ item.coursename }}</span><br>
+                <span style="padding-bottom: 5px">{{ item.coachname }}</span><br>
+                <span
+                  style="padding-bottom: 5px"
+                >约{{ item.reservednumber }}/{{ item.reservablenumber }}</span><br>
+                <span
+                  style="padding-bottom: 5px"
+                >到{{ item.signednumber }}</span>
               </div>
             </div>
           </div>
@@ -610,7 +608,7 @@ export default {
         "20",
         "21",
         "22",
-        "23",
+        "23"
       ],
       startMinute: ["00", "05", "15", "30", "45"],
       stores: [],
@@ -619,7 +617,7 @@ export default {
       strenth: [
         { label: 1, value: 1 },
         { label: 2, value: 2 },
-        { label: 3, value: 3 },
+        { label: 3, value: 3 }
       ],
       teamCourse: [],
       putForm: [],
@@ -630,7 +628,7 @@ export default {
         coachid: "",
         cid: "",
         strenth: "",
-        sid: "",
+        sid: ""
       },
       form2: {},
       form3: {},
@@ -645,7 +643,7 @@ export default {
       strenthNumberArr4: [],
       strenthNumberArr5: [],
       strenthNumberArr6: [],
-      strenthNumberArr7: [],
+      strenthNumberArr7: []
     };
   },
   created() {
@@ -661,8 +659,8 @@ export default {
       this.$router.push({
         path: "/afcbdkcgl/tkkcxx",
         query: {
-          item: e,
-        },
+          item: e
+        }
       });
     },
     getWeek(currentDay) {
@@ -707,7 +705,7 @@ export default {
       var roleid = localStorage.getItem("roleid");
       this.$axios
         .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           if (
@@ -740,7 +738,7 @@ export default {
     getAllCoach() {
       this.$axios
         .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           var obj = { userid: "", name: "全部教练" };
@@ -751,7 +749,7 @@ export default {
     getAllCoachs() {
       this.$axios
         .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.coachs = res.data;
@@ -776,7 +774,7 @@ export default {
     getAllCourse() {
       this.$axios
         .post("https://www.facebodyfitness.com/web/new/getCourseAll", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.courseType = res.data;
@@ -1039,14 +1037,14 @@ export default {
         .then((res) => {
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

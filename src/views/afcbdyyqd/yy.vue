@@ -116,32 +116,18 @@ export default {
     this.restaurants = this.loadAll();
   },
   onLoad() {
-    this.getAllUsers();
+    // this.getAllUsers();
   },
   methods: {
-    getUsers(e) {
-      var data = { name: "" };
-      data.name = e;
-      this.$axios
-        .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
-          this.$qs.stringify(data),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        )
-        .then((res) => {
-          this.jfarr = res.data.rows;
-          this.listLoading = false;
-        });
-    },
-    getAllUsers() {
-      this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        })
-        .then((res) => {
-          this.results = res.data.rows;
-        });
-    },
+    // getAllUsers() {
+    //   this.$axios
+    //     .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
+    //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    //     })
+    //     .then((res) => {
+    //       this.results = res.data.rows;
+    //     });
+    // },
 
     onSubmit() {
       this.form.storename = this.query.storename;
@@ -187,24 +173,17 @@ export default {
       }
     },
     querySearchAsync(queryString, cb) {
-      // var restaurants = this.restaurants;
-      // var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-
-      // clearTimeout(this.timeout);
-      // this.timeout = setTimeout(() => {
-      //   cb(results);
-      // }, 3000 * Math.random());
       var data = {};
       data.name = queryString;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
+          "http://localhost:8081/web/new/setUser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          var results = res.data.rows;
-          // console.log(results)
+          var results = res.data;
+          console.log(results)
           cb(results);
         });
     },

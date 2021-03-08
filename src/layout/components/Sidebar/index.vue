@@ -108,7 +108,7 @@ export default {
                   var mylist=[]
                   menus.forEach((item)=>{
                     item.roles=item.roles.substr(1)
-                    item.roles=item.roles.substr(0,item.roles.length-1)
+                    item.roles=item.roles.substr(0, item.roles.length-1)
                     item.roles=item.roles.split(',')
                     if(item.roles==null){
                     }else{
