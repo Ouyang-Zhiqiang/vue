@@ -79,7 +79,7 @@
                 <span>暂不开卡</span>&nbsp;&nbsp;&nbsp;
               </el-radio>
  
-              <el-radio v-model="xuka.isopen" value="1"  label="1" style="display:block;margin-top:10px">
+              <el-radio v-model="xuka.isopen" value="1" label="1" style="display:block;margin-top:10px">
                 <span>开卡日期</span>&nbsp;&nbsp;&nbsp;<br>
                 <el-date-picker
                   v-model="xuka.mydate"
@@ -146,7 +146,7 @@ export default {
         theAllStores:[],
         bjxs:[],
         xuka:{
-          isopen:'0',
+          isopen:'0'
         },
         tidu:[]
       }
@@ -264,7 +264,11 @@ export default {
 
         this.xuka.cardno=this.guid()
         // console.log(this.xuka)
-        this.insertCard()
+        if(this.xuka.typeid==null||this.xuka.typeid==''||this.xuka.typeid==undefined){
+            this.$message.error('请选择梯度！！！！')
+        }else{
+            this.insertCard()
+        }
       },
       insertCard(){
         var data={}
@@ -275,7 +279,6 @@ export default {
         data.points=Math.round(this.xuka.totalfee)
         this.xuka.createdby=localStorage.getItem('userid')
         this.xuka.createdname=localStorage.getItem('username')
-        console.log(this.xuka)
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNE921', this.$qs.stringify(this.xuka), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.$message({
             message: '恭喜你，操作成功',
@@ -287,6 +290,16 @@ export default {
             type: 'success'
           })
           });
+        var s={}
+        s.cardno=this.xuka.cardno
+        s.userid=this.user.userid
+          this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/BuyCardSendToDT', this.$qs.stringify(s), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$message({
+            message: '发送成功',
+            type: 'success'
+          })
+          });
+          
           this.$router.push({
               path:'/afcbdhygl/hybk',
               query: {

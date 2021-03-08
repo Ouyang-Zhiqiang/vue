@@ -1103,4 +1103,13 @@ export default {
 .Team {
   background: #82c3db;
 }
+.Zumba{
+  background: #ee740c;
+}
+.Jazz{
+  background: #AC26B9;
+}
+.舞蹈工作坊{
+  background: #73B926;
+}
 </style>

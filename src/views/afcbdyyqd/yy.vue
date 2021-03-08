@@ -60,6 +60,7 @@
         <el-form-item label="人数">
           <el-input-number
             v-model="form.traineenum"
+            min="1"
             style="width: 250px"
           />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人
         </el-form-item>
@@ -101,10 +102,10 @@ export default {
         remarks: "",
         query: {},
         mycards: [],
+        traineenum: 1
       },
       selectedCardno: "",
       cardlist: [],
-      form: { traineenum: 1 },
       type: "",
     };
   },
@@ -145,7 +146,9 @@ export default {
       this.form.createdname = localStorage.getItem("username");
       this.form.lasteby = localStorage.getItem("userid");
       this.form.lastename = localStorage.getItem("username");
-
+      if(this.form.traineenum==''||this.form.traineenum==null||this.form.traineenum<=0){
+        return  this.$message.error("请选择人数！");
+      }
       this.cardlist.forEach((item) => {
         this.form.periodvalidity = item.periodvalidity;
         if (item.cardno == this.selectedCardno) {

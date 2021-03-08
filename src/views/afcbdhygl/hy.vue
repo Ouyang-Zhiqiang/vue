@@ -79,7 +79,7 @@
 
         <el-button type="success" style="margin-top:5px;margin-left:30px" @click="toClickSearch">查询</el-button>
         <el-button type="success" style="margin-top:5px" @click="daochu">导出Excel</el-button>
-        <el-button type="success" style="margin-top:5px" @click="toOpen4">新增会员</el-button>
+        <!-- <el-button type="success" style="margin-top:5px" @click="toOpen4">新增会员</el-button>
         <el-dialog title="新增会员" :visible.sync="dialogFormVisible4" style="width:1200px;margin:0 auto">
           <el-form :model="form4">
             <el-form-item label="姓名" :label-width="formLabelWidth" required>
@@ -122,7 +122,7 @@
             <el-button @click="dialogFormVisible4 = false">取 消</el-button>
             <el-button type="primary" @click="toTrue4()">确 定</el-button>
           </div>
-        </el-dialog>
+        </el-dialog> -->
 
         <el-dialog title="会员编辑" :visible.sync="dialogFormVisible" style="width:1200px;margin:0 auto">
           <el-form :model="form">
@@ -275,7 +275,6 @@
                     <el-radio v-model="form3.memgrade" label="3">Lv3</el-radio>
                     <el-radio v-model="form3.memgrade" label="4">Lv4</el-radio>
                   </el-form-item>
-                  
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="dialogFormVisible3 = false">取 消</el-button>
@@ -548,7 +547,6 @@ export default {
                 this.listLoading=false
                   }
               });
-            
             }
           }else if(this.clickStore){
             console.log('条件三')

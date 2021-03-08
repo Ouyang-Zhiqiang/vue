@@ -313,7 +313,7 @@ export default {
           this.$message.error('错了哦，这是一条错误消息');
         });
     },
-     topase1(){
+    topase1(){
         this.obj.datetime=this.obj.datetime.toLocaleDateString().replace(/\//g, '-')
     },
     topase2(){
