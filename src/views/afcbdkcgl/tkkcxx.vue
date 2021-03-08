@@ -101,7 +101,7 @@
         </el-form-item>
          
         <el-form-item label="教练:" :label-width="formLabelWidth" required>
-          <el-select v-model="form.coachid" placeholder="全部教练">
+          <el-select v-model="form.coachname" placeholder="全部教练">
             <el-option
               v-for="item in options2"
               :key="item.userid"
@@ -157,7 +157,7 @@ export default {
         thiscoachname:'',
         storename:'',
         coursename:'',
-        coachid: "B",
+        coachid: "",
         coachname:'',
         hourse:'',
         courseduration:'60',
@@ -176,6 +176,7 @@ export default {
   },
   created() {
     this.query = this.$route.query.item;
+    console.log(this.query)
     this.getusers();
     this.getAllCoach();
   },
@@ -201,12 +202,12 @@ export default {
   
     getAllCoach() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          var obj = { userid: "B", name: "全部教练" };
-          this.options2 = res.data.rows;
+          var obj = { userid: "", name: "全部教练" };
+          this.options2 = res.data;
           this.options2.unshift(obj);
         });
     },
@@ -215,7 +216,7 @@ export default {
       data.reservablenumber=this.reservablenumber
       data.scheduleid=this.query.scheduleid
         this.$axios.post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6MHQ",
+          "https://www.facebodyfitness.com/web/new/upreservablenumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -239,12 +240,12 @@ export default {
       var data={}
       data.scheduleid=this.query.scheduleid
           this.$axios.post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6MQK",
+          "https://www.facebodyfitness.com/web/new/getReservablenumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.reservablenumber=res.data.rows[0].reservablenumber
+          this.reservablenumber=res.data.reservablenumber
         });
     },
     getusers() {
@@ -300,43 +301,45 @@ export default {
     },
     cancleord(e, coachid) {
       e.coachid = this.query.coachid; //取消预约
+      
       var obj = {};
       obj = e;
+      console.log(obj)
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
+          "https://www.facebodyfitness.com/web/new/cancelReservation",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.cancleThenSend(obj);
-          this.getusers();
-          this.getreservablenumber();
-          this.$message({
-            message: "恭喜你，操作成功",
-            type: "success"
-          });
+          // this.cancleThenSend(obj);
+          // this.getusers();
+          // this.getreservablenumber();
+          // this.$message({
+          //   message: "恭喜你，操作成功",
+          //   type: "success"
+          // });
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
-        var teamschedule={}
-        teamschedule.traineenum=e.traineenum
-        teamschedule.scheduleid=this.query.scheduleid
-         this.$axios
-        .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6TV3",
-          this.$qs.stringify(teamschedule),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        ).then((res) => {
-          this.$message({
-            message: "恭喜你，操作成功",
-            type: "success"
-          });
-        })
-        .catch((error) => {
-          this.$message.error("错了哦，这是一条错误消息");
-        });
+      //   var teamschedule={}
+      //   teamschedule.traineenum=e.traineenum
+      //   teamschedule.scheduleid=this.query.scheduleid
+      //    this.$axios
+      //   .post(
+      //     "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6TV3",
+      //     this.$qs.stringify(teamschedule),
+      //     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      //   ).then((res) => {
+      //     this.$message({
+      //       message: "恭喜你，操作成功",
+      //       type: "success"
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     this.$message.error("错了哦，这是一条错误消息");
+      //   });
     },
     cancleThenSend(obj) {
       this.$axios

@@ -9,7 +9,12 @@
       label-position="left"
     >
       <div class="title-container">
-        <h1 class="title" style="color:white;margin-top:200px;margin-left:820px">FaceBody颜身管理系统</h1>
+        <h1
+          class="title"
+          style="color: white; margin-top: 200px; margin-left: 820px"
+        >
+          FaceBody颜身管理系统
+        </h1>
       </div>
       <el-tabs v-model="activeName">
         <el-tab-pane label="验证码登录" name="first">
@@ -38,7 +43,8 @@
                   size="mini"
                   :loading="sendboolean"
                   @click="sendPhone"
-                >发送验证码</el-button>
+                  >发送验证码</el-button
+                >
               </span>
             </el-form-item>
           </el-tooltip>
@@ -72,13 +78,14 @@
               </span>
             </el-form-item>
           </el-tooltip>
-          <br>
+          <br />
           <el-button
             :loading="loading"
             type="primary"
             style="width: 100%; margin-bottom: 35px"
             @click.native.prevent="handleLogin"
-          >登录</el-button>
+            >登录</el-button
+          >
         </el-tab-pane>
         <el-tab-pane label="微信登录" name="second">
           <div id="weixin" style="width: 300px; text-align: center" />
@@ -116,19 +123,19 @@ export default {
       sendboolean: false,
       loginForm: {
         username: "",
-        password: ""
+        password: "",
       },
       trueForm: {
         username: "",
-        password: ""
+        password: "",
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", validator: validateUsername }
+          { required: true, trigger: "blur", validator: validateUsername },
         ],
         password: [
-          { required: true, trigger: "blur", validator: validatePassword }
-        ]
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
       passwordType: "password",
       capsTooltip: false,
@@ -136,7 +143,7 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      activeName: "first"
+      activeName: "first",
     };
   },
   watch: {
@@ -148,8 +155,8 @@ export default {
           this.otherQuery = this.getOtherQuery(query);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {},
   mounted() {
@@ -209,14 +216,14 @@ export default {
       ) {
         localStorage.setItem("myphone", "admin");
         this.$axios
-          .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+          .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
           })
           .then((res) => {
             var storeid = "";
-            res.data.rows.forEach((item) => {
-              storeid += item.id + ",";
-            });
+            for (var i = 0; i < res.data.length; i++) {
+              storeid += res.data[i].id + ",";
+            }
             localStorage.setItem("storeid", storeid);
             localStorage.setItem("userid", "系统管理员");
             localStorage.setItem("username", "系统管理员");
@@ -232,7 +239,7 @@ export default {
           .then(() => {
             this.$router.push({
               path: this.redirect || "/",
-              query: this.otherQuery
+              query: this.otherQuery,
             });
             this.loading = false;
           })
@@ -248,27 +255,28 @@ export default {
         phonesearch.tel = this.loginForm.username;
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNAA6R",
+            "https://www.facebodyfitness.com/web/new/login",
             this.$qs.stringify(phonesearch),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            localStorage.setItem("roleid", res.data.rows[0].roleid);
-            this.$axios
-              .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                }
-              })
-              .then((res) => {
-                localStorage.setItem("storenumber", res.data.rows[0].count);
-              });
-            if (res.data.rows.length > 0) {
-              localStorage.setItem("username", res.data.rows[0].name);
-              localStorage.setItem("userid", res.data.rows[0].userid);
-              localStorage.setItem("storeid", res.data.rows[0].storeid);
-              localStorage.setItem("resurl", res.data.rows[0].resurl);
-              localStorage.setItem("createdon", res.data.rows[0].createdon);
+            console.log(res)
+            localStorage.setItem("roleid", res.data[0].roleid);
+            // this.$axios
+            //   .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
+            //     headers: {
+            //       "Content-Type": "application/x-www-form-urlencoded",
+            //     },
+            //   })
+            //   .then((res) => {
+                localStorage.setItem("storenumber", 7);
+              // });
+            if (res.data.length > 0) {
+              localStorage.setItem("username", res.data[0].name);
+              localStorage.setItem("userid", res.data[0].userid);
+              localStorage.setItem("storeid", res.data[0].storeid);
+              localStorage.setItem("resurl", res.data[0].resurl);
+              localStorage.setItem("createdon", res.data[0].createdon);
               this.loading = true;
               this.loginForm.username = "admin";
               this.$store
@@ -276,7 +284,7 @@ export default {
                 .then(() => {
                   this.$router.push({
                     path: this.redirect || "/",
-                    query: this.otherQuery
+                    query: this.otherQuery,
                   });
                   this.loading = false;
                 })
@@ -301,7 +309,6 @@ export default {
       }, {});
     },
     wxlogin() {
-      
       const s = document.createElement("script");
       s.type = "text/javascript";
       s.src = "https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js";
@@ -311,9 +318,10 @@ export default {
           id: "weixin", // 需要显示的容器id
           appid: "wx1aac047a48fb2c68", // 公众号appid wx*******
           scope: "snsapi_login", // 网页默认即可
-          redirect_uri: "https://www.facebodyfitness.com/fbadmin/#/login?redirect=%2Fafcbdindex", // 授权成功后回调的url
+          redirect_uri:
+            "https://www.facebodyfitness.com/fbadmin/#/login?redirect=%2Fafcbdindex", // 授权成功后回调的url
           state: Math.ceil(Math.random() * 1000), // 可设置为简单的随机数加session用来校验
-          style: "black" // 提供"black"、"white"可选。二维码的样式
+          style: "black", // 提供"black"、"white"可选。二维码的样式
         });
       };
       const code = qs.parse(window.location.search.substr(1)).code;
@@ -334,8 +342,8 @@ export default {
                   "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R",
                   {
                     headers: {
-                      "Content-Type": "application/x-www-form-urlencoded"
-                    }
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
                   }
                 )
                 .then((res) => {
@@ -354,7 +362,7 @@ export default {
                 .then(() => {
                   this.$router.push({
                     path: this.redirect || "/",
-                    query: this.otherQuery
+                    query: this.otherQuery,
                   });
                   this.loading = false;
                 })
@@ -366,8 +374,8 @@ export default {
             }
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -398,19 +406,18 @@ export default {
     width: 150px !important;
     text-align: center;
     font-weight: bolder;
-    background: #FDFDFD;
+    background: #fdfdfd;
     border-radius: 5px;
-    
   }
   .el-tabs {
-    background: #FDFDFD;
+    background: #fdfdfd;
     width: 300px;
     height: 440px;
     border-radius: 15px;
     float: right;
-    margin-right:400px;
+    margin-right: 400px;
     margin-top: -20px;
-    opacity:0.85;
+    opacity: 0.85;
   }
 }
 </style>

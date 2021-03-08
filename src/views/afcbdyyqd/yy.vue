@@ -347,31 +347,6 @@ export default {
                     })
                     }
                })
-        //   var param = {};
-        //   param.templatetype = 1;
-        //   param.time = e.coursedate + " " + e.coursetime;
-        //   param.coursename = e.coursename;
-        //   param.userid=this.user.userid;
-        //   console.log(param);
-        //   this.$axios
-        //     .post(
-        //       "http://localhost:8081/web/wxremind/geiWxRemind",
-        //       this.$qs.stringify(param),
-        //       {
-        //         headers: {
-        //           "Content-Type": "application/x-www-form-urlencoded",
-        //         },
-        //       }
-        //     )
-        //     .then((res) => {
-        //       this.$message({
-        //         message: "服务号已发送",
-        //         type: "success",
-        //       });
-        //     })
-        //     .catch((error) => {
-        //       this.$message.error("错了哦，这是一条错误消息");
-        //     });
         });
     },
   },

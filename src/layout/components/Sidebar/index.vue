@@ -43,95 +43,9 @@ export default {
   },
   methods:{
     getRoute(){
-      // var arr = [
-      //   {
-      //       "id": 127,
-      //       "path": "afcbdindex",
-      //       "name": null,
-      //       "hidden": 0,
-      //       "redirect": null,
-      //       "meta": {
-      //           "title": "首页",
-      //           "icon": "excel"
-      //       },
-      //       "children": [
-      //           {
-      //               "id": 139,
-      //               "path": "",
-      //               "name": null,
-      //               "hidden": 0,
-      //               "redirect": null,
-      //               "meta": {
-      //                   "title": "首页",
-      //                   "icon": "excel"
-      //               },
-      //             },
-      //           ]
-      //         },
-      //       {
-      //       "id": 128,
-      //       "path": "afcbdyyqd",
-      //       "name": null,
-      //       "hidden": 0,
-      //       "redirect": null,
-      //       "meta": {
-      //           "title": "预约签到",
-      //           "icon": "excel"
-      //       },
-      //       "children": [
-      //           {
-      //               "id": 138,
-      //               "path": "afcbdyyqd",
-      //               "name": null,
-      //               "hidden": 0,
-      //               "redirect": null,
-      //               "meta": {
-      //                   "title": "预约签到",
-      //                   "icon": "excel"
-      //               },
-      //             },
-      //           ]
-      //         },
-      //         {
-      //       "id": 148,
-      //       "path": "afcbdkcgl",
-      //       "name": null,
-      //       "hidden": 0,
-      //       "redirect": null,
-      //       "meta": {
-      //           "title": "课程管理",
-      //           "icon": "excel"
-      //       },
-      //       "children": [
-      //           {
-      //               "id": 158,
-      //               "path": "kcfx",
-      //               "name": null,
-      //               "hidden": 0,
-      //               "redirect": null,
-      //               "meta": {
-      //                   "title": "课程分析",
-      //                   "icon": "excel"
-      //               },
-      //             },
-      //             {
-      //               "id": 148,
-      //               "path": "tkgl",
-      //               "name": null,
-      //               "hidden": 0,
-      //               "redirect": null,
-      //               "meta": {
-      //                   "title": "团课管理",
-      //                   "icon": "excel"
-      //               },
-      //             },
-      //           ]
-      //         },
-      //     ]
-        // this.menuList=arr
         if(localStorage.getItem('myphone')=='admin'){
-          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNARW9', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            var mylist=res.data.rows
+          this.$axios.post('https://www.facebodyfitness.com/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            var mylist=res.data
             var parentArr=[]
             mylist.forEach(item=>{
               if(item.pid==0){
@@ -183,34 +97,30 @@ export default {
                 }
               }
             })
-            // console.log(parentArr)
-            
             this.menuList=parentArr
           });
         }else{
           var phone={tel:localStorage.getItem('myphone')}
-          this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNAP2D', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-              var myroles=res.data.rows[0].roleid.split(',')
-              // console.log(myroles)
-              this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLNARW9', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                  var menus=res.data.rows
-                  // console.log(menus)
+          this.$axios.post('https://www.facebodyfitness.com/web/new/getRoleid', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              var myroles=res.data.roleid.split(',')
+              this.$axios.post('https://www.facebodyfitness.com/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                  var menus=res.data
                   var mylist=[]
-
                   menus.forEach((item)=>{
-                    item.roles=JSON.parse(item.roles)
+                    item.roles=item.roles.substr(1)
+                    item.roles=item.roles.substr(0,item.roles.length-1)
+                    item.roles=item.roles.split(',')
                     if(item.roles==null){
                     }else{
                       item.roles.forEach(item1=>{
                         myroles.forEach(item3=>{
-                          if(item3==item1.roleid){
+                          if(item3==item1){
                             mylist.push(item)
                           }
                         })
                       })
                     }
                   })
-
                 mylist=this.unique(mylist)
                 var parentArr=[]
                 mylist.forEach(item=>{
@@ -263,8 +173,6 @@ export default {
                     }
                   }
                 })
-                // console.log(parentArr)
-                
                 this.menuList=parentArr
               });
           });
