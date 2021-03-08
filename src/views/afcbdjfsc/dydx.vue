@@ -61,7 +61,7 @@
               <span>{{ scope.row.lastedon }}</span>
             </template>
           </el-table-column>
-        <el-table-column class-name="status-col" label="操作" width="200">
+          <el-table-column class-name="status-col" label="操作" width="200">
             <template slot-scope="scope">
               <span v-if="scope.row.state==0"><el-button type="text" style="margin-top:5px;" @click="clerkExchange(scope.row.orderid)">店员兑换</el-button></span>
               <span v-if="scope.row.state==1">已使用</span>
@@ -148,12 +148,12 @@ export default {
       clickSearch(){
         this.listQuery.page=1
         this.getAllSp(this.listQuery)
-      } ,
+      },
       clerkExchange(orderid){
         this.$confirm("是否继续兑换积分?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
       }) .then(() => {
         var obj={}
         obj.orderId=orderid

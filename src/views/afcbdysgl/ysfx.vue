@@ -187,7 +187,7 @@ export default {
             obj.StartDate=this.date1[0]
             obj.EndDate=this.date1[1]
             obj.days=this.day
-            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart1",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart1", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                 this.amount=res.data
                  for (var row in  this.amount) {
                            this.sumamount=this.sumamount+this.amount[row]
@@ -247,7 +247,7 @@ export default {
                 obj.StartDate=this.date1[0]
                 obj.EndDate=this.date1[1]
                 obj.days=this.day
-                 this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+                 this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                         var accuontJsons =[]
                         accuontJsons = res.data;
                         var category = new Array();
@@ -279,7 +279,7 @@ export default {
                             calculable: true,
                             xAxis: [
                                 {
-                                    type: 'value',
+                                    type: 'value'
                                 }
                             ],
                             yAxis: [
@@ -296,7 +296,6 @@ export default {
                                 }
                             ]
                         });
-                    
                 })
         //         .catch(error=>{
         //     this.$message.error('错了哦，这是一条错误消息');
@@ -348,7 +347,7 @@ export default {
             obj.days=this.day
             obj.SalerId=''
             obj.BuyType=''
-            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/BarChar2",this.$qs.stringify(obj),{ headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/BarChar2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
              var accuontJsons = res.data
                         var nameArray = new Array();
                         var amountArray = new Array();
@@ -366,7 +365,7 @@ export default {
                                 data: ['卡数', '金额']
                             },
                             toolbox: {
-                                show: true,
+                                show: true
                             },
                             calculable: false,
                             xAxis: [
@@ -378,14 +377,14 @@ export default {
                             yAxis: [
                                 {
                                     type: 'category',
-                                    data: nameArray,
+                                    data: nameArray
                                 }
                             ],
                             series: [
                                 {
                                     name: '卡数',
                                     type: 'bar',
-                                    data: countArray,
+                                    data: countArray
 
                                 },
                                 {
@@ -396,7 +395,7 @@ export default {
                                         normal: {
                                             color: '#2f5395'
                                         }
-                                    },
+                                    }
                                 }
                             ]
             })

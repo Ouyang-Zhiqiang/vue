@@ -16,10 +16,8 @@
           <img
             :src="user.imgurl"
             style="width: 70px; height: 70px; border-radius: 50%; float: left"
-          />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.name }}</span
-          >&nbsp;&nbsp;&nbsp;&nbsp;<span v-show="user.name == 0">男</span
-          ><span v-show="user.name == 1">女</span><br />
+          >
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span v-show="user.name == 0">男</span><span v-show="user.name == 1">女</span><br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.tel }}</span>
         </el-form-item>
 
@@ -32,27 +30,23 @@
                 v-model="selectedCardno"
                 :label="item.cardno"
               >
-                <span>{{ item.cardname }}</span
-                >&nbsp;&nbsp;&nbsp;
-                <span v-if="item.isopen == true"
-                  >{{ item.cardbegin }}~{{ item.cardend }}</span
-                >
+                <span>{{ item.cardname }}</span>&nbsp;&nbsp;&nbsp;
+                <span
+                  v-if="item.isopen == true"
+                >{{ item.cardbegin }}~{{ item.cardend }}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span
                   v-if="
                     item.isopen == false ||
-                    item.isopen == '' ||
-                    item.isopen == null
+                      item.isopen == '' ||
+                      item.isopen == null
                   "
-                  >未开卡</span
-                >
+                >未开卡</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span v-if="item.cardtype == 'S'">{{ item.curtimes }}次</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span v-if="item.cardtype == 'S'">次卡</span
-                >&nbsp;&nbsp;&nbsp;&nbsp;
-                <span v-if="item.cardtype == 'P'">期卡</span
-                >&nbsp;&nbsp;&nbsp;&nbsp;
+                <span v-if="item.cardtype == 'S'">次卡</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span v-if="item.cardtype == 'P'">期卡</span>&nbsp;&nbsp;&nbsp;&nbsp;
               </el-radio>
             </div>
           </template>
@@ -106,7 +100,7 @@ export default {
       },
       selectedCardno: "",
       cardlist: [],
-      type: "",
+      type: ""
     };
   },
   created() {
@@ -216,8 +210,8 @@ export default {
                 this.$qs.stringify(this.user),
                 {
                   headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                  },
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  }
                 }
               )
               .then((res) => {
@@ -228,8 +222,8 @@ export default {
                     this.$qs.stringify(this.user),
                     {
                       headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                      },
+                        "Content-Type": "application/x-www-form-urlencoded"
+                      }
                     }
                   )
                   .then((res) => {
@@ -258,7 +252,7 @@ export default {
           .then((res) => {
             this.$message({
               message: "开卡成功",
-              type: "success",
+              type: "success"
             });
           })
           .catch((error) => {
@@ -275,7 +269,7 @@ export default {
           .then((res) => {
             this.$message({
               message: "修改团课人数成功",
-              type: "success",
+              type: "success"
             });
           })
           .catch((error) => {
@@ -291,7 +285,7 @@ export default {
           .then((res) => {
             this.$message({
               message: "修改私教人数成功",
-              type: "success",
+              type: "success"
             });
           })
           .catch((error) => {
@@ -309,7 +303,7 @@ export default {
           this.form = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
 
           var uid={userid:''}
@@ -330,8 +324,8 @@ export default {
                     }
                })
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
