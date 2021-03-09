@@ -251,8 +251,8 @@ export default {
         })
       },
       getAllcourse(){
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVCN9', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-            this.list=res.data.rows
+        this.$axios.post('https://www.facebodyfitness.com/web/new/getAllcourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.list=res.data
         })
       },
       handleSuccess(file){

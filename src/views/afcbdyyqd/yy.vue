@@ -174,7 +174,7 @@ export default {
       data.name = queryString;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/setUser",
+          "https://www.facebodyfitness.com/web/new/setUser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
