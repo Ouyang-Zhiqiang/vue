@@ -195,7 +195,11 @@ export default {
       data.name = queryString;
       this.$axios
         .post(
+<<<<<<< HEAD
           "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
+=======
+          "https://www.facebodyfitness.com/web/new/setUser",
+>>>>>>> e8222bbd012a9c76f4646b3eb97c667693b60800
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
