@@ -493,7 +493,7 @@ export default {
     getAllStore() {
       var loginname = localStorage.getItem("username");
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
+        .post("http://localhost:8081/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -505,10 +505,10 @@ export default {
               roleid.search("2018053014114510000") != -1)
           ) {
             this.allstore = true;
-            this.theAllstores = res.data.rows;
+            this.theAllstores = res.data;
           } else {
             var userStore = localStorage.getItem("storeid").split(",");
-            var storeArr = res.data.rows;
+            var storeArr = res.data;
             userStore.forEach((item1) => {
               storeArr.forEach((item) => {
                 if (item1 == item.id) {
@@ -523,11 +523,11 @@ export default {
     },
     getAllCoach() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
+        .post("http://localhost:8081/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          this.theAllCoach = res.data.rows;
+          this.theAllCoach = res.data;
         });
     },
     yskcs() {
