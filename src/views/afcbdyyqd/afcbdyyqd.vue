@@ -221,7 +221,7 @@ export default {
       options2: [],  
       options5: [
         {
-          value: "",
+          value: "C",
           label: "全部状态"
         },
         {
@@ -250,8 +250,8 @@ export default {
       courseType: "团课",
       selectForm: {
         storeid:"",
-        coachid: "",
-        status: "",
+        coachid: "B",
+        status: "C",
         day1: "",
         day2: ""
       },
@@ -263,6 +263,7 @@ export default {
     this.toStartDate();
     this.getAllCoach();
     this.getAllStore();
+    // this.getTimeRange('2020-03-04','2020-03-11')
   },
   methods: {
     toStartDate() {
@@ -303,23 +304,30 @@ export default {
       data.storeid = this.selectForm.storeid;
       data.coachid = this.selectForm.coachid;
       data.status = this.selectForm.status;
+
       data.day1 = this.value6[0].toLocaleDateString().replace(/\//g, "-");
       data.day2 = this.value6[1].toLocaleDateString().replace(/\//g, "-");
       this.getTimeRange(data.day1, data.day2);
+
       data.page = this.listQuery.page - 1;
       data.limit = this.listQuery.limit;
       this.listLoading = true;
-      console.log(data)
+      // if(data.status!=null&&data.status!=''){
+      //   if(data.status){
+
+      //   }
+      // }
+      // data.ordstate=
       if(this.courseType=='团课'){
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getTeamschedule",
+          "https://www.facebodyfitness.com/hi/main?hi=24BIUVHG226C",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.list = res.data;
-          this.total = res.data[0].counts;
+          this.list = res.data.rows;
+          this.total = res.data.rows[0].counts;
           this.list.forEach((item) => {
             item.users = JSON.parse(item.users);
           });
@@ -345,19 +353,19 @@ export default {
     getAllStore() {
       var loginname=localStorage.getItem('username')
       this.$axios
-        .post("http://localhost:8081/web/new/getStoreIdAll", {
+        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           var roleid=localStorage.getItem('roleid')
           if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
-             var nostore = { name: "全部运动馆", id: "" };
-             this.options1 = res.data;
+             var nostore = { name: "全部运动馆", id: "A" };
+             this.options1 = res.data.rows;
              this.options1.unshift(nostore);
-             this.selectForm.storeid=''
+             this.selectForm.storeid='A'
           }else{
               var userStore=localStorage.getItem('storeid').split(',')
-              var storeArr=res.data
+              var storeArr=res.data.rows
               userStore.forEach(item1=>{
                 storeArr.forEach(item => {
                       if(item1==item.id){
@@ -367,19 +375,18 @@ export default {
               })
               this.selectForm.storeid=this.options1[0].id
           }
-          console.log(this.options1)
           this.listLoading = true;
           this.getAllTeam();
         });
     },
     getAllCoach() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          var obj = { userid: "", name: "全部教练" };
-          this.options2 = res.data;
+          var obj = { userid: "B", name: "全部教练" };
+          this.options2 = res.data.rows;
           this.options2.unshift(obj);
         });
     },

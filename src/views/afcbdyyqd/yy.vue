@@ -111,18 +111,32 @@ export default {
     this.restaurants = this.loadAll();
   },
   onLoad() {
-    // this.getAllUsers();
+    this.getAllUsers();
   },
   methods: {
-    // getAllUsers() {
-    //   this.$axios
-    //     .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
-    //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    //     })
-    //     .then((res) => {
-    //       this.results = res.data.rows;
-    //     });
-    // },
+    getUsers(e) {
+      var data = { name: "" };
+      data.name = e;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.jfarr = res.data.rows;
+          this.listLoading = false;
+        });
+    },
+    getAllUsers() {
+      this.$axios
+        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then((res) => {
+          this.results = res.data.rows;
+        });
+    },
 
     onSubmit() {
       this.form.storename = this.query.storename;
@@ -170,17 +184,24 @@ export default {
       }
     },
     querySearchAsync(queryString, cb) {
+      // var restaurants = this.restaurants;
+      // var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+      // clearTimeout(this.timeout);
+      // this.timeout = setTimeout(() => {
+      //   cb(results);
+      // }, 3000 * Math.random());
       var data = {};
       data.name = queryString;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/setUser",
+          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          var results = res.data;
-          console.log(results)
+          var results = res.data.rows;
+          // console.log(results)
           cb(results);
         });
     },
@@ -323,6 +344,31 @@ export default {
                     })
                     }
                })
+        //   var param = {};
+        //   param.templatetype = 1;
+        //   param.time = e.coursedate + " " + e.coursetime;
+        //   param.coursename = e.coursename;
+        //   param.userid=this.user.userid;
+        //   console.log(param);
+        //   this.$axios
+        //     .post(
+        //       "https://www.facebodyfitness.com/web/wxremind/geiWxRemind",
+        //       this.$qs.stringify(param),
+        //       {
+        //         headers: {
+        //           "Content-Type": "application/x-www-form-urlencoded",
+        //         },
+        //       }
+        //     )
+        //     .then((res) => {
+        //       this.$message({
+        //         message: "服务号已发送",
+        //         type: "success",
+        //       });
+        //     })
+        //     .catch((error) => {
+        //       this.$message.error("错了哦，这是一条错误消息");
+        //     });
         });
     }
   }
