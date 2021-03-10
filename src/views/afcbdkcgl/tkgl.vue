@@ -763,7 +763,7 @@ export default {
       data.coachid = this.coachid;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getTeamschedule",
+          "http://localhost:8081/web/new/getTeamschedule",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

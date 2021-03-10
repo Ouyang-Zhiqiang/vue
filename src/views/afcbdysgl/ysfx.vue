@@ -236,7 +236,7 @@ export default {
             });
             this.daySearch=false
         },
-         zsr(){
+        zsr(){
             const zsrs = this.$echarts.init(document.getElementById('tab1-2'))
             //  zsrs.showLoading({
             //     text: "图表数据正在努力加载..."
@@ -336,7 +336,7 @@ export default {
             //         data: [18203, 23489, 29034, 104970, 131744]
             //     }
             // ]
-            // })\
+            // })
         },
         hykxs(){
             const hykxss = this.$echarts.init(document.getElementById('tab2-1'))

@@ -17,7 +17,7 @@
             :src="user.imgurl"
             style="width: 70px; height: 70px; border-radius: 50%; float: left"
           >
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span v-show="user.name == 0">男</span><span v-show="user.name == 1">女</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span v-show="user.sex == 0">男</span><span v-show="user.sex == 1">女</span><br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ user.tel }}</span>
         </el-form-item>
 
@@ -105,24 +105,39 @@ export default {
   },
   created() {
     this.query = this.$route.query.item;
+    console.log(this.query)
     this.type = this.$route.query.type;
   },
   mounted() {
     this.restaurants = this.loadAll();
   },
   onLoad() {
-    // this.getAllUsers();
+    this.getAllUsers();
   },
   methods: {
-    // getAllUsers() {
-    //   this.$axios
-    //     .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
-    //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    //     })
-    //     .then((res) => {
-    //       this.results = res.data.rows;
-    //     });
-    // },
+    getUsers(e) {
+      var data = { name: "" };
+      data.name = e;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAD8",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.jfarr = res.data.rows;
+          this.listLoading = false;
+        });
+    },
+    getAllUsers() {
+      this.$axios
+        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAI3", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        })
+        .then((res) => {
+          this.results = res.data.rows;
+        });
+    },
 
     onSubmit() {
       this.form.storename = this.query.storename;
@@ -170,16 +185,23 @@ export default {
       }
     },
     querySearchAsync(queryString, cb) {
+      // var restaurants = this.restaurants;
+      // var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+      // clearTimeout(this.timeout);
+      // this.timeout = setTimeout(() => {
+      //   cb(results);
+      // }, 3000 * Math.random());
       var data = {};
       data.name = queryString;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/setUser",
+          "http://localhost:8081/web/new/setUser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          var results = res.data;
+          var results =res.data;
           cb(results);
         });
     },
@@ -194,18 +216,22 @@ export default {
       this.selectedCardno = "";
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAR9",
+          "http://localhost:8081/web/Appointment/userByNameAndTel",
           this.$qs.stringify(item),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.user = res.data.rows[0];
-          if (res.data.rows.length) {
+          this.user = res.data[0];
+          
+          // if (res.data.row) {
             this.showNow = true;
-            this.user.CourseType = this.type == "团课" ? "T" : "P";
+            this.user.coursetype = this.type == "团课" ? "T" : "P";
+            this.user.cid = this.query.cid;
+
+            console.log(this.user)
             this.$axios
               .post(
-                "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNCEA0",
+                "http://localhost:8081/web/Appointment/selectCardListByStr",
                 this.$qs.stringify(this.user),
                 {
                   headers: {
@@ -214,10 +240,10 @@ export default {
                 }
               )
               .then((res) => {
-                this.cardlist = res.data.rows;
+                this.cardlist = res.data;
                 this.$axios
                   .post(
-                    "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNDCNH",
+                    "http://localhost:8081/web/Appointment/isStaff",
                     this.$qs.stringify(this.user),
                     {
                       headers: {
@@ -226,14 +252,14 @@ export default {
                     }
                   )
                   .then((res) => {
-                    if (res.data.rows.length > 0) {
+                    if (res.data.length > 0) {
                       this.form.ordtype = "E";
                     } else {
                       this.form.ordtype = "U";
                     }
                   });
               });
-          }
+          //}
         });
     },
     loadAll() {
@@ -244,7 +270,7 @@ export default {
       if (e.isopen == false || e.isopen == "false") {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNNG90",
+            "http://localhost:8081/web/Appointment/activateCard",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -261,7 +287,7 @@ export default {
       if (this.type == "团课") {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RAY",
+            "http://localhost:8081/web/Appointment/updateReservedNumber",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -277,7 +303,7 @@ export default {
       } else {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6RXS",
+            "http://localhost:8081/web/Appointment/updateReservedNumberPrivate",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -294,7 +320,7 @@ export default {
 
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI9",
+          "http://localhost:8081/web/Appointment/appointmentCourse",
           this.$qs.stringify(e),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -307,9 +333,12 @@ export default {
 
           var uid={userid:''}
           uid.userid=this.user.userid
-                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CQRLLOA6JM', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                 var st=res.data.rows[0].storeid
+                this.$axios.post('http://localhost:8081/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                 var st=res.data.storeid
+                 console.log("rr----")
+                 console.log(st)
                 if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
+                  console.log("erfer")
                    var ss={}
                     ss=e
                     this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -322,6 +351,31 @@ export default {
                     })
                     }
                })
+        //   var param = {};
+        //   param.templatetype = 1;
+        //   param.time = e.coursedate + " " + e.coursetime;
+        //   param.coursename = e.coursename;
+        //   param.userid=this.user.userid;
+        //   console.log(param);
+        //   this.$axios
+        //     .post(
+        //       "https://www.facebodyfitness.com/web/wxremind/geiWxRemind",
+        //       this.$qs.stringify(param),
+        //       {
+        //         headers: {
+        //           "Content-Type": "application/x-www-form-urlencoded",
+        //         },
+        //       }
+        //     )
+        //     .then((res) => {
+        //       this.$message({
+        //         message: "服务号已发送",
+        //         type: "success",
+        //       });
+        //     })
+        //     .catch((error) => {
+        //       this.$message.error("错了哦，这是一条错误消息");
+        //     });
         });
     }
   }

@@ -699,13 +699,10 @@ export default {
       const yyrszss = this.$echarts.init(document.getElementById("tab2-1"));
       var datearr=[]
       var numarr=[] 
-      console.log(this.yyrsarr)
       for (var i=0;i<this.yyrsarr.length;i++){
         datearr.push(this.yyrsarr[i].to_date)
         numarr.push(this.yyrsarr[i].sum)
       }
-      console.log(datearr)
-      console.log(numarr)
       yyrszss.setOption({
         label: {
           show: true,
