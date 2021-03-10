@@ -221,7 +221,6 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-         
           this.user = res.data[0];
           
           // if (res.data.row) {

@@ -26,8 +26,7 @@
           size="mini"
           style="margin-top: -6px"
           @click="dialogVisible = true"
-          >修改可预约人数</el-button
-        >
+        >修改可预约人数</el-button>
       </div>
       <div>
         <el-button
@@ -35,8 +34,7 @@
           size="mini"
           style="margin-top: -6px"
           @click="toUrl()"
-          >预约</el-button
-        >
+        >预约</el-button>
       </div>
       <div v-if="isremoved()">
         <el-button
@@ -44,11 +42,10 @@
           size="mini"
           style="margin-top: -6px"
           @click="deletetk()"
-          >删除</el-button
-        >
+        >删除</el-button>
       </div>
     </div>
-    <br />
+    <br>
     <el-table :data="users" style="width: 100%">
       <el-table-column prop="name" label="姓名" width="120" />
       <el-table-column prop="tel" label="电话" width="130" />
@@ -82,9 +79,10 @@
         <template slot-scope="scope">
           <div v-if="scope.row.ordstate == 1 && scope.row.signstate == 0">
             <el-button type="text" @click="signed(scope.row)">签到</el-button>
-            <el-button type="text" @click="cancleord(scope.row)"
-              >取消预约</el-button
-            >
+            <el-button
+              type="text"
+              @click="cancleord(scope.row)"
+            >取消预约</el-button>
           </div>
         </template>
       </el-table-column>
@@ -138,12 +136,12 @@ export default {
         "20",
         "21",
         "22",
-        "23",
+        "23"
       ],
       startMinute: ["00", "15", "30", "45"],
       formLabelWidth: "150px",
       reservablenumber: "",
-      dialogVisible: false,
+      dialogVisible: false
     };
   },
   created() {
@@ -175,7 +173,7 @@ export default {
     getAllCoach() {
       this.$axios
         .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           var obj = { userid: "", name: "全部教练" };
@@ -196,7 +194,7 @@ export default {
         .then((res) => {
           this.$message({
             message: "修改成功",
-            type: "success",
+            type: "success"
           });
           this.getreservablenumber();
           this.dialogVisible = false;
@@ -260,13 +258,13 @@ export default {
       console.log(e);
       this.$axios
         .post("http://localhost:8081/web/new/signed", this.$qs.stringify(obj), {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           this.getusers();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
@@ -287,7 +285,7 @@ export default {
         .then((res) => {
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
@@ -307,7 +305,7 @@ export default {
           this.getreservablenumber();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success",
+            type: "success"
           });
         })
         .catch((error) => {
@@ -333,8 +331,8 @@ export default {
         path: "/afcbdyyqd/yy",
         query: {
           item: this.query,
-          type: "团课",
-        },
+          type: "团课"
+        }
       });
     },
     deletetk() {
@@ -349,17 +347,17 @@ export default {
         .then((res) => {
           this.$message({
             message: "删除成功！",
-            type: "success",
+            type: "success"
           });
           this.$router.push({
-            path: "/afcbdkcgl/tkgl",
+            path: "/afcbdkcgl/tkgl"
           });
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
