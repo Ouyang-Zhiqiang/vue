@@ -490,36 +490,41 @@ export default {
     getAllStore() {
       var loginname=localStorage.getItem('username')
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
+        .post("http://localhost:8081/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          var roleid=localStorage.getItem('roleid')
-           if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1)){
-             this.allstore=true
-             this.theAllstores = res.data.rows;
-            }else{
-                var userStore=localStorage.getItem('storeid').split(',')
-                var storeArr=res.data.rows
-                userStore.forEach(item1=>{
-                  storeArr.forEach(item => {
-                        if(item1==item.id){
-                          this.theAllstores.push(item)
-                      }
-                    })
-                })
-                this.storeid=this.theAllstores[0].id
-            this.getKCFX()
-            }
+          var roleid = localStorage.getItem("roleid");
+          if (
+            loginname != null &&
+            (loginname == "系统管理员" ||
+              roleid.search("2018053014055110006") != -1 ||
+              roleid.search("2018053014114510000") != -1)
+          ) {
+            this.allstore = true;
+            this.theAllstores = res.data;
+          } else {
+            var userStore = localStorage.getItem("storeid").split(",");
+            var storeArr = res.data;
+            userStore.forEach((item1) => {
+              storeArr.forEach((item) => {
+                if (item1 == item.id) {
+                  this.theAllstores.push(item);
+                }
+              });
+            });
+            this.storeid = this.theAllstores[0].id;
+            this.getKCFX();
+          }
         });
     },
     getAllCoach() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
+        .post("http://localhost:8081/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          this.theAllCoach = res.data.rows;
+          this.theAllCoach = res.data;
         });
     },
     yskcs() {
