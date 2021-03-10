@@ -701,8 +701,8 @@ export default {
       var numarr=[] 
       console.log(this.yyrsarr)
       for (var i=0;i<this.yyrsarr.length;i++){
-        datearr.push((this.yyrsarr[i].datearr).substring(0, 10))
-        numarr.push(this.yyrsarr[i].numarr)
+        datearr.push(this.yyrsarr[i].to_date)
+        numarr.push(this.yyrsarr[i].sum)
       }
       console.log(datearr)
       console.log(numarr)
@@ -747,26 +747,24 @@ export default {
       tDate = this.doHandleMonth(tDate);
       this.datevalue[1]=myDate.getFullYear()+'-'+(myDate.getMonth()+1)+'-'+myDate.getDate()
       this.datevalue[0]=tYear + "-" + tMonth + "-" + tDate
-      console.log(this.datevalue)
       this.getyysr();
     },
     getDay2() {
-      console.log(this.datevalue)
       this.getyysr();
     },
     getyysr() {
       var data = {};
-      data.starttime=this.datevalue[0]
-      data.endtime=this.datevalue[1]
+      data.day1=this.datevalue[0]
+      data.day2=this.datevalue[1]
       data.storeid = this.storeid;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP7Q3I",
+          "http://localhost:8081/web/new/getNumberofreservations",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-         this.yyrsarr=res.data.rows
+         this.yyrsarr=res.data
          this.yyrszs()
         });
     },

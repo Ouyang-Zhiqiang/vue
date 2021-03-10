@@ -78,10 +78,9 @@
           <el-input v-model="xuka.remarks" style="width: 270px; float: left" />
         </el-form-item>
         <el-form-item label="卡有效期" :label-width="formLabelWidth">
-          <el-checkbox
-            v-model="xuka.sz"
-            style="float: left"
-          >设置有效期</el-checkbox><br>
+          <el-checkbox v-model="xuka.sz" style="float: left"
+            >设置有效期</el-checkbox
+          ><br />
           <el-date-picker
             v-model="xuka.mydate"
             style="margin-top: 5px; width: 270px"
@@ -230,27 +229,27 @@
     <el-tabs type="border-card" style="margin-top: 10px">
       <el-tab-pane label="会员详情">
         <div style="width: 150px; height: 150px; float: left">
-          <img :src="img.originalpath" width="100px" height="100px">
+          <img :src="img.originalpath" width="100px" height="100px" />
         </div>
         <div style="width: 350px; float: left">
-          <span style="font-size: 24px; color: #307ef8">{{ query.name }}</span><br>
-          <span style="font-size: 15px">等级：lv{{ query.memgrade }}</span><br>
-          <span style="font-size: 15px">手机：{{ query.tel }}</span><br>
-          <span style="font-size: 15px">积分：{{ query.points }}</span><br>
-          <span style="font-size: 15px">时间：{{ query.createdon }}</span><br>
+          <span style="font-size: 24px; color: #307ef8">{{ query.name }}</span
+          ><br />
+          <span style="font-size: 15px">等级：lv{{ query.memgrade }}</span
+          ><br />
+          <span style="font-size: 15px">手机：{{ query.tel }}</span
+          ><br />
+          <span style="font-size: 15px">积分：{{ query.points }}</span
+          ><br />
+          <span style="font-size: 15px">时间：{{ query.createdon }}</span
+          ><br />
         </div>
-        <el-button
-          type="primary"
-          style="float: right"
-          size="mini"
-          @click="toOpen(query)"
-        >编辑</el-button>
         <el-button
           type="primary"
           style="float: right; margin-right: 20px"
           size="mini"
           @click="tjgjjl"
-        >添加跟进记录</el-button>
+          >添加跟进记录</el-button
+        >
       </el-tab-pane>
     </el-tabs>
 
@@ -258,16 +257,17 @@
       <el-tab-pane label="会员分析">
         <div style="width: 100%; padding: 20px">
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">消费总金额</span><br><br><br>
-            <span style="font-size: 22px">￥{{ amount.sum }}元</span><br>
+            <span style="font-size: 18px">消费总金额</span><br /><br /><br />
+            <span style="font-size: 22px">￥{{ amount.sum }}元</span><br />
           </div>
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">上课数</span><br><br><br>
-            <span style="font-size: 22px">{{ courseAmount.count }}节</span><br>
+            <span style="font-size: 18px">上课数</span><br /><br /><br />
+            <span style="font-size: 22px">{{ courseAmount.count }}节</span
+            ><br />
           </div>
           <div style="width: 33%; float: left">
-            <span style="font-size: 18px">有效会员卡</span><br><br><br>
-            <span style="font-size: 22px">{{ cardamount.count }}张</span><br>
+            <span style="font-size: 18px">有效会员卡</span><br /><br /><br />
+            <span style="font-size: 22px">{{ cardamount.count }}张</span><br />
           </div>
         </div>
       </el-tab-pane>
@@ -278,14 +278,16 @@
           size="mini"
           style="float: right"
           @click="sxhyk"
-        >失效会员卡</el-button>
+          >失效会员卡</el-button
+        >
         <el-button
           type="primary"
           size="mini"
           style="float: right; margin-right: 25px"
           @click="yxhyk"
-        >有效会员卡</el-button>
-        <br>
+          >有效会员卡</el-button
+        >
+        <br />
         <el-table
           v-loading="listLoading"
           :data="bindCardList"
@@ -325,7 +327,8 @@
 
           <el-table-column align="center" label="期限" width="250">
             <template slot-scope="scope">
-              <span>{{ scope.row.cardbegin }}</span>~
+              <span>{{ scope.row.cardbegin }}</span
+              >~
               <span>{{ scope.row.cardend }}</span>
             </template>
           </el-table-column>
@@ -344,56 +347,52 @@
                     v-if="scope.row.state == 1"
                     type="text"
                     @click="opencard(scope.row)"
-                  >停卡</el-button>
+                    >停卡</el-button
+                  >
                   <el-button
                     v-if="scope.row.state == 0"
                     type="text"
                     @click="changestate(scope.row.cardno)"
-                  >恢复</el-button>
-                  <el-button
-                    type="text"
-                    @click="openqixian(scope.row)"
-                  >期限变更</el-button>
-                  <el-button
-                    type="text"
-                    @click="tpingzhang(scope.row)"
-                  >平账</el-button>
-                  <el-button
-                    type="text"
-                    @click="zhuanka(scope.row)"
-                  >转卡</el-button>
+                    >恢复</el-button
+                  >
+                  <el-button type="text" @click="openqixian(scope.row)"
+                    >期限变更</el-button
+                  >
+                  <el-button type="text" @click="tpingzhang(scope.row)"
+                    >平账</el-button
+                  >
+                  <el-button type="text" @click="zhuanka(scope.row)"
+                    >转卡</el-button
+                  >
                 </div>
                 <div v-if="scope.row.cardtype == 'S'">
-                  <el-button
-                    type="text"
-                    @click="openxuka(scope.row)"
-                  >续卡</el-button>
-                  <el-button
-                    type="text"
-                    @click="openrecard(scope.row)"
-                  >扣卡</el-button>
+                  <el-button type="text" @click="openxuka(scope.row)"
+                    >续卡</el-button
+                  >
+                  <el-button type="text" @click="openrecard(scope.row)"
+                    >扣卡</el-button
+                  >
                   <el-button
                     v-if="scope.row.state == 1"
                     type="text"
                     @click="opencard(scope.row)"
-                  >停卡</el-button>
+                    >停卡</el-button
+                  >
                   <el-button
                     v-if="scope.row.state == 0"
                     type="text"
                     @click="changestate(scope.row.cardno)"
-                  >恢复</el-button>
-                  <el-button
-                    type="text"
-                    @click="openqixian(scope.row)"
-                  >期限变更</el-button>
-                  <el-button
-                    type="text"
-                    @click="tpingzhang(scope.row)"
-                  >平账</el-button>
-                  <el-button
-                    type="text"
-                    @click="zhuanka(scope.row)"
-                  >转卡</el-button>
+                    >恢复</el-button
+                  >
+                  <el-button type="text" @click="openqixian(scope.row)"
+                    >期限变更</el-button
+                  >
+                  <el-button type="text" @click="tpingzhang(scope.row)"
+                    >平账</el-button
+                  >
+                  <el-button type="text" @click="zhuanka(scope.row)"
+                    >转卡</el-button
+                  >
                 </div>
               </div>
               <div v-else>此卡已转，无法操作</div>
@@ -411,9 +410,10 @@
               type="text"
               style="float: right; line-height: 10px; font-size: 16px"
               @click="gengduo('#hyxq_2')"
-            >更多</el-button>
+              >更多</el-button
+            >
           </div>
-          <hr>
+          <hr />
           <el-table :data="yuyuejilu4" style="width: 100%; font-size: 13px">
             <el-table-column prop="date" label="上课时间" width="200">
               <template slot-scope="scope">
@@ -452,7 +452,7 @@
             <el-table-column prop="createdon" label="预约时间" width="200" />
           </el-table>
         </div>
-        <br><br>
+        <br /><br />
         <!-- 操作记录 -->
         <div style="width: 100%; height: 270px">
           <div style="width: 100%; height: 30px">
@@ -461,9 +461,10 @@
               type="text"
               style="float: right; line-height: 10px; font-size: 16px"
               @click="gengduo('#hyxq_3')"
-            >更多</el-button>
+              >更多</el-button
+            >
           </div>
-          <hr>
+          <hr />
           <el-table :data="caozuojilu4" style="width: 100%; font-size: 13px">
             <el-table-column prop="operatingtime" label="时间" width="200" />
             <el-table-column prop="vipcard" label="会员卡" width="300" />
@@ -632,14 +633,15 @@
             />
           </el-tab-pane>
         </el-tabs>
-        <br>
+        <br />
         <el-button
           style="float: right"
           size="mini"
           type="primary"
           @click="tianjiatice()"
-        >添加体测</el-button>
-        <br>
+          >添加体测</el-button
+        >
+        <br />
         <el-table :data="ticeliebiao" style="width: 100%">
           <el-table-column prop="时间" label="体测时间" width="200" />
           <el-table-column prop="身高" label="身高(cm)" width="150" />
@@ -656,18 +658,16 @@
           <el-table-column prop="腰围" label="腰围(cm)" width="150" />
           <el-table-column prop="name" label="操作">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                @click="bianjitice(scope.row)"
-              >编辑</el-button>
-              <el-button
-                type="text"
-                @click="shanchutice(scope.row)"
-              >删除</el-button>
+              <el-button type="text" @click="bianjitice(scope.row)"
+                >编辑</el-button
+              >
+              <el-button type="text" @click="shanchutice(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
-        <br>
+        <br />
       </el-tab-pane>
     </el-tabs>
 
@@ -679,9 +679,10 @@
           style="float: right; margin-top: 15px"
           size="mini"
           @click="fanhui('#hyxq_2')"
-        >返回</el-button>
+          >返回</el-button
+        >
       </div>
-      <hr>
+      <hr />
       <el-table :data="yuyuejilu4" style="width: 100%; font-size: 13px">
         <el-table-column prop="date" label="上课时间" width="200">
           <template slot-scope="scope">
@@ -736,9 +737,10 @@
           style="float: right; margin-top: 15px"
           size="mini"
           @click="fanhui('#hyxq_3')"
-        >返回</el-button>
+          >返回</el-button
+        >
       </div>
-      <hr>
+      <hr />
       <el-table :data="caozuojilu4" style="width: 100%; font-size: 13px">
         <el-table-column prop="operatingtime" label="时间" width="200" />
         <el-table-column prop="vipcard" label="会员卡" width="300" />
@@ -813,7 +815,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         身高：<el-input
           v-model="tice.shengao"
           placeholder="请输入数字"
@@ -821,7 +823,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         体重：<el-input
           v-model="tice.tizhong"
           placeholder="请输入数字"
@@ -829,7 +831,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         基础代谢：<el-input
           v-model="tice.jichudaixie"
           placeholder="请输入数字"
@@ -837,7 +839,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         大腿围L：<el-input
           v-model="tice.datuiweil"
           placeholder="请输入数字"
@@ -845,7 +847,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         大腿围R：<el-input
           v-model="tice.datuiweir"
           placeholder="请输入数字"
@@ -853,7 +855,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         小腿L：<el-input
           v-model="tice.xiaotuil"
           placeholder="请输入数字"
@@ -861,7 +863,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         小腿R：<el-input
           v-model="tice.xiaotuir"
           placeholder="请输入数字"
@@ -869,7 +871,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         手臂L：<el-input
           v-model="tice.shoubil"
           placeholder="请输入数字"
@@ -877,7 +879,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         手臂R：<el-input
           v-model="tice.shoubir"
           placeholder="请输入数字"
@@ -885,7 +887,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         胸围：<el-input
           v-model="tice.xiongwei"
           placeholder="请输入数字"
@@ -893,7 +895,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         脂肪含量：<el-input
           v-model="tice.zhifang"
           placeholder="请输入数字"
@@ -901,7 +903,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         骨骼肌含量：<el-input
           v-model="tice.gugeji"
           placeholder="请输入数字"
@@ -909,7 +911,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         腰围：<el-input
           v-model="tice.yaowei"
           placeholder="请输入数字"
@@ -917,7 +919,7 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br>
+        <br />
         臀围：<el-input
           v-model="tice.tunwei"
           placeholder="请输入数字"
@@ -925,82 +927,9 @@
           onkeyup="if(isNaN(value))execCommand('undo')"
           onafterpaste="if(isNaN(value))execCommand('undo')"
         />
-        <br><br>
+        <br /><br />
         <el-button @click="quxiaoaddtice">取 消</el-button>
         <el-button type="primary" @click="addtice">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog
-      title="会员编辑"
-      :visible.sync="dialogFormVisible6"
-      style="width: 1200px; margin: 0 auto"
-    >
-      <el-form :model="form">
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="form.name" style="width: 270px; float: left" />
-        </el-form-item>
-        <el-form-item label="性别" :label-width="formLabelWidth">
-          <el-radio
-            v-model="form.sex"
-            label="0"
-            style="float: left; margin-top: 10px; margin-left: 5px"
-          >男</el-radio>
-          <el-radio
-            v-model="form.sex"
-            label="1"
-            style="float: left; margin-top: 10px"
-          >女</el-radio>
-        </el-form-item>
-        <el-form-item label="电话" :label-width="formLabelWidth">
-          <el-input v-model="form.tel" style="width: 270px; float: left" />
-        </el-form-item>
-        <el-form-item label="场馆" :label-width="formLabelWidth">
-          <el-select v-model="form.storeId" style="width: 270px; float: left">
-            <el-option
-              v-for="item in theAllStores"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="来源" :label-width="formLabelWidth">
-          <el-select
-            v-model="form.sourcetype"
-            style="width: 270px; float: left"
-          >
-            <el-option
-              v-for="item in sources"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="销售" :label-width="formLabelWidth">
-          <el-select v-model="form.xsid" style="width: 270px; float: left">
-            <el-option
-              v-for="item in bjxs"
-              :key="item.userid"
-              :label="item.name"
-              :value="item.userid"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="备注" :label-width="formLabelWidth">
-          <el-input
-            v-model="form.remarks"
-            style="width: 270px; float: left; height: 100px"
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 4 }"
-            :placeholder="form.remarks"
-          />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible6 = false">取 消</el-button>
-        <el-button type="primary" @click="toTrueClose()">确 定</el-button>
       </div>
     </el-dialog>
     <el-dialog title="转卡" :visible.sync="zkdialogVisible" width="26%">
@@ -1028,11 +957,9 @@
               />
             </el-form-item>
           </el-form>
-          <el-button
-            type="primary"
-            style="margin-left: 71%"
-            @click="qdzk(1)"
-          >确 定</el-button>
+          <el-button type="primary" style="margin-left: 71%" @click="qdzk(1)"
+            >确 定</el-button
+          >
         </el-tab-pane>
         <el-tab-pane v-if="zktype == 'S'" label="部分转出">
           <el-form label-width="100px">
@@ -1046,11 +973,7 @@
               />
             </el-form-item>
             <el-form-item label="次数">
-              <el-input-number
-                v-model="zkcs"
-                :min="1"
-                :max="1000"
-              />
+              <el-input-number v-model="zkcs" :min="1" :max="1000" />
             </el-form-item>
             <el-form-item label="日期">
               <el-date-picker
@@ -1064,11 +987,9 @@
               />
             </el-form-item>
           </el-form>
-          <el-button
-            type="primary"
-            style="margin-left: 71%"
-            @click="qdzk(2)"
-          >确 定</el-button>
+          <el-button type="primary" style="margin-left: 71%" @click="qdzk(2)"
+            >确 定</el-button
+          >
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
@@ -1089,33 +1010,14 @@ export default {
       total: 0,
       fenye: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       caozuojilu4: [],
-      form: {
-        name: "",
-        sex: "",
-        tel: "",
-        xsid: "",
-        storeId: "",
-        storeName: "",
-        xsname: "",
-        remarks: ""
-      },
-      sources: [
-        { id: 0, name: "自然到店" },
-        { id: 1, name: "老带新" },
-        { id: 2, name: "拉访" },
-        { id: 3, name: "大众点评" },
-        { id: 4, name: "活动" },
-        { id: 5, name: "其他" }
-      ],
-      dialogFormVisible6: false,
       zkdialogVisible: false,
       state: "",
       zk: {
         zkid: "",
-        zkyxq: ""
+        zkyxq: "",
       },
       zkclass: {},
       zkcs: 1,
@@ -1143,13 +1045,13 @@ export default {
         { label: "刷卡", value: "3" },
         { label: "扫码支付", value: "1" },
         { label: "转账", value: "2" },
-        { label: "其他", value: "4" }
+        { label: "其他", value: "4" },
       ],
       dialogFormVisible4: false,
       recard: {},
       xuka: {
         sz: false,
-        mydate: []
+        mydate: [],
       },
       dialogFormVisible5: false,
       theAllStores: [],
@@ -1178,26 +1080,26 @@ export default {
         userid: "",
         createdby: "",
         createdname: "",
-        createdon: ""
+        createdon: "",
       },
-      ticetype: ""
+      ticetype: "",
     };
   },
   created() {
     this.query = this.$route.query.item;
     this.getAllxs();
-    this.getAllStore2();
+    this.getAllStore();
     this.getImg();
-    this.getAmount();
-    this.getCourseAmount();
-    this.getCardAmount();
-    this.yxhyk();
-    this.genjinjilu();
-    this.getyuyuejilu4();
-    this.getcaozuojilu4();
+    // this.getAmount();
+    // this.getCourseAmount();
+    // this.getCardAmount();
+    // this.yxhyk();
+    // this.genjinjilu();
+    // this.getyuyuejilu4();
+    // this.getcaozuojilu4();
   },
   mounted() {
-    this.getticeliebiao();
+    // this.getticeliebiao();
   },
   methods: {
     getFirstcharacter(e) {
@@ -1209,23 +1111,22 @@ export default {
     getAllxs() {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24B21OYFT1UZ",
-          this.$qs.stringify(data),
+          "http://localhost:8081/web/new/getXiaoshou",
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
           var noxs = { name: "暂无销售", userid: 0 };
-          this.bjxs = res.data.rows;
+          this.bjxs = res.data;
           this.bjxs.unshift(noxs);
         });
     },
-    getAllStore2() {
+    getAllStore() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        .post("http://localhost:8081/web/new/getStoreIdAll", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          this.theAllStores = res.data.rows;
+          this.theAllStores = res.data;
         });
     },
     getImg() {
@@ -1306,43 +1207,6 @@ export default {
           this.bindCardList = res.data.rows;
         });
     },
-    //点击打开用户信息编辑弹窗
-    toOpen(e) {
-      this.dialogFormVisible6 = true;
-      this.form.name = e.name;
-      this.form.sex = e.sex;
-      this.form.tel = e.tel;
-      this.form.storeId = e.storeid;
-      this.form.storeName = e.storename;
-      this.form.xsid = e.saleuserid;
-      this.form.xsname = e.xs;
-      this.form.remarks = e.remarks;
-      this.form.userid = e.userid;
-      this.form.sourcetype = e.sourcetype;
-    },
-    //会员编辑弹窗点击确定
-    toTrueClose() {
-      this.dialogFormVisible6 = false;
-      this.updateUser();
-    },
-    //用户基本信息修改
-    updateUser() {
-      this.$axios
-        .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BACFMEV5DL",
-          this.$qs.stringify(this.form),
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        )
-        .then((res) => {
-          this.$message({
-            message: "恭喜你，操作成功",
-            type: "success"
-          });
-        })
-        .catch((error) => {
-          this.$message.error("错了哦，这是一条错误消息");
-        });
-    },
     tpingzhang(e) {
       this.pingzhangobj.cardno = e.cardno;
       this.pingzhangobj.cardid = e.cardid;
@@ -1373,7 +1237,7 @@ export default {
           this.pingzhangobj = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1432,7 +1296,7 @@ export default {
           this.qixianobj = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1463,7 +1327,7 @@ export default {
           this.stopcard = {};
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1491,7 +1355,7 @@ export default {
           this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1528,7 +1392,7 @@ export default {
           this.yxhyk();
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1585,7 +1449,7 @@ export default {
           this.dialogFormVisible5 = false;
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1606,7 +1470,7 @@ export default {
           this.dialogFormVisible5 = false;
           this.$message({
             message: "恭喜你，操作成功",
-            type: "success"
+            type: "success",
           });
         })
         .catch((error) => {
@@ -1649,7 +1513,7 @@ export default {
         .then((res) => {
           this.$message({
             message: "操作成功",
-            type: "success"
+            type: "success",
           });
           this.genjinjilu();
         });
@@ -1702,135 +1566,135 @@ export default {
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: tizhong,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb2 = this.$echarts.init(document.getElementById("tb2"));
         tb2.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: jichudaixie,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb3 = this.$echarts.init(document.getElementById("tb3"));
         tb3.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: tizhilv,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb4 = this.$echarts.init(document.getElementById("tb4"));
         tb4.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: zhifang,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
         const tb5 = this.$echarts.init(document.getElementById("tb5"));
         tb5.setOption({
           label: {
             show: true,
             position: "top",
-            color: "#333"
+            color: "#333",
           },
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              type: "shadow"
-            }
+              type: "shadow",
+            },
           },
           xAxis: {
             type: "category",
-            data: shijian
+            data: shijian,
           },
           yAxis: {
-            type: "value"
+            type: "value",
           },
           series: [
             {
               data: gugeji,
-              type: "line"
-            }
-          ]
+              type: "line",
+            },
+          ],
         });
       }
     },
@@ -1862,7 +1726,7 @@ export default {
           .then((res) => {
             this.$message({
               message: "添加成功",
-              type: "success"
+              type: "success",
             });
             this.getticeliebiao();
             this.quxiaoaddtice();
@@ -1877,7 +1741,7 @@ export default {
           .then((res) => {
             this.$message({
               message: "修改成功",
-              type: "success"
+              type: "success",
             });
             this.getticeliebiao();
             this.quxiaoaddtice();
@@ -1916,7 +1780,7 @@ export default {
           this.getticeliebiao();
           this.$message({
             message: "已删除",
-            type: "success"
+            type: "success",
           });
         });
     },
@@ -1924,7 +1788,7 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           this.deletetice(e);
@@ -2045,8 +1909,8 @@ export default {
                 this.$qs.stringify(data2),
                 {
                   headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                  }
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
                 }
               )
               .then((res) => {
@@ -2099,7 +1963,12 @@ export default {
       var createdby = localStorage.getItem("userid");
       var data = {};
       data.cardno = this.zkclass.cardno;
-      if (this.zk.zkid == "" || this.zk.zkyxq == "" || (this.zkcs == ""&&e==2)|| (this.zkcs ==undefined&&e==2)) {
+      if (
+        this.zk.zkid == "" ||
+        this.zk.zkyxq == "" ||
+        (this.zkcs == "" && e == 2) ||
+        (this.zkcs == undefined && e == 2)
+      ) {
         this.$message.error("信息填写不完整");
         return;
       }
@@ -2120,8 +1989,8 @@ export default {
               this.$qs.stringify(data),
               {
                 headers: {
-                  "Content-Type": "application/x-www-form-urlencoded"
-                }
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
               }
             )
             .then((res2) => {
@@ -2140,7 +2009,11 @@ export default {
                 zktk.curtimes = res.data.rows[0].curtimes;
               } else if (e == 2) {
                 zktk.curtimes = this.zkcs;
-                zktk.pzremarks = "转卡"+this.zkcs+"次至" + this.zk.zkid.value.slice(0, -11);
+                zktk.pzremarks =
+                  "转卡" +
+                  this.zkcs +
+                  "次至" +
+                  this.zk.zkid.value.slice(0, -11);
               }
               if (res.data.rows[0].cardtype == "S") {
                 zktk.fee =
@@ -2162,14 +2035,14 @@ export default {
                     this.$qs.stringify(zktk),
                     {
                       headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                      }
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
                     }
                   )
                   .then((res) => {
                     this.$message({
                       message: "原卡停卡成功",
-                      type: "success"
+                      type: "success",
                     });
                   });
               } else if (e == 2) {
@@ -2179,14 +2052,14 @@ export default {
                     this.$qs.stringify(zktk),
                     {
                       headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                      }
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
                     }
                   )
                   .then((res) => {
                     this.$message({
                       message: "原卡扣次成功",
-                      type: "success"
+                      type: "success",
                     });
                   });
               }
@@ -2229,8 +2102,8 @@ export default {
                   this.$qs.stringify(zkbk),
                   {
                     headers: {
-                      "Content-Type": "application/x-www-form-urlencoded"
-                    }
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
                   }
                 )
                 .then((res) => {
@@ -2258,8 +2131,8 @@ export default {
                       this.$qs.stringify(value),
                       {
                         headers: {
-                          "Content-Type": "application/x-www-form-urlencoded"
-                        }
+                          "Content-Type": "application/x-www-form-urlencoded",
+                        },
                       }
                     )
                     .then((res) => {});
@@ -2270,14 +2143,14 @@ export default {
                   this.zk.zkyxq = "";
                   this.$message({
                     message: "转卡完成",
-                    type: "success"
+                    type: "success",
                   });
                 });
             });
         });
       this.zkdialogVisible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

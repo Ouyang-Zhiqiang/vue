@@ -54,7 +54,7 @@
         <el-form-item label="人数">
           <el-input-number
             v-model="form.traineenum"
-            min="1"
+            :min="1"
             style="width: 250px"
           />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人
         </el-form-item>
@@ -180,7 +180,6 @@ export default {
         )
         .then((res) => {
           var results = res.data;
-          console.log(results)
           cb(results);
         });
     },
