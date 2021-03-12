@@ -29,9 +29,9 @@
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="deletesj()">删除</el-button>
       </div>
 
-      <div v-if="isShow()">
+      <!-- <div v-if="isShow()">
         <el-button type="primary" size="mini" style="margin-top:-6px" @click="updateCoach()">编辑</el-button>
-      </div>
+      </div> -->
     </div>
     </div>
 
@@ -155,15 +155,15 @@ export default {
   methods: {
       getusers() {
       var data = {};
-      data.ScheduleId = this.query.scheduleid;
+      data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6FHI",
+          "https://www.facebodyfitness.com/web/new/getPivateuser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.users = res.data.rows;
+          this.users = res.data;
         });
     },
     getyysl(e) {
@@ -183,7 +183,7 @@ export default {
       obj = e;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHHP",
+          "https://www.facebodyfitness.com/web/new/signedsj",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -192,6 +192,7 @@ export default {
             message: "恭喜你，操作成功",
             type: "success"
           });
+          this.getusers()
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
@@ -204,9 +205,10 @@ export default {
       var teamschedule={}
       teamschedule.traineenum=e.traineenum
       teamschedule.scheduleid=this.query.scheduleid
+      console.log(teamschedule)
        this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6U00",
+          "https://www.facebodyfitness.com/web/new/cancelReservation3",
           this.$qs.stringify(teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -215,7 +217,7 @@ export default {
         });
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
+          "https://www.facebodyfitness.com/web/new/cancelReservation",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -225,10 +227,13 @@ export default {
             message: "恭喜你，操作成功",
             type: "success"
           });
+          this.getusers()
+
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
+
     },
     cancleThenSend(obj){
        this.$axios.post('http://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
@@ -243,8 +248,8 @@ export default {
     }
     ,
      getPreCourse(){
-            this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG2AR4', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                this.allCourse=res.data.rows
+            this.$axios.post('https://www.facebodyfitness.com/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.allCourse=res.data
             });
         },
     toTrueClose(){
@@ -318,7 +323,7 @@ export default {
       data.scheduleid=this.query.scheduleid
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOS51R",
+          "https://www.facebodyfitness.com/web/new/deletesj",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

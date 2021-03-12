@@ -403,16 +403,16 @@ export default {
         },
         getAllStore2(){
             if(localStorage.getItem('username')=='系统管理员'){
-                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                    this.theAllstores=res.data.rows
+                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.theAllstores=res.data
                     var obj={}
                     obj.id=''
                     obj.name='全部运动馆'
                     this.theAllstores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
-                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                    this.theAllstores=res.data.rows
+                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.theAllstores=res.data
                     var obj={}
                     obj.id=''
                     obj.name='全部运动馆'
@@ -420,9 +420,9 @@ export default {
                 })
             }else{
                 this.storeid=localStorage.getItem('storeid').split(',')[0]
-                this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     var userStore=localStorage.getItem('storeid').split(',')
-                    var storeArr=res.data.rows
+                    var storeArr=res.data
                     var mystore=[]
                     userStore.forEach(item1=>{
                         storeArr.forEach(item => {
