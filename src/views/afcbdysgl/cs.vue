@@ -293,7 +293,7 @@ export default {
            toTrueClose2(){
              var data={}
              data.str=JSON.stringify(this.list)
-             this.$axios.post('https://www.facebodyfitness.com/web/TjTest/updateAllTest', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+             this.$axios.post('http://localhost:8081/web/TjTest/updateAllTest', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               this.getAllTest()
               this.listLoading=false
               this.$message({

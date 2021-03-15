@@ -168,7 +168,7 @@ export default {
       obj.phonenum = this.loginForm.username;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/CCourse/RegUserSendvcode",
+          "http://localhost:8081/web/CCourse/RegUserSendvcode",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -322,7 +322,7 @@ export default {
 
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/wxremind/wxLogin",
+            "http://localhost:8081/web/wxremind/wxLogin",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )

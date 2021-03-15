@@ -187,7 +187,7 @@ export default {
             obj.StartDate=this.date1[0]
             obj.EndDate=this.date1[1]
             obj.days=this.day
-            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart1", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart1", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                 this.amount=res.data
                  for (var row in  this.amount) {
                            this.sumamount=this.sumamount+this.amount[row]
@@ -247,7 +247,7 @@ export default {
                 obj.StartDate=this.date1[0]
                 obj.EndDate=this.date1[1]
                 obj.days=this.day
-                 this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/DrawChart2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+                 this.$axios.post("http://localhost:8081/web/RevenueAnalysis/DrawChart2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
                         var accuontJsons =[]
                         accuontJsons = res.data;
                         var category = new Array();
@@ -347,7 +347,7 @@ export default {
             obj.days=this.day
             obj.SalerId=''
             obj.BuyType=''
-            this.$axios.post("https://www.facebodyfitness.com/web/RevenueAnalysis/BarChar2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
+            this.$axios.post("http://localhost:8081/web/RevenueAnalysis/BarChar2", this.$qs.stringify(obj), { headers: { "Content-Type": "application/x-www-form-urlencoded" } }).then((res) => {
              var accuontJsons = res.data
                         var nameArray = new Array();
                         var amountArray = new Array();
@@ -403,7 +403,7 @@ export default {
         },
         getAllStore2(){
             if(localStorage.getItem('username')=='系统管理员'){
-                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('http://localhost:8081/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.theAllstores=res.data
                     var obj={}
                     obj.id=''
@@ -411,7 +411,7 @@ export default {
                     this.theAllstores.unshift(obj)
                 })
             }else if(localStorage.getItem('storenumber')==localStorage.getItem('storeid').split(',').length-1){
-                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('http://localhost:8081/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.theAllstores=res.data
                     var obj={}
                     obj.id=''
@@ -420,7 +420,7 @@ export default {
                 })
             }else{
                 this.storeid=localStorage.getItem('storeid').split(',')[0]
-                this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('http://localhost:8081/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     var userStore=localStorage.getItem('storeid').split(',')
                     var storeArr=res.data
                     var mystore=[]

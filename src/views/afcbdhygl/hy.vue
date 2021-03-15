@@ -467,7 +467,7 @@ export default {
       ) {
         this.startStoreId = "";
         this.$axios
-          .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
+          .post("http://localhost:8081/web/new/getStoreIdAll", {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           })
           .then((res) => {
@@ -483,7 +483,7 @@ export default {
       ) {
         this.startStoreId = "";
         this.$axios
-          .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
+          .post("http://localhost:8081/web/new/getStoreIdAll", {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           })
           .then((res) => {
@@ -496,7 +496,7 @@ export default {
       } else {
         this.startStoreId = localStorage.getItem("storeid").split(",")[0];
         this.$axios
-          .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
+          .post("http://localhost:8081/web/new/getStoreIdAll", {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           })
           .then((res) => {
@@ -562,7 +562,7 @@ export default {
     getAllxs() {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getXiaoshou",
+          "http://localhost:8081/web/new/getXiaoshou",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -575,7 +575,7 @@ export default {
     getAllxs2() {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getXiaoshou",
+          "http://localhost:8081/web/new/getXiaoshou",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -592,7 +592,7 @@ export default {
     getAllhyk() {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getAllhyk",
+          "http://localhost:8081/web/new/getAllhyk",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

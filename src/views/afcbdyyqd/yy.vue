@@ -216,7 +216,7 @@ export default {
       this.selectedCardno = "";
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/userByNameAndTel",
+          "http://localhost:8081/web/Appointment/userByNameAndTel",
           this.$qs.stringify(item),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -231,7 +231,7 @@ export default {
             console.log(this.user)
             this.$axios
               .post(
-                "https://www.facebodyfitness.com/web/Appointment/selectCardListByStr",
+                "http://localhost:8081/web/Appointment/selectCardListByStr",
                 this.$qs.stringify(this.user),
                 {
                   headers: {
@@ -243,7 +243,7 @@ export default {
                 this.cardlist = res.data;
                 this.$axios
                   .post(
-                    "https://www.facebodyfitness.com/web/Appointment/isStaff",
+                    "http://localhost:8081/web/Appointment/isStaff",
                     this.$qs.stringify(this.user),
                     {
                       headers: {
@@ -270,7 +270,7 @@ export default {
       if (e.isopen == false || e.isopen == "false") {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/Appointment/activateCard",
+            "http://localhost:8081/web/Appointment/activateCard",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -287,7 +287,7 @@ export default {
       if (this.type == "团课") {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/Appointment/updateReservedNumber",
+            "http://localhost:8081/web/Appointment/updateReservedNumber",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -301,10 +301,9 @@ export default {
             this.$message.error("错了哦，这是一条错误消息");
           });
       } else {
-        alert("私课")
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/Appointment/updateReservedNumberPrivate",
+            "http://localhost:8081/web/Appointment/updateReservedNumberPrivate",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -321,7 +320,7 @@ export default {
 
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/appointmentCourse",
+          "http://localhost:8081/web/Appointment/appointmentCourse",
           this.$qs.stringify(e),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -332,25 +331,25 @@ export default {
             type: "success"
           });
 
-          var uid={userid:''}
-          uid.userid=this.user.userid
-                this.$axios.post('https://www.facebodyfitness.com/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                 var st=res.data.storeid
-                 console.log(st)
-                if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
-                  console.log("erfer")
-                   var ss={}
-                    ss=e
-                    this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-                    this.$message({
-                    message: '短信已发送',
-                    type: 'success'
-                    })
-                    }).catch(error=>{
-                                    this.$message.error('错了哦，这是一条错误消息');
-                    })
-                    }
-               })
+          // var uid={userid:''}
+          // uid.userid=this.user.userid
+          //       this.$axios.post('http://localhost:8081/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          //        var st=res.data.storeid
+          //        console.log(st)
+          //       if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
+          //         console.log("erfer")
+          //          var ss={}
+          //           ss=e
+          //           this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          //           this.$message({
+          //           message: '短信已发送',
+          //           type: 'success'
+          //           })
+          //           }).catch(error=>{
+          //                           this.$message.error('错了哦，这是一条错误消息');
+          //           })
+          //           }
+          //      })
 
                this.$router.push({
                  path:'/afcbdyyqd/afcbdyyqd',

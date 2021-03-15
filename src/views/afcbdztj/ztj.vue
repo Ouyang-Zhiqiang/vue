@@ -331,7 +331,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/getTotalAttendance', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CCourse/getTotalAttendance', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.zszl=res.data.TotalAttendance
                 // console.log(res)
             });
@@ -342,7 +342,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/getTConversionRateOfGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CCourse/getTConversionRateOfGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.tktyzhl=res.data.ConversionRateOfGroupLessons
                 // console.log(res.data)
             });
@@ -353,7 +353,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/getPConversionRateOfGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CCourse/getPConversionRateOfGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.sjtyzhl=res.data.ConversionRateOfGroupLessons
                 // console.log(res.data)
             });
@@ -363,7 +363,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/getNumberOfLessonsGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CCourse/getNumberOfLessonsGroupLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.tkxknumber=res.data.Tnumber
                 // console.log(res.data)
             });
@@ -373,7 +373,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/getNumberOfPrivateLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CCourse/getNumberOfPrivateLessons', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.sjxknumber=res.data.Tnumber
                 // console.log(res)
             });
@@ -394,7 +394,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getCourseRevenuetotal', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getCourseRevenuetotal', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.courserevenuetotal1=res.data.courserevenuetotal
             });
         },
@@ -403,7 +403,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getCourseRevenueTotalFirst', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getCourseRevenueTotalFirst', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.courserevenuetotal2=res.data.courserevenuetotal
             });
         },
@@ -412,7 +412,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getCourseRevenueTotalContinue', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getCourseRevenueTotalContinue', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.courserevenuetotal3=res.data.courserevenuetotal
                 // console.log(res)
             });
@@ -422,7 +422,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getAveragePriceSingleGroupLesson', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getAveragePriceSingleGroupLesson', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AveragePrice=res.data.AveragePrice
                 // console.log(res)
             });
@@ -432,7 +432,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getPrivateEducationSingleSectionAveragePrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getPrivateEducationSingleSectionAveragePrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AveragePrice2=res.data.AveragePrice
                 // console.log(res)
                 // console.log(res.data.AverageUnitPrice)
@@ -443,7 +443,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.money=res.data.money
                 // console.log(res)
             });
@@ -453,7 +453,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getTeamSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getTeamSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.money2=res.data.money
             });
         },
@@ -462,7 +462,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getPrivateTeamSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getPrivateTeamSubcardMoney', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.money3=res.data.money
             });
         },
@@ -471,7 +471,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getAverageunit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getAverageunit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AveragePrice4=res.data.AveragePrice
             });
         },
@@ -480,7 +480,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getGroupAverageUnitPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getGroupAverageUnitPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AveragePrice5=res.data.AveragePrice
             });
         },
@@ -489,7 +489,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getPrivateAverageUnitPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getPrivateAverageUnitPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AveragePrice6=res.data.AverageUnitPrice
                 // console.log(res)
             });
@@ -499,7 +499,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getGroupAveragePriceUnit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getGroupAveragePriceUnit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AverageUnitPrice=res.data.AverageUnitPrice
             });
         },
@@ -508,7 +508,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getPrivateAveragePriceUnit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getPrivateAveragePriceUnit', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.AverageUnitPrice2=res.data.AverageUnitPrice
             });
         },
@@ -517,7 +517,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getTotalAmountofGoods', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getTotalAmountofGoods', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.money4=res.data.money
             });
         },
@@ -526,7 +526,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getCustomerPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getCustomerPrice', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.CustomerPrice=res.data.CustomerPrice
             });
         },
@@ -535,7 +535,7 @@ export default {
             data.storeid=this.storeid
             data.CourseDatestart=this.date1[0]
             data.CourseDateend =this.date1[1]
-            this.$axios.post('https://www.facebodyfitness.com/web/CRevenue/getGoodsnumber', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('http://localhost:8081/web/CRevenue/getGoodsnumber', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.goodsnumber=res.data.goodsnumber
             });
         },

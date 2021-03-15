@@ -44,7 +44,7 @@ export default {
   methods:{
     getRoute(){
         if(localStorage.getItem('myphone')=='admin'){
-          this.$axios.post('https://www.facebodyfitness.com/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.$axios.post('http://localhost:8081/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             var mylist=res.data
             var parentArr=[]
             mylist.forEach(item=>{
@@ -101,9 +101,9 @@ export default {
           });
         }else{
           var phone={tel:localStorage.getItem('myphone')}
-          this.$axios.post('https://www.facebodyfitness.com/web/new/getRoleid', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.$axios.post('http://localhost:8081/web/new/getRoleid', this.$qs.stringify(phone), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
               var myroles=res.data.roleid.split(',')
-              this.$axios.post('https://www.facebodyfitness.com/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+              this.$axios.post('http://localhost:8081/web/new/getFunction', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                   var menus=res.data
                   var mylist=[]
                   menus.forEach((item)=>{

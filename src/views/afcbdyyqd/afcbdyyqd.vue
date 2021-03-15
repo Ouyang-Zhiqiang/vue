@@ -327,7 +327,7 @@ export default {
       if(this.courseType=='团课'){
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/getAllTeam",
+          "http://localhost:8081/web/Appointment/getAllTeam",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -339,7 +339,7 @@ export default {
         }else{
            this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/getAllPrivate",
+          "http://localhost:8081/web/Appointment/getAllPrivate",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -425,7 +425,7 @@ export default {
       if(this.courseType=="团课"){
          this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/cancelTeam",
+          "http://localhost:8081/web/Appointment/cancelTeam",
           this.$qs.stringify(this.teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         ).then((res) => {
@@ -440,7 +440,7 @@ export default {
       }else{
        this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/cancelPrivate",
+          "http://localhost:8081/web/Appointment/cancelPrivate",
           this.$qs.stringify(this.teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -450,7 +450,7 @@ export default {
       }
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/Appointment/cancelUpdateCardCurtimes",
+          "http://localhost:8081/web/Appointment/cancelUpdateCardCurtimes",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
