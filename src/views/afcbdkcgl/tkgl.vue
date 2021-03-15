@@ -704,7 +704,7 @@ export default {
       var loginname = localStorage.getItem("username");
       var roleid = localStorage.getItem("roleid");
       this.$axios
-        .post("http://localhost:8081/web/new/getStoreIdAll", {
+        .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -737,7 +737,7 @@ export default {
 
     getAllCoach() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -748,7 +748,7 @@ export default {
     },
     getAllCoachs() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -763,7 +763,7 @@ export default {
       data.coachid = this.coachid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getTeamschedule",
+          "https://www.facebodyfitness.com/web/new/getTeamschedule",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -773,7 +773,7 @@ export default {
     },
     getAllCourse() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCourseAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCourseAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -801,7 +801,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -816,7 +816,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -831,7 +831,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -846,7 +846,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -861,7 +861,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -876,7 +876,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -891,7 +891,7 @@ export default {
       data.strenth = strenth;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCurTeamStrength",
+          "https://www.facebodyfitness.com/web/new/getCurTeamStrength",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1031,7 +1031,7 @@ export default {
       var data = e;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/setCurTeamCourseBase",
+          "https://www.facebodyfitness.com/web/new/setCurTeamCourseBase",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

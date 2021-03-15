@@ -397,7 +397,7 @@ export default {
       // console.log(data)
       this.$axios
         .post(
-          "http://localhost:8081/web/CAnalysis/getCoursesNumber",
+          "https://www.facebodyfitness.com/web/CAnalysis/getCoursesNumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -408,7 +408,7 @@ export default {
 
       this.$axios
         .post(
-          "http://localhost:8081/web/CAnalysis/getPersontimesandClassnumber",
+          "https://www.facebodyfitness.com/web/CAnalysis/getPersontimesandClassnumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -419,7 +419,7 @@ export default {
 
       this.$axios
         .post(
-          "http://localhost:8081/web/CAnalysis/getAmountoflessonssoldpercard",
+          "https://www.facebodyfitness.com/web/CAnalysis/getAmountoflessonssoldpercard",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -440,7 +440,7 @@ export default {
         data.limit = this.listQuery.limit;
         this.$axios
           .post(
-            "http://localhost:8081/web/CAnalysis/getctCoursereport",
+            "https://www.facebodyfitness.com/web/CAnalysis/getctCoursereport",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -465,7 +465,7 @@ export default {
         // console.log(data)
         this.$axios
           .post(
-            "http://localhost:8081/web/CAnalysis/getcpCoursereport",
+            "https://www.facebodyfitness.com/web/CAnalysis/getcpCoursereport",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -490,7 +490,7 @@ export default {
     getAllStore() {
       var loginname=localStorage.getItem('username')
       this.$axios
-        .post("http://localhost:8081/web/new/getStoreIdAll", {
+        .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -520,7 +520,7 @@ export default {
     },
     getAllCoach() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -777,7 +777,7 @@ export default {
       data.coachid = this.coachid1;
       this.$axios
         .post(
-          "http://localhost:8081/web/CAnalysis/getNumberofreservation",
+          "https://www.facebodyfitness.com/web/CAnalysis/getNumberofreservation",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

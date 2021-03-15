@@ -196,7 +196,7 @@ export default {
       data.name = queryString;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/setUser",
+          "https://www.facebodyfitness.com/web/new/setUser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -216,7 +216,7 @@ export default {
       this.selectedCardno = "";
       this.$axios
         .post(
-          "http://localhost:8081/web/Appointment/userByNameAndTel",
+          "https://www.facebodyfitness.com/web/Appointment/userByNameAndTel",
           this.$qs.stringify(item),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -231,7 +231,7 @@ export default {
             console.log(this.user)
             this.$axios
               .post(
-                "http://localhost:8081/web/Appointment/selectCardListByStr",
+                "https://www.facebodyfitness.com/web/Appointment/selectCardListByStr",
                 this.$qs.stringify(this.user),
                 {
                   headers: {
@@ -243,7 +243,7 @@ export default {
                 this.cardlist = res.data;
                 this.$axios
                   .post(
-                    "http://localhost:8081/web/Appointment/isStaff",
+                    "https://www.facebodyfitness.com/web/Appointment/isStaff",
                     this.$qs.stringify(this.user),
                     {
                       headers: {
@@ -270,7 +270,7 @@ export default {
       if (e.isopen == false || e.isopen == "false") {
         this.$axios
           .post(
-            "http://localhost:8081/web/Appointment/activateCard",
+            "https://www.facebodyfitness.com/web/Appointment/activateCard",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -287,7 +287,7 @@ export default {
       if (this.type == "团课") {
         this.$axios
           .post(
-            "http://localhost:8081/web/Appointment/updateReservedNumber",
+            "https://www.facebodyfitness.com/web/Appointment/updateReservedNumber",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -303,7 +303,7 @@ export default {
       } else {
         this.$axios
           .post(
-            "http://localhost:8081/web/Appointment/updateReservedNumberPrivate",
+            "https://www.facebodyfitness.com/web/Appointment/updateReservedNumberPrivate",
             this.$qs.stringify(e),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -320,7 +320,7 @@ export default {
 
       this.$axios
         .post(
-          "http://localhost:8081/web/Appointment/appointmentCourse",
+          "https://www.facebodyfitness.com/web/Appointment/appointmentCourse",
           this.$qs.stringify(e),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -333,7 +333,7 @@ export default {
 
           // var uid={userid:''}
           // uid.userid=this.user.userid
-          //       this.$axios.post('http://localhost:8081/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          //       this.$axios.post('https://www.facebodyfitness.com/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           //        var st=res.data.storeid
           //        console.log(st)
           //       if(st!='2020082713550410017'||!st.equals('2020082713550410017')){

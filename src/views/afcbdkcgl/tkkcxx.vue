@@ -172,7 +172,7 @@ export default {
 
     getAllCoach() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -187,7 +187,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/upreservablenumber",
+          "https://www.facebodyfitness.com/web/new/upreservablenumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -212,7 +212,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getReservablenumber",
+          "https://www.facebodyfitness.com/web/new/getReservablenumber",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -225,7 +225,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/CCourse/getcourseinformation",
+          "https://www.facebodyfitness.com/web/CCourse/getcourseinformation",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -257,7 +257,7 @@ export default {
       obj.scheduleid = this.query.scheduleid;
       console.log(e);
       this.$axios
-        .post("http://localhost:8081/web/new/signed", this.$qs.stringify(obj), {
+        .post("https://www.facebodyfitness.com/web/new/signed", this.$qs.stringify(obj), {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -278,7 +278,7 @@ export default {
       obj = e;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation",
+          "https://www.facebodyfitness.com/web/new/cancelReservation",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -296,7 +296,7 @@ export default {
       teamschedule.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation2",
+          "https://www.facebodyfitness.com/web/new/cancelReservation2",
           this.$qs.stringify(teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -315,7 +315,7 @@ export default {
     cancleThenSend(obj) {
       this.$axios
         .post(
-          "http://localhost:8081/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId",
+          "https://www.facebodyfitness.com/web/ordercourse/CancelCourseOrdersByOrderIdAndUserId",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -340,7 +340,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/deletetk",
+          "https://www.facebodyfitness.com/web/new/deletetk",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
