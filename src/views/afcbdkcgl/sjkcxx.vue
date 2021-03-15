@@ -158,7 +158,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getPivateuser",
+          "https://www.facebodyfitness.com/web/new/getPivateuser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -183,7 +183,7 @@ export default {
       obj = e;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/signedsj",
+          "https://www.facebodyfitness.com/web/new/signedsj",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -208,7 +208,7 @@ export default {
       console.log(teamschedule)
        this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation3",
+          "https://www.facebodyfitness.com/web/new/cancelReservation3",
           this.$qs.stringify(teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -217,7 +217,7 @@ export default {
         });
       this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation",
+          "https://www.facebodyfitness.com/web/new/cancelReservation",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -248,7 +248,7 @@ export default {
     }
     ,
      getPreCourse(){
-            this.$axios.post('http://localhost:8081/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.allCourse=res.data
             });
         },
@@ -323,7 +323,7 @@ export default {
       data.scheduleid=this.query.scheduleid
       this.$axios
         .post(
-          "http://localhost:8081/web/new/deletesj",
+          "https://www.facebodyfitness.com/web/new/deletesj",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

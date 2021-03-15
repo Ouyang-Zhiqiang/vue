@@ -758,7 +758,7 @@ export default {
         console.log(data)
         this.$axios
           .post(
-            "http://localhost:8081/web/new/getCrdMembershipCardCategoryTeamCourse",
+            "https://www.facebodyfitness.com/web/new/getCrdMembershipCardCategoryTeamCourse",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -824,7 +824,7 @@ export default {
     },
     getAllStore2() {
       this.$axios
-        .post("http://localhost:8081/web/new/getStoreIdAll", {
+        .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
@@ -833,7 +833,7 @@ export default {
     },
     getAllcourse() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCourseAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCourseAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
@@ -852,7 +852,7 @@ export default {
         console.log(data)
         this.$axios
           .post(
-            "http://localhost:8081/web/new/getAllCards",
+            "https://www.facebodyfitness.com/web/new/getAllCards",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )

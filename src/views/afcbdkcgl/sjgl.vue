@@ -176,7 +176,7 @@ export default {
          getAllStore(){
           var loginname=localStorage.getItem('username')
           var roleid=localStorage.getItem('roleid')
-          this.$axios.post('http://localhost:8081/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
              this.allStores=res.data
              this.storeid=this.allStores[0].id
@@ -196,7 +196,7 @@ export default {
           });
         },
         getAllCoach(){
-            this.$axios.post('http://localhost:8081/web/new/getCoachAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/new/getCoachAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 var obj={userid:'', name:'全部教练'}
                 this.allCoach=res.data
                 this.allCoach.unshift(obj)
@@ -208,18 +208,18 @@ export default {
             data.CourseDateend=this.dateRange[1]
             data.storeid=this.storeid
             data.coachid=this.coachid
-            this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.list=res.data
             });
         },
         getStartCources(){
-            this.$axios.post('http://localhost:8081/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 var data={}
                 data.CourseDatestart=this.dateRange[0]
                 data.CourseDateend=this.dateRange[1]
                 data.storeid=res.data[0].id
                 data.coachid=this.coachid
-                this.$axios.post('http://localhost:8081/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                this.$axios.post('https://www.facebodyfitness.com/web/CCourse/privatelessonschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                     this.list=res.data
                 });
             })
@@ -255,7 +255,7 @@ export default {
             this.getCources()
         },
         getPreCourse(){
-            this.$axios.post('http://localhost:8081/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.allCourse=res.data
             });
         },
@@ -305,7 +305,7 @@ export default {
         },
         insertPreCourse(data){
           console.log(data)
-            this.$axios.post('http://localhost:8081/web/new/setCurprivschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+            this.$axios.post('https://www.facebodyfitness.com/web/new/setCurprivschedule', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
              this.$message({
                     message: '恭喜你，操作成功',
                     type: 'success' 
