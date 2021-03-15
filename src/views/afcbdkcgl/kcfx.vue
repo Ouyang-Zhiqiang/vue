@@ -493,7 +493,7 @@ export default {
     getAllStore() {
       var loginname = localStorage.getItem("username");
       this.$axios
-        .post("http://localhost:8081/web/new/getStoreIdAll", {
+        .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -523,7 +523,7 @@ export default {
     },
     getAllCoach() {
       this.$axios
-        .post("http://localhost:8081/web/new/getCoachAll", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -756,7 +756,7 @@ export default {
       data.storeid = this.storeid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getNumberofreservations",
+          "https://www.facebodyfitness.com/web/new/getNumberofreservations",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

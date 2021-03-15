@@ -11,7 +11,7 @@
   >
     <div class="kcxx">
       <h2>课程信息</h2>
-      <div style="margin-left: 0px">课程名称:{{ this.query.coursename }}</div>
+      <div style="margin-left: 0px!important">课程名称:{{ this.query.coursename }}</div>
       <div>上课日期:{{ this.query.scheduledate }}</div>
       <div>
         开课时间:{{ this.query.schedulebegin }}-{{ this.query.scheduleend }}
@@ -257,7 +257,7 @@ export default {
       obj.scheduleid = this.query.scheduleid;
       console.log(e);
       this.$axios
-        .post("http://localhost:8081/web/new/signed", this.$qs.stringify(obj), {
+        .post("https://www.facebodyfitness.com/web/new/signed", this.$qs.stringify(obj), {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
@@ -276,9 +276,10 @@ export default {
       e.coachid = this.query.coachid;
       var obj = {};
       obj = e;
+      console.log(obj)
       this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation",
+          "https://www.facebodyfitness.com/web/new/cancelReservation",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -293,16 +294,17 @@ export default {
         });
       var teamschedule = {};
       teamschedule.traineenum = e.traineenum;
-      teamschedule.scheduleid = this.query.scheduleid;
+      teamschedule.ordid = e.ordid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/cancelReservation2",
+          "https://www.facebodyfitness.com/web/new/cancelReservation2",
           this.$qs.stringify(teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
           this.cancleThenSend(obj);
           this.getreservablenumber();
+          this.getusers();
           this.$message({
             message: "恭喜你，操作成功",
             type: "success"
@@ -340,7 +342,7 @@ export default {
       data.scheduleid = this.query.scheduleid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/deletetk",
+          "https://www.facebodyfitness.com/web/new/deletetk",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -371,7 +373,7 @@ export default {
 }
 .kcxx div {
   float: left;
-  margin-left: 40px;
+  margin-left: 40px!important;
   font-size: 16px;
   font-weight: bold;
 }

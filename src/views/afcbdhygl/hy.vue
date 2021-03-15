@@ -528,7 +528,7 @@ export default {
       data.page = this.listQuery.page - 1;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getUsers",
+          "https://www.facebodyfitness.com/web/new/getUsers",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -537,7 +537,7 @@ export default {
           data.limit = 999999;
           this.$axios
             .post(
-              "http://localhost:8081/web/new/getUsers",
+              "https://www.facebodyfitness.com/web/new/getUsers",
               this.$qs.stringify(data),
               {
                 headers: {
@@ -610,7 +610,7 @@ export default {
     updateUser() {
       this.$axios
         .post(
-          "http://localhost:8081/web/new/updateUser",
+          "https://www.facebodyfitness.com/web/new/updateUser",
           this.$qs.stringify(this.form),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -632,7 +632,7 @@ export default {
       };
       this.$axios
         .post(
-          "http://localhost:8081/web/new/DisableUser",
+          "https://www.facebodyfitness.com/web/new/DisableUser",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -651,7 +651,7 @@ export default {
     updateJf(data) {
       this.$axios
         .post(
-          "http://localhost:8081/web/new/updatePoints",
+          "https://www.facebodyfitness.com/web/new/updatePoints",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -684,7 +684,7 @@ export default {
     toTrueClose3() {
       this.$axios
         .post(
-          "http://localhost:8081/web/new/updateMemgrade",
+          "https://www.facebodyfitness.com/web/new/updateMemgrade",
           this.$qs.stringify(this.form3),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -702,7 +702,6 @@ export default {
     },
     //修改积分弹窗
     toOpen2(e) {
-      console.log(e);
       this.dialogFormVisible2 = true;
       this.form2.add = 0;
       this.form2.pre = 0;
@@ -781,7 +780,6 @@ export default {
       this.toGetAll();
     },
     toUrl(e) {
-      console.log(e)
       this.$router.push({
         path: "/afcbdhygl/hyxq",
         query: {

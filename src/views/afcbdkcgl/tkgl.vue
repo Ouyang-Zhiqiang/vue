@@ -763,7 +763,7 @@ export default {
       data.coachid = this.coachid;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getTeamschedule",
+          "https://www.facebodyfitness.com/web/new/getTeamschedule",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1111,5 +1111,8 @@ export default {
 }
 .舞蹈工作坊{
   background: #73B926;
+}
+.瑜伽{
+  background: rosybrown;
 }
 </style>

@@ -78,7 +78,7 @@
           style="width: 180px; margin-top: 5px"
         />
 
-        <el-button type="success" style="margin-top: 5px" @click="toClickSearch"
+        <el-button type="success" style="margin-top: 5px" @click="getAllCards"
           >查询</el-button
         >
         <el-button type="success" style="margin-top: 5px">导出Excel</el-button>
@@ -272,8 +272,8 @@
               <el-checkbox-group v-model="insertForm.courseId">
                 <el-checkbox
                   v-for="item in allCourse"
-                  :key="item.mycid"
-                  :label="item.mycid"
+                  :key="item.cid"
+                  :label="item.cid"
                   >{{ item.catetitle }}</el-checkbox
                 >
               </el-checkbox-group>
@@ -442,7 +442,6 @@ export default {
       cardimage: "",
       datevalue1: "",
       startStoreId: "A",
-      clickSearch: false,
       list: [],
       total: 0,
       listLoading: true,
@@ -452,7 +451,7 @@ export default {
       },
       options1: [
         {
-          value: "B",
+          value: "",
           label: "全部",
         },
         {
@@ -468,7 +467,7 @@ export default {
 
       options2: [
         {
-          value: "C",
+          value: "",
           label: "全部",
         },
         {
@@ -485,7 +484,7 @@ export default {
       selectvalue3: "",
       options3: [
         {
-          value: "D",
+          value: "",
           label: "全部",
         },
         {
@@ -544,7 +543,7 @@ export default {
   mounted() {
     this.hykcs();
     this.qkck();
-    this.getAllCards(this.listQuery);
+    this.getAllCards();
     this.getAllStore2();
     this.getAllcourse();
   },
@@ -594,9 +593,9 @@ export default {
       }
       for (var i = 0; i < this.insertForm.courseId.length; i++) {
         for (var j = 0; j < this.allCourse.length; j++) {
-          if (this.insertForm.courseId[i] == this.allCourse[j].mycid) {
+          if (this.insertForm.courseId[i] == this.allCourse[j].cid) {
             var data = {};
-            data.courseid = this.allCourse[j].mycid;
+            data.courseid = this.allCourse[j].cid;
             data.coursename = this.allCourse[j].catetitle;
             this.insertForm.courseId[i] = data;
           }
@@ -721,7 +720,7 @@ export default {
           });
       }
       this.listQuery.page=1
-      this.getAllCards(this.listQuery);
+      this.getAllCards();
     },
     toOpen(e, x) {
       this.insertForm.storeids = []
@@ -756,39 +755,41 @@ export default {
         }
         var data = {};
         data.cardid = e.cardid;
+        console.log(data)
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP4HLZ",
+            "http://localhost:8081/web/new/getCrdMembershipCardCategoryTeamCourse",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
+            console.log(this.allCourse)
             for (var i = 0; i < this.allCourse.length; i++) {
-              for (var j = 0; j < res.data.rows.length; j++) {
+              for (var j = 0; j < res.data.length; j++) {
                 if (
-                  res.data.rows[j].coursename == this.allCourse[i].catetitle
+                  res.data[j].courseid == this.allCourse[i].cid
                 ) {
-                  this.insertForm.courseId.push(this.allCourse[i].mycid);
+                  this.insertForm.courseId.push(res.data[j].courseid);
                 }
               }
             }
           });
 
-        this.$axios
-          .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP4IP3",
-            this.$qs.stringify(data),
-            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-          )
-          .then((res) => {
-            for (var i = 0; i < res.data.rows.length; i++) {
-              var data = {};
-              data.times = res.data.rows[i].times;
-              data.fee = res.data.rows[i].fee;
-              data.periodvalidity = res.data.rows[i].periodvalidity;
-              this.oldtidu.push(data);
-            }
-          });
+        // this.$axios
+        //   .post(
+        //     "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP4IP3",
+        //     this.$qs.stringify(data),
+        //     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        //   )
+        //   .then((res) => {
+        //     for (var i = 0; i < res.data.rows.length; i++) {
+        //       var data = {};
+        //       data.times = res.data.rows[i].times;
+        //       data.fee = res.data.rows[i].fee;
+        //       data.periodvalidity = res.data.rows[i].periodvalidity;
+        //       this.oldtidu.push(data);
+        //     }
+        //   });
       }else{
         this.caozuobiaoti='新增会员卡'
       }
@@ -798,7 +799,7 @@ export default {
     handleCheckAllChange(val) {
       if (this.isIndeterminate == true) {
         for (var i = 0; i < this.allCourse.length; i++) {
-          this.insertForm.courseId.push(this.allCourse[i].mycid);
+          this.insertForm.courseId.push(this.allCourse[i].cid);
         }
         this.isIndeterminate = false;
       } else {
@@ -823,55 +824,41 @@ export default {
     },
     getAllStore2() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
+        .post("http://localhost:8081/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          this.allStores = res.data.rows;
+          this.allStores = res.data
         });
     },
     getAllcourse() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVCN9", {
+        .post("http://localhost:8081/web/new/getCourseAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          this.allCourse = res.data.rows;
+          this.allCourse = res.data
         });
     },
-    getAllCards(data) {
-      if (this.clickSearch) {
-        if (this.searhForm.cardtype == "") {
-          data.cardtype = "B";
-        } else {
-          data.cardtype = this.searhForm.cardtype;
-        }
-        if (this.searhForm.isonlinebuy == "") {
-          data.isonlinebuy = "C";
-        } else {
-          data.isonlinebuy = this.searhForm.isonlinebuy;
-        }
-        if (this.searhForm.state == "") {
-          data.state = "D";
-        } else {
-          data.state = this.searhForm.state;
-        }
-        if (this.searhForm.cardname == "") {
-          data.cardname = "E";
-        } else {
-          data.cardname = this.searhForm.cardname;
-        }
-        this.listLoading = true;
-        data.page = data.page - 1;
+    getAllCards() {
+      var data= {}
+        this.listLoading = true
+        data.page = this.listQuery.page - 1
+        data.limit = this.listQuery.limit
+        data.cardtype = this.searhForm.cardtype
+        data.cardname = this.searhForm.cardname
+        data.status = this.searhForm.state
+        data.isonlinebuy = this.searhForm.isonlinebuy
+        console.log(data)
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24BACFMEV3S0",
+            "http://localhost:8081/web/new/getAllCards",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            this.list = res.data.rows;
-            this.total = res.data.rows[0].counts;
+            this.list = res.data;
+            this.total = res.data[0].counts;
             this.list.forEach((item) => {
               var storeList = JSON.parse(item.storesjson);
               var stores = "";
@@ -882,54 +869,7 @@ export default {
             });
             this.listLoading = false;
           });
-      } else {
-        if (this.searhForm.cardtype == "") {
-          data.cardtype = "B";
-        } else {
-          data.cardtype = this.searhForm.cardtype;
-        }
-        if (this.searhForm.isonlinebuy == "") {
-          data.isonlinebuy = "C";
-        } else {
-          data.isonlinebuy = this.searhForm.isonlinebuy;
-        }
-        if (this.searhForm.state == "") {
-          data.state = "D";
-        } else {
-          data.state = this.searhForm.state;
-        }
-        if (this.searhForm.cardname == "") {
-          data.cardname = "E";
-        } else {
-          data.cardname = this.searhForm.cardname;
-        }
-        this.listLoading = true;
-        data.page = data.page - 1;
-        this.$axios
-          .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24BACFMEV3S0",
-            this.$qs.stringify(data),
-            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-          )
-          .then((res) => {
-            this.list = res.data.rows;
-            this.total = res.data.rows[0].counts;
-            this.list.forEach((item) => {
-              var storeList = JSON.parse(item.storesjson);
-              var stores = "";
-              storeList.forEach((item) => {
-                stores += item.StoreName + ";";
-              });
-              item.storesjson = stores;
-            });
-            this.listLoading = false;
-          });
-      }
-    },
-    toClickSearch() {
-      this.clickSearch = true;
-      this.listQuery.page = 1;
-      this.getAllCards(this.listQuery);
+
     },
     hykcs() {
       const hykcss = this.$echarts.init(document.getElementById("tab1-1"));
