@@ -1011,7 +1011,7 @@ export default {
       data.accountid = e;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/CAnalysis/selectcost",
+          "http://localhost:8081/web/CAnalysis/selectcost",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1021,7 +1021,7 @@ export default {
         });
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/CAnalysis/selectrevenue",
+          "http://localhost:8081/web/CAnalysis/selectrevenue",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1040,7 +1040,7 @@ export default {
       data.jsonstr = jsonstr;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/CAnalysis/updatecost",
+          "http://localhost:8081/web/CAnalysis/updatecost",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1231,7 +1231,7 @@ export default {
       data.str = JSON.stringify(this.list);
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/TjTest/updateAllTest",
+          "http://localhost:8081/web/TjTest/updateAllTest",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

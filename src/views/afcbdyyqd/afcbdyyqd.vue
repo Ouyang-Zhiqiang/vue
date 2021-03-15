@@ -126,7 +126,7 @@
           </el-table-column>
           <el-table-column width="80" label="课程价格" align="center">
             <template slot-scope="scope">
-              <span>{{ scope.row.courseprice.toFixed(2) }} </span>
+              <span>{{ scope.row.courseprice }} </span>
             </template>
           </el-table-column>
 
@@ -221,7 +221,7 @@ export default {
       options2: [],  
       options5: [
         {
-          value: "C",
+          value: "",
           label: "全部状态"
         },
         {
@@ -250,8 +250,8 @@ export default {
       courseType: "团课",
       selectForm: {
         storeid:"",
-        coachid: "B",
-        status: "C",
+        coachid: "",
+        status: "",
         day1: "",
         day2: ""
       },
@@ -301,9 +301,15 @@ export default {
     },
     getAllTeam() {
       var data = {};
-      data.storeid = this.selectForm.storeid;
-      data.coachid = this.selectForm.coachid;
-      data.status = this.selectForm.status;
+      if(this.selectForm.storeid!=''){
+        data.storeid = this.selectForm.storeid;
+      }
+      if(this.selectForm.coachid!=''){
+        data.coachid = this.selectForm.coachid;
+      }
+      if(this.selectForm.status){
+        data.status = this.selectForm.status;
+      }
 
       data.day1 = this.value6[0].toLocaleDateString().replace(/\//g, "-");
       data.day2 = this.value6[1].toLocaleDateString().replace(/\//g, "-");
@@ -321,31 +327,25 @@ export default {
       if(this.courseType=='团课'){
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BIUVHG226C",
+          "https://www.facebodyfitness.com/web/Appointment/getAllTeam",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.list = res.data.rows;
-          this.total = res.data.rows[0].counts;
-          this.list.forEach((item) => {
-            item.users = JSON.parse(item.users);
-          });
+          this.list = res.data;
+          this.total = res.data[0].counts;
           this.listLoading = false;
         });
         }else{
            this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNPY1K",
+          "https://www.facebodyfitness.com/web/Appointment/getAllPrivate",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.list = res.data.rows;
-          this.total = res.data.rows[0].counts;
-          this.list.forEach((item) => {
-            item.users = JSON.parse(item.users);
-          });
+         this.list = res.data;
+          this.total = res.data[0].counts;
           this.listLoading = false;
         });
         }
@@ -353,16 +353,16 @@ export default {
     getAllStore() {
       var loginname=localStorage.getItem('username')
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
+        .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
           var roleid=localStorage.getItem('roleid')
           if(loginname!=null&&(loginname=='系统管理员'||roleid.search('2018053014055110006') !=-1||roleid.search('2018053014114510000') !=-1||roleid.search('2018053014052310002') !=-1)){
-             var nostore = { name: "全部运动馆", id: "A" };
-             this.options1 = res.data.rows;
+             var nostore = { name: "全部运动馆", id: "" };
+             this.options1 = res.data;
              this.options1.unshift(nostore);
-             this.selectForm.storeid='A'
+             this.selectForm.storeid=''
           }else{
               var userStore=localStorage.getItem('storeid').split(',')
               var storeArr=res.data.rows
@@ -381,12 +381,12 @@ export default {
     },
     getAllCoach() {
       this.$axios
-        .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEW860", {
+        .post("https://www.facebodyfitness.com/web/new/getCoachAll", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" }
         })
         .then((res) => {
-          var obj = { userid: "B", name: "全部教练" };
-          this.options2 = res.data.rows;
+          var obj = { userid: "", name: "全部教练" };
+          this.options2 = res.data;
           this.options2.unshift(obj);
         });
     },
@@ -400,7 +400,7 @@ export default {
       obj = e;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHHP",
+          "https://www.facebodyfitness.com/web/new/signed",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -410,8 +410,7 @@ export default {
             message: "恭喜你，操作成功",
             type: "success"
           });
-        })
-        .catch((error) => {
+        }).catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");
         });
     },
@@ -426,7 +425,7 @@ export default {
       if(this.courseType=="团课"){
          this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6TV3",
+          "https://www.facebodyfitness.com/web/Appointment/cancelTeam",
           this.$qs.stringify(this.teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         ).then((res) => {
@@ -441,7 +440,7 @@ export default {
       }else{
        this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLO6U00",
+          "https://www.facebodyfitness.com/web/Appointment/cancelPrivate",
           this.$qs.stringify(this.teamschedule),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -451,12 +450,11 @@ export default {
       }
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNBHI3",
+          "https://www.facebodyfitness.com/web/Appointment/cancelUpdateCardCurtimes",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          // this.cancleThenSend(obj)
           this.getAllTeam();
           this.$message({
             message: "恭喜你，操作成功",

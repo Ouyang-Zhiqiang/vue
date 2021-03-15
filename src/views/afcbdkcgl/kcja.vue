@@ -251,7 +251,7 @@ export default {
         })
       },
       getAllcourse(){
-        this.$axios.post('https://www.facebodyfitness.com/web/new/getAllcourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('http://localhost:8081/web/new/getAllcourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             this.list=res.data
         })
       },

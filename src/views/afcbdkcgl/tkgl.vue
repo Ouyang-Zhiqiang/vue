@@ -936,10 +936,11 @@ export default {
           item.courseid =
             new Date().valueOf() + "" + Math.ceil(Math.random() * 10000);
           //wxd管理员
-          item.createdby = "系统管理员";
-          item.createdname = "系统管理员";
-          item.lastedby = "系统管理员";
-          item.lastedname = "系统管理员";
+          item.createdby = localStorage.getItem("userid");
+          item.createdname = localStorage.getItem("username");
+          item.lastedby = localStorage.getItem("userid");
+          item.lastedip=
+          item.lastedname =localStorage.getItem("username");
           this.courseType.forEach((item1) => {
             if (item.cid == item1.cid) {
               item.reservablenumber = item1.reservablenumber;
