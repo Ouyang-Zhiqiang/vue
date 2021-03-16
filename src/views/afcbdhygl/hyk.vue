@@ -138,7 +138,7 @@
             <el-form-item
               label="会员卡类型"
               :label-width="formLabelWidth"
-              v-if="caozuoleixing==1"
+              v-if="caozuoleixing == 1"
               required
             >
               <el-radio
@@ -247,21 +247,29 @@
                 >不支持</el-radio
               >
             </el-form-item>
-            <el-form-item label="支持课程类型" :label-width="formLabelWidth" v-if="caozuoleixing==1">
+            <el-form-item
+              label="支持课程类型"
+              :label-width="formLabelWidth"
+              v-if="caozuoleixing == 1"
+            >
               <el-radio
                 v-model="insertForm.coursetype"
                 label="T"
                 style="float: left; margin-top: 10px; margin-left: 5px"
                 >团课</el-radio
               >
-              <el-radio 
+              <el-radio
                 v-model="insertForm.coursetype"
                 label="P"
                 style="float: left; margin-top: 10px"
                 >私教</el-radio
               >
             </el-form-item>
-            <el-form-item label="支持团课课程" :label-width="formLabelWidth" v-if="insertForm.coursetype=='T'">
+            <el-form-item
+              label="支持团课课程"
+              :label-width="formLabelWidth"
+              v-if="insertForm.coursetype == 'T'"
+            >
               <el-checkbox
                 v-model="checkAll"
                 :indeterminate="isIndeterminate"
@@ -307,29 +315,23 @@
           highlight-current-row
           style="margin-top: 20px"
         >
-          <el-table-column align="center" label="会员卡名称" width="200">
+          <el-table-column align="center" label="会员卡名称" width="250">
             <template slot-scope="scope">
               <span>{{ scope.row.cardname }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" width="100" label="支持课程">
+          <el-table-column align="center" width="150" label="支持课程">
             <template slot-scope="scope">
               <span v-if="scope.row.coursetype == 'T'">团课</span>
               <span v-else-if="scope.row.coursetype == 'P'">私教</span>
             </template>
           </el-table-column>
 
-          <el-table-column width="200" align="center" label="类型">
+          <el-table-column width="150" align="center" label="类型">
             <template slot-scope="scope">
               <span v-if="scope.row.cardtype == 'S'">次卡</span>
               <span v-else-if="scope.row.cardtype == 'P'">期卡</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column width="80" label="梯度" align="center">
-            <template slot-scope="scope">
-              <span>{{ scope.row.tdcount }}</span>
             </template>
           </el-table-column>
 
@@ -361,25 +363,13 @@
               <el-button
                 v-if="scope.row.state == 1"
                 type="text"
-                @click="
-                  updateToDisEn(
-                    scope.row.status,
-                    scope.row.userid,
-                    scope.$index
-                  )
-                "
+                @click="updateToDisEn(scope.row, scope.$index)"
                 >禁用</el-button
               >
               <el-button
                 v-else-if="scope.row.state == 0"
                 type="text"
-                @click="
-                  updateToDisEn(
-                    scope.row.status,
-                    scope.row.userid,
-                    scope.$index
-                  )
-                "
+                @click="updateToDisEn(scope.row, scope.$index)"
                 >启用</el-button
               >
             </template>
@@ -419,7 +409,7 @@ export default {
       tidu: [],
       oldtidu: [],
       caozuoleixing: 1,
-      caozuobiaoti:'',
+      caozuobiaoti: "",
       bjcardid: "",
       insertForm: {
         resid: "",
@@ -434,10 +424,6 @@ export default {
         isonlinebuy: "",
         isopenedbyfirst: "",
         courseId: [],
-        createdby: "系统管理员",
-        createdname: "系统管理员",
-        lastedby: "系统管理员",
-        lastedname: "系统管理员",
       },
       cardimage: "",
       datevalue1: "",
@@ -505,39 +491,6 @@ export default {
         state: "",
         cardname: "",
       },
-
-      tableData: [
-        {
-          hykmc: "私教1v1",
-          zckc: "私教",
-          lx: "次卡",
-          td: "1",
-          zxgm: "不支持",
-          zccg: "万达馆,东鼎馆,泗泾馆,开元馆,亚繁馆",
-          px: "0",
-          cz: "",
-        },
-        {
-          hykmc: "私教1v1",
-          zckc: "私教",
-          lx: "次卡",
-          td: "1",
-          zxgm: "不支持",
-          zccg: "万达馆,东鼎馆,泗泾馆,开元馆,亚繁馆",
-          px: "0",
-          cz: "",
-        },
-        {
-          hykmc: "私教1v1",
-          zckc: "私教",
-          lx: "次卡",
-          td: "1",
-          zxgm: "不支持",
-          zccg: "万达馆,东鼎馆,泗泾馆,开元馆,亚繁馆",
-          px: "0",
-          cz: "",
-        },
-      ],
     };
   },
   mounted() {
@@ -555,15 +508,32 @@ export default {
       this.insertImg();
     },
     //禁用恢复
-    updateToDisEn(e, id, index) {
-      var status = 0;
-      if (e == 0) {
-        status = 1;
-        this.updateStatus(status, id, index);
-      } else if (e == 1) {
-        status = 0;
-        this.updateStatus(status, id, index);
+    updateToDisEn(e, index) {
+      var data = {};
+      data.cardid = e.cardid;
+      if (e.state == 0) {
+        data.state = 1;
+      } else if (e.state == 1) {
+        data.state = 0;
       }
+
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/web/new/xiugaihykzt",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          if (data.state == 0) {
+            this.$message.success("禁用成功");
+          } else {
+            this.$message.success("启用成功");
+          }
+          this.getAllCards();
+        })
+        .catch((error) => {
+          this.$message.error("新增会员(基础)卡失败");
+        });
     },
     createInput() {
       this.createNumber = this.createNumber + 1;
@@ -602,8 +572,6 @@ export default {
         }
       }
       this.insertForm.storesjson += "]";
-      this.insertForm.createdby = localStorage.getItem("userid");
-      this.insertForm.createdname = localStorage.getItem("username");
       if (this.caozuoleixing == 1) {
         this.insertForm.cardid =
           new Date().valueOf() + "" + Math.ceil(Math.random() * 10000) + "";
@@ -629,6 +597,7 @@ export default {
         this.$message.error("卡信息填写不完整");
         return;
       }
+      this.tidu = [];
       for (var i = 0; i < document.querySelectorAll(".Fee").length; i++) {
         var data = {};
         data.times = document.querySelectorAll(".Times")[i].value;
@@ -638,17 +607,18 @@ export default {
         ].value;
         this.tidu.push(data);
       }
+      this.insertForm.tidu = this.tidu;
       if (this.caozuoleixing == 1) {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOTO1V",
+            "https://www.facebodyfitness.com/web/new/xinzenghuiyuanka",
             this.$qs.stringify(this.insertForm),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            this.xzkcandtd()
-            this.$message.success("新增会员卡成功")
-            this.dialogFormVisible = false
+            this.xzkcandtd();
+            this.$message.success("新增会员卡成功");
+            this.dialogFormVisible = false;
           })
           .catch((error) => {
             this.$message.error("新增会员(基础)卡失败");
@@ -656,14 +626,14 @@ export default {
       } else if (this.caozuoleixing == 2) {
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP4XKK",
+            "https://www.facebodyfitness.com/web/new/xiugaihuiyuanka",
             this.$qs.stringify(this.insertForm),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            this.xzkcandtd()
-            this.$message.success("修改会员卡成功")
-            this.dialogFormVisible = false
+            this.xzkcandtd();
+            this.$message.success("修改会员卡成功");
+            this.dialogFormVisible = false;
           })
           .catch((error) => {
             this.$message.error("修改会员(基础)卡失败");
@@ -672,42 +642,10 @@ export default {
     },
     xzkcandtd() {
       if (this.insertForm.coursetype == "T") {
-        for (var i = 0; i < this.insertForm.courseId.length; i++) {
-          var data = {};
-          data.cardid = this.insertForm.cardid;
-          data.courseid = this.insertForm.courseId[i].courseid;
-          data.coursename = this.insertForm.courseId[i].coursename;
-          data.createdby = this.insertForm.createdby;
-          data.createdname = this.insertForm.createdname;
-          this.$axios
-            .post(
-              "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOTOD3",
-              this.$qs.stringify(data),
-              {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              }
-            )
-            .then((res) => {})
-            .catch((error) => {
-              this.$message.error("新增会员卡(团课课程)失败");
-            });
-        }
-      }
-      for (var i = 0; i < this.tidu.length; i++) {
-        var data = {};
-        data.cardid = this.insertForm.cardid;
-        data.cardtype = this.insertForm.cardtype;
-        data.times = this.tidu[i].times;
-        data.fee = this.tidu[i].fee;
-        data.periodvalidity = this.tidu[i].periodvalidity;
-        data.createdby = this.insertForm.createdby;
-        data.createdname = this.insertForm.createdname;
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOTWT4",
-            this.$qs.stringify(data),
+            "https://www.facebodyfitness.com/web/new/xiugaihuiyuankakecheng",
+            this.$qs.stringify(this.insertForm),
             {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -716,25 +654,43 @@ export default {
           )
           .then((res) => {})
           .catch((error) => {
-            this.$message.error("新增会员卡(梯度)失败");
+            this.$message.error("新增会员卡(团课课程)失败");
           });
       }
-      this.listQuery.page=1
+      var data = {};
+      data.cardid = this.insertForm.cardid;
+      data.cardtype = this.insertForm.cardtype;
+      data.tidu = this.tidu;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/web/new/xiugaihuiyuankatidu",
+          this.$qs.stringify(data),
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then((res) => {})
+        .catch((error) => {
+          this.$message.error("新增会员卡(梯度)失败");
+        });
+      this.listQuery.page = 1;
       this.getAllCards();
     },
     toOpen(e, x) {
-      this.insertForm.storeids = []
-      this.insertForm.courseId = []
-      this.oldtidu = []
-      this.createNumber = 0
-      this.cardimage = ''
-      this.insertForm.cardname = ''
-      this.insertForm.isonlinebuy=''
-      this.insertForm.ismulmem=''
-      this.insertForm.istransfer=''
-      this.insertForm.isopenedbyfirst=''
+      this.insertForm.storeids = [];
+      this.insertForm.courseId = [];
+      this.oldtidu = [];
+      this.createNumber = 0;
+      this.cardimage = "";
+      this.insertForm.cardname = "";
+      this.insertForm.isonlinebuy = "";
+      this.insertForm.ismulmem = "";
+      this.insertForm.istransfer = "";
+      this.insertForm.isopenedbyfirst = "";
       if (x == 2) {
-        this.caozuobiaoti='编辑会员卡'
+        this.caozuobiaoti = "编辑会员卡";
         this.bjcardid = e.cardid;
         this.cardimage = e.resurl;
         this.insertForm.cardname = e.cardname;
@@ -755,7 +711,6 @@ export default {
         }
         var data = {};
         data.cardid = e.cardid;
-        console.log(data)
         this.$axios
           .post(
             "https://www.facebodyfitness.com/web/new/getCrdMembershipCardCategoryTeamCourse",
@@ -763,35 +718,32 @@ export default {
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            console.log(this.allCourse)
             for (var i = 0; i < this.allCourse.length; i++) {
               for (var j = 0; j < res.data.length; j++) {
-                if (
-                  res.data[j].courseid == this.allCourse[i].cid
-                ) {
+                if (res.data[j].courseid == this.allCourse[i].cid) {
                   this.insertForm.courseId.push(res.data[j].courseid);
                 }
               }
             }
           });
 
-        // this.$axios
-        //   .post(
-        //     "https://www.facebodyfitness.com/hi/main?hi=24CQRLLP4IP3",
-        //     this.$qs.stringify(data),
-        //     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        //   )
-        //   .then((res) => {
-        //     for (var i = 0; i < res.data.rows.length; i++) {
-        //       var data = {};
-        //       data.times = res.data.rows[i].times;
-        //       data.fee = res.data.rows[i].fee;
-        //       data.periodvalidity = res.data.rows[i].periodvalidity;
-        //       this.oldtidu.push(data);
-        //     }
-        //   });
-      }else{
-        this.caozuobiaoti='新增会员卡'
+        this.$axios
+          .post(
+            "https://www.facebodyfitness.com/web/new/getCrdMembershipCardCategoryTypeCard",
+            this.$qs.stringify(data),
+            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+          )
+          .then((res) => {
+            for (var i = 0; i < res.data.length; i++) {
+              var data = {};
+              data.times = res.data[i].times;
+              data.fee = res.data[i].fee;
+              data.periodvalidity = res.data[i].periodvalidity;
+              this.oldtidu.push(data);
+            }
+          });
+      } else {
+        this.caozuobiaoti = "新增会员卡";
       }
       this.caozuoleixing = x;
       this.dialogFormVisible = true;
@@ -810,13 +762,12 @@ export default {
     insertImg() {
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/hi/main?hi=24BIUVHG2DFK",
+          "https://www.facebodyfitness.com/web/new/setImage",
           this.$qs.stringify(this.insertForm),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
           this.insertForm.logoid = this.insertForm.resid;
-          console.log("图片添加成功");
         })
         .catch((error) => {
           this.$message.error("图片添加失败");
@@ -828,7 +779,7 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          this.allStores = res.data
+          this.allStores = res.data;
         });
     },
     getAllcourse() {
@@ -837,39 +788,37 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         })
         .then((res) => {
-          this.allCourse = res.data
+          this.allCourse = res.data;
         });
     },
     getAllCards() {
-      var data= {}
-        this.listLoading = true
-        data.page = this.listQuery.page - 1
-        data.limit = this.listQuery.limit
-        data.cardtype = this.searhForm.cardtype
-        data.cardname = this.searhForm.cardname
-        data.status = this.searhForm.state
-        data.isonlinebuy = this.searhForm.isonlinebuy
-        console.log(data)
-        this.$axios
-          .post(
-            "https://www.facebodyfitness.com/web/new/getAllCards",
-            this.$qs.stringify(data),
-            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-          )
-          .then((res) => {
-            this.list = res.data;
-            this.total = res.data[0].counts;
-            this.list.forEach((item) => {
-              var storeList = JSON.parse(item.storesjson);
-              var stores = "";
-              storeList.forEach((item) => {
-                stores += item.StoreName + ";";
-              });
-              item.storesjson = stores;
+      var data = {};
+      this.listLoading = true;
+      data.page = this.listQuery.page - 1;
+      data.limit = this.listQuery.limit;
+      data.cardtype = this.searhForm.cardtype;
+      data.cardname = this.searhForm.cardname;
+      data.status = this.searhForm.state;
+      data.isonlinebuy = this.searhForm.isonlinebuy;
+      this.$axios
+        .post(
+          "https://www.facebodyfitness.com/web/new/getAllCards",
+          this.$qs.stringify(data),
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        )
+        .then((res) => {
+          this.list = res.data;
+          this.total = res.data[0].counts;
+          this.list.forEach((item) => {
+            var storeList = JSON.parse(item.storesjson);
+            var stores = "";
+            storeList.forEach((item) => {
+              stores += item.StoreName + ";";
             });
-            this.listLoading = false;
+            item.storesjson = stores;
           });
-
+          this.listLoading = false;
+        });
     },
     hykcs() {
       const hykcss = this.$echarts.init(document.getElementById("tab1-1"));

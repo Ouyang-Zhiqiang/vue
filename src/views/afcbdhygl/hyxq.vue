@@ -262,8 +262,13 @@
             <span style="font-size: 22px">￥{{ amount.sum }}元</span><br>
           </div>
           <div style="width: 33%; float: left">
+<<<<<<< HEAD
             <span style="font-size: 18px">上课数</span><br><br><br>
             <span style="font-size: 22px">{{ courseAmount.count }}节</span><br>
+=======
+            <span style="font-size: 18px">上课数</span><br /><br /><br />
+            <span style="font-size: 22px">{{ courseAmount }}节</span><br />
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
           </div>
           <div style="width: 33%; float: left">
             <span style="font-size: 18px">有效会员卡</span><br><br><br>
@@ -306,10 +311,16 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="状态" width="150">
+          <el-table-column align="center" label="状态" width="100">
             <template slot-scope="scope">
               <span v-if="scope.row.state == 1">正常</span>
               <span v-if="scope.row.state == 0">停卡</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="是否开卡" width="100">
+            <template slot-scope="scope">
+              <span v-if="scope.row.isopen == true">是</span>
+              <span v-if="scope.row.state == false">否</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="购卡金额" width="80">
@@ -417,7 +428,15 @@
           <el-table :data="yuyuejilu4" style="width: 100%; font-size: 13px">
             <el-table-column prop="date" label="上课时间" width="200">
               <template slot-scope="scope">
+<<<<<<< HEAD
                 {{ scope.row.coursedate + " " + scope.row.coursetime }}
+=======
+                {{
+                  scope.row.coursedate.slice(0, 10) +
+                  " " +
+                  scope.row.coursetime.slice(10)
+                }}
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
               </template>
             </el-table-column>
             <el-table-column prop="coursename" label="课程名称" width="200" />
@@ -685,7 +704,15 @@
       <el-table :data="yuyuejilu4" style="width: 100%; font-size: 13px">
         <el-table-column prop="date" label="上课时间" width="200">
           <template slot-scope="scope">
+<<<<<<< HEAD
             {{ scope.row.coursedate + " " + scope.row.coursetime }}
+=======
+            {{
+              scope.row.coursedate.slice(0, 10) +
+              " " +
+              scope.row.coursetime.slice(10)
+            }}
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
           </template>
         </el-table-column>
         <el-table-column prop="coursename" label="课程名称" width="200" />
@@ -1123,10 +1150,17 @@ export default {
       yuyuejilu4: [],
       dialogFormVisible: false,
       formLabelWidth: "150px",
+<<<<<<< HEAD
       img: {},
       amount: {},
       courseAmount: {},
       cardamount: {},
+=======
+      img: "",
+      amount: 0,
+      courseAmount: 0,
+      cardamount: 0,
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
       bindCardList: [],
       listLoading: false,
       pingzhangShow: false,
@@ -1251,7 +1285,13 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.amount = res.data.rows[0];
+=======
+          if (res.data != null) {
+            this.amount = res.data.sum;
+          }
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         });
     },
     getCourseAmount() {
@@ -1264,7 +1304,13 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.courseAmount = res.data.rows[0];
+=======
+          if (res.data != null) {
+            this.courseAmount = res.data.count;
+          }
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         });
     },
     getCardAmount() {
@@ -1483,9 +1529,17 @@ export default {
       obj.cardno = e;
       this.$axios
         .post(
+<<<<<<< HEAD
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNC79E",
           this.$qs.stringify(obj),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+=======
+          "https://www.facebodyfitness.com/web/new/huifu",
+          this.$qs.stringify(obj),
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         )
         .then((res) => {
           this.yxhyk();
@@ -1623,7 +1677,11 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.genjinall = res.data.rows;
+=======
+          this.genjinall = res.data;
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         });
     },
     tjgjjl() {
@@ -1985,7 +2043,11 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.yuyuejilu4 = res.data.rows;
+=======
+          this.yuyuejilu = res.data;
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         });
     },
     getyuyuejilu() {
@@ -2000,9 +2062,15 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.yuyuejilu4 = res.data.rows;
           if (res.data.rows.length > 0) {
             this.total = res.data.rows[0].yuyuetotal;
+=======
+          this.yuyuejilu = res.data;
+          if (res.data.length > 0) {
+            this.total = res.data[0].count;
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
           }
         });
     },
@@ -2018,7 +2086,11 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.caozuojilu4 = res.data.rows;
+=======
+          this.caozuojilu = res.data;
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
         });
     },
     getcaozuojilu() {
@@ -2033,8 +2105,13 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
+<<<<<<< HEAD
           this.caozuojilu4 = res.data.rows;
           if (res.data.rows.length > 0) {
+=======
+          this.caozuojilu = res.data;
+          if (res.data.length > 0) {
+>>>>>>> 463b6f2351ecee1318991cb5229bf3960e38bf1d
             var data2 = {};
             data2.userid = this.query.userid;
             data2.limit = 999999;
@@ -2107,6 +2184,96 @@ export default {
         this.$message.error("转卡次数大于剩余次数");
         return;
       }
+      //转卡停卡
+      var zktk = {};
+      zktk.cardno = this.zkclass.cardno;
+      zktk.userid = this.query.userid;
+      zktk.name = this.query.name;
+      zktk.tel = this.query.tel;
+      zktk.typeid = this.zkclass.typeid;
+      zktk.cardid = this.zkclass.cardid;
+      zktk.cardname = this.zkclass.cardname;
+      zktk.payments = this.zkclass.payment;
+      if (e == 1) {
+        zktk.curtimes = this.zkclass.curtimes;
+        zktk.remarks = "转卡至" + this.zk.zkid.value.slice(0, -11);
+      } else if (e == 2) {
+        zktk.curtimes = this.zkcs;
+        zktk.remarks =
+          "转卡" + this.zkcs + "次至" + this.zk.zkid.value.slice(0, -11);
+      }
+      if (this.zkclass.cardtype == "S") {
+        zktk.fee =
+          parseInt(this.zkclass.totalfee -
+          (this.zkclass.totalfee - zktk.curtimes * this.zkclass.timefee));
+      } else {
+        zktk.fee = this.zkclass.totalfee;
+      }
+      zktk.timefee = this.zkclass.timefee;
+      zktk.stoptype = "P";
+      zktk.day2 = "2099-01-01";
+
+      if (e == 1 || this.zkcs == this.zkclass.curtimes) {
+        this.$axios
+          .post(
+            "https://www.facebodyfitness.com/web/new/quanbuzhuanka",
+            this.$qs.stringify(zktk),
+            {
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+            }
+          )
+          .then((res) => {
+            this.$message({
+              message: "原卡停卡成功",
+              type: "success",
+            });
+          });
+      } else if (e == 2) {
+        this.$axios
+          .post(
+            "https://www.facebodyfitness.com/web/new/bufenzhuanka",
+            this.$qs.stringify(zktk),
+            {
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+            }
+          )
+          .then((res) => {
+            this.$message({
+              message: "原卡扣次成功",
+              type: "success",
+            });
+          });
+      }
+
+      //转卡绑卡
+      var zkbk = {};
+      zkbk.cardno = this.guid();
+      zkbk.cardid = this.zkclass.cardid;
+      zkbk.cardname = this.zkclass.cardname;
+      zkbk.isfree = this.zkclass.isfree;
+      zkbk.typeid = this.zkclass.typeid;
+      zkbk.originalfee = this.zkclass.originalfee;
+      zkbk.isopen = false;
+      zkbk.day1 = this.zk.zkyxq[0];
+      zkbk.day2 = this.zk.zkyxq[1];
+      zkbk.periodvalidity = this.zkclass.periodvalidity;
+      zkbk.curtimes = zktk.curtimes;
+      zkbk.totaltimes = zktk.curtimes;
+      zkbk.totalfee = zktk.fee;
+      zkbk.times = this.zkclass.times;
+      zkbk.remarks = "来自" + this.query.name + "转卡";
+      zkbk.timefee = this.zkclass.timefee;
+      zkbk.userid = this.zk.zkid.name;
+      zkbk.payments = this.zkclass.payment;
+      zkbk.storeid = this.zkclass.storeid;
+      zkbk.storename = this.zkclass.storename;
+      zkbk.saleid = this.zkclass.salerid;
+      zkbk.salename = this.zkclass.salername;
+      zkbk.cardtype = this.zkclass.cardtype;
       this.$axios
         .post(
           "https://www.facebodyfitness.com/hi/main?hi=24CQRLLOPBHI",
