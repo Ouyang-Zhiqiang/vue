@@ -163,7 +163,6 @@ export default {
       })
     },
     tochange(e){
-      console.log(e)
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24CDIAEBZB4L', this.$qs.stringify(e), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.$message({
           message: '恭喜你，操作成功',

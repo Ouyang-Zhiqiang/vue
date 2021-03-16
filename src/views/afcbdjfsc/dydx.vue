@@ -138,10 +138,10 @@ export default {
           data.userphone=this.selectForm.userphone
         }
         this.listLoading=true
-        data.page=this.listQuery.page-1
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1VOZ', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          this.list=res.data.rows
-          this.total=res.data.rows[0].counts
+        // data.page=this.listQuery.page-1
+        this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/selectGoodsOrderList', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.list=res.data.list
+          this.total=res.data.total
           this.listLoading=false
         });
       }, 
@@ -160,10 +160,10 @@ export default {
         obj.createdby= localStorage.getItem("userid");
         obj.createdname=localStorage.getItem("username");
         obj.ip='127.01';
-        this.$axios.post('http://localhost:8081/web/SpmGood/spmGoodChange', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/spmGoodChange', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             if(res.data=='操作成功！'){
                this.getAllSp(this.listQuery)
-               this.$message( {
+               this.$message({
                  message: '恭喜你，操作成功',
                  type: 'success'});
             }else{

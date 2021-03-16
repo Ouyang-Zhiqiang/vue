@@ -113,7 +113,6 @@ export default {
    },
   created(){
     this.query=this.$route.query.item
-    console.log(this.query)
     this.getAllComment(this.listQuery)
     this.getAllStore2()
   },
@@ -121,7 +120,6 @@ export default {
     getAllStore2(){
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.theAllStores=res.data.rows
-        console.log(this.theAllStores)
       });
     },
     getAllComment(data){

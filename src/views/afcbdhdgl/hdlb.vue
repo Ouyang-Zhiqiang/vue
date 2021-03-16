@@ -254,7 +254,6 @@ export default {
     getAllStore2(){
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.theAllStores=res.data.rows
-        console.log(this.theAllStores)
       });
     },
     getAllComment(data){
@@ -316,7 +315,6 @@ export default {
     toOpen2(item){
       this.dialogFormVisible2=true
       this.updateStoreid=[]
-      console.log(item)
       this.updateForm=item
       if(this.updateForm.stores){
         if(typeof this.updateForm.stores === 'string'){
@@ -325,7 +323,6 @@ export default {
           this.updateForm.stores.forEach(item=>{
             this.updateStoreid.push(item.id)
           })
-          console.log(this.updateStoreid)
         }else{
           this.updateForm.stores.forEach(item=>{
             this.updateStoreid.push(item.id)
