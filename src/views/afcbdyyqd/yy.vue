@@ -331,56 +331,31 @@ export default {
             type: "success"
           });
 
-          // var uid={userid:''}
-          // uid.userid=this.user.userid
-          //       this.$axios.post('https://www.facebodyfitness.com/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          //        var st=res.data.storeid
-          //        console.log(st)
-          //       if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
-          //         console.log("erfer")
-          //          var ss={}
-          //           ss=e
-          //           this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          //           this.$message({
-          //           message: '短信已发送',
-          //           type: 'success'
-          //           })
-          //           }).catch(error=>{
-          //                           this.$message.error('错了哦，这是一条错误消息');
-          //           })
-          //           }
-          //      })
+          var uid={userid:''}
+          uid.userid=this.user.userid
+                this.$axios.post('https://www.facebodyfitness.com/web/Appointment/selectStoreByUserid', this.$qs.stringify(uid), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                 var st=res.data.storeid
+                 console.log(st)
+                if(st!='2020082713550410017'||!st.equals('2020082713550410017')){
+                  console.log("erfer")
+                   var ss={}
+                    ss=e
+                    this.$axios.post('https://www.facebodyfitness.com/web/ordercourse/SendToMembersAndCoach', this.$qs.stringify(ss), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+                    this.$message({
+                    message: '短信已发送',
+                    type: 'success'
+                    })
+                    }).catch(error=>{
+                                    this.$message.error('错了哦，这是一条错误消息');
+                    })
+                    }
+               })
 
                this.$router.push({
                  path:'/afcbdyyqd/afcbdyyqd',
                  query: {
                  }
              })
-        //   var param = {};
-        //   param.templatetype = 1;
-        //   param.time = e.coursedate + " " + e.coursetime;
-        //   param.coursename = e.coursename;
-        //   param.userid=this.user.userid;
-        //   console.log(param);
-        //   this.$axios
-        //     .post(
-        //       "https://www.facebodyfitness.com/web/wxremind/geiWxRemind",
-        //       this.$qs.stringify(param),
-        //       {
-        //         headers: {
-        //           "Content-Type": "application/x-www-form-urlencoded",
-        //         },
-        //       }
-        //     )
-        //     .then((res) => {
-        //       this.$message({
-        //         message: "服务号已发送",
-        //         type: "success",
-        //       });
-        //     })
-        //     .catch((error) => {
-        //       this.$message.error("错了哦，这是一条错误消息");
-        //     });
         });
     }
   }

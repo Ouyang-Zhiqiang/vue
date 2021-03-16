@@ -205,7 +205,8 @@ export default {
       var teamschedule={}
       teamschedule.traineenum=e.traineenum
       teamschedule.scheduleid=this.query.scheduleid
-      console.log(teamschedule)
+      teamschedule.ordid=e.ordid
+      console.log(e)
        this.$axios
         .post(
           "https://www.facebodyfitness.com/web/new/cancelReservation3",

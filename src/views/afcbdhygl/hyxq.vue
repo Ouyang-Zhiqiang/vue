@@ -249,8 +249,7 @@
           </div>
           <div style="width: 33%; float: left">
             <span style="font-size: 18px">上课数</span><br /><br /><br />
-            <span style="font-size: 22px">{{ courseAmount}}节</span
-            ><br />
+            <span style="font-size: 22px">{{ courseAmount }}节</span><br />
           </div>
           <div style="width: 33%; float: left">
             <span style="font-size: 18px">有效会员卡</span><br /><br /><br />
@@ -295,10 +294,16 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="状态" width="150">
+          <el-table-column align="center" label="状态" width="100">
             <template slot-scope="scope">
               <span v-if="scope.row.state == 1">正常</span>
               <span v-if="scope.row.state == 0">停卡</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="是否开卡" width="100">
+            <template slot-scope="scope">
+              <span v-if="scope.row.isopen == true">是</span>
+              <span v-if="scope.row.state == false">否</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="购卡金额" width="80">
@@ -413,7 +418,11 @@
           <el-table :data="yuyuejilu" style="width: 100%; font-size: 13px">
             <el-table-column prop="date" label="上课时间" width="200">
               <template slot-scope="scope">
-                {{ (scope.row.coursedate).slice(0,10) + " " + (scope.row.coursetime).slice(10) }}
+                {{
+                  scope.row.coursedate.slice(0, 10) +
+                  " " +
+                  scope.row.coursetime.slice(10)
+                }}
               </template>
             </el-table-column>
             <el-table-column prop="coursename" label="课程名称" width="200" />
@@ -682,7 +691,11 @@
       <el-table :data="yuyuejilu" style="width: 100%; font-size: 13px">
         <el-table-column prop="date" label="上课时间" width="200">
           <template slot-scope="scope">
-            {{ (scope.row.coursedate).slice(0,10) + " " + (scope.row.coursetime).slice(10) }}
+            {{
+              scope.row.coursedate.slice(0, 10) +
+              " " +
+              scope.row.coursetime.slice(10)
+            }}
           </template>
         </el-table-column>
         <el-table-column prop="coursename" label="课程名称" width="200" />
@@ -1023,7 +1036,7 @@ export default {
       formLabelWidth: "150px",
       img: "",
       amount: 0,
-      courseAmount:0,
+      courseAmount: 0,
       cardamount: 0,
       bindCardList: [],
       listLoading: false,
@@ -1146,7 +1159,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          if(res.data!=null){
+          if (res.data != null) {
             this.amount = res.data.sum;
           }
         });
@@ -1161,7 +1174,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          if(res.data!=null){
+          if (res.data != null) {
             this.courseAmount = res.data.count;
           }
         });
@@ -1352,9 +1365,13 @@ export default {
       var obj = {};
       obj.cardno = e;
       this.$axios
-        .post("https://www.facebodyfitness.com/web/new/huifu", this.$qs.stringify(obj), {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        })
+        .post(
+          "https://www.facebodyfitness.com/web/new/huifu",
+          this.$qs.stringify(obj),
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        )
         .then((res) => {
           this.getCardAmount();
           this.$message({
@@ -1479,7 +1496,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.genjinall = res.data
+          this.genjinall = res.data;
         });
     },
     tjgjjl() {
@@ -1838,7 +1855,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.yuyuejilu = res.data
+          this.yuyuejilu = res.data;
         });
     },
     getyuyuejilu() {
@@ -1853,7 +1870,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.yuyuejilu = res.data
+          this.yuyuejilu = res.data;
           if (res.data.length > 0) {
             this.total = res.data[0].count;
           }
@@ -1866,12 +1883,12 @@ export default {
       data.page = 0;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getCaozuojilu",
+          "http://localhost:8081/web/new/getCaozuojilu",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.caozuojilu = res.data
+          this.caozuojilu = res.data;
         });
     },
     getcaozuojilu() {
@@ -1881,12 +1898,12 @@ export default {
       data.page = this.fenye.page - 1;
       this.$axios
         .post(
-          "https://www.facebodyfitness.com/web/new/getCaozuojilu",
+          "http://localhost:8081/web/new/getCaozuojilu",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.caozuojilu = res.data
+          this.caozuojilu = res.data;
           if (res.data.length > 0) {
             var data2 = {};
             data2.userid = this.query.userid;
@@ -1970,8 +1987,8 @@ export default {
       zktk.name = this.query.name;
       zktk.tel = this.query.tel;
       zktk.typeid = this.zkclass.typeid;
-      zktk.cardid=this.zkclass.cardid
-      zktk.cardname=this.zkclass.cardname
+      zktk.cardid = this.zkclass.cardid;
+      zktk.cardname = this.zkclass.cardname;
       zktk.payments = this.zkclass.payment;
       if (e == 1) {
         zktk.curtimes = this.zkclass.curtimes;
@@ -1983,14 +2000,15 @@ export default {
       }
       if (this.zkclass.cardtype == "S") {
         zktk.fee =
-          this.zkclass.totalfee -
-          (this.zkclass.totalfee - zktk.curtimes * this.zkclass.timefee);
+          parseInt(this.zkclass.totalfee -
+          (this.zkclass.totalfee - zktk.curtimes * this.zkclass.timefee));
       } else {
         zktk.fee = this.zkclass.totalfee;
       }
       zktk.timefee = this.zkclass.timefee;
       zktk.stoptype = "P";
       zktk.day2 = "2099-01-01";
+
       if (e == 1 || this.zkcs == this.zkclass.curtimes) {
         this.$axios
           .post(

@@ -295,6 +295,7 @@ export default {
       var teamschedule = {};
       teamschedule.traineenum = e.traineenum;
       teamschedule.ordid = e.ordid;
+      teamschedule.scheduleid= this.query.scheduleid;
       this.$axios
         .post(
           "https://www.facebodyfitness.com/web/new/cancelReservation2",
