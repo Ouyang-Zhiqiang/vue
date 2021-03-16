@@ -233,7 +233,7 @@ export default {
         // data.page=this.listQuery.page-1
         this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/GoodsList', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.list=res.data.list
-          this.total=res.data.total
+          this.total=res.data.
           this.listLoading=false
         });
       },

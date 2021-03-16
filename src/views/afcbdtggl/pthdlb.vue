@@ -253,7 +253,7 @@ export default {
         this.form.actype='C'
         this.form.createdname=localStorage.getItem('username')
         this.form.lastedname=localStorage.getItem('username')
-        this.$axios.post('http://localhost:8081/web/marketingMakeupgroupBase/addMarketingMakeupgroupBase', this.$qs.stringify(this.form), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('https://www.facebodyfitness.com/web/marketingMakeupgroupBase/addMarketingMakeupgroupBase', this.$qs.stringify(this.form), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
          this.$message({
             message: '恭喜你，操作成功',
             type: 'success'
@@ -310,7 +310,7 @@ export default {
         })
       },
       toGetAll(){
-        this.$axios.post('http://localhost:8081/web/marketingMakeupgroupBase/marketingMakeupgroupBaseMapperList', this.$qs.stringify(this.listQuery), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('https://www.facebodyfitness.com/web/marketingMakeupgroupBase/marketingMakeupgroupBaseMapperList', this.$qs.stringify(this.listQuery), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           // console.log(res)
           this.list=res.data
           this.total=res.data[0].total
