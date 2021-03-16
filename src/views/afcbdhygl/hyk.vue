@@ -519,7 +519,7 @@ export default {
 
       this.$axios
         .post(
-          "http://localhost:8081/web/new/xiugaihykzt",
+          "https://www.facebodyfitness.com/web/new/xiugaihykzt",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -611,7 +611,7 @@ export default {
       if (this.caozuoleixing == 1) {
         this.$axios
           .post(
-            "http://localhost:8081/web/new/xinzenghuiyuanka",
+            "https://www.facebodyfitness.com/web/new/xinzenghuiyuanka",
             this.$qs.stringify(this.insertForm),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -626,7 +626,7 @@ export default {
       } else if (this.caozuoleixing == 2) {
         this.$axios
           .post(
-            "http://localhost:8081/web/new/xiugaihuiyuanka",
+            "https://www.facebodyfitness.com/web/new/xiugaihuiyuanka",
             this.$qs.stringify(this.insertForm),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -644,7 +644,7 @@ export default {
       if (this.insertForm.coursetype == "T") {
         this.$axios
           .post(
-            "http://localhost:8081/web/new/xiugaihuiyuankakecheng",
+            "https://www.facebodyfitness.com/web/new/xiugaihuiyuankakecheng",
             this.$qs.stringify(this.insertForm),
             {
               headers: {
@@ -663,7 +663,7 @@ export default {
       data.tidu = this.tidu;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/xiugaihuiyuankatidu",
+          "https://www.facebodyfitness.com/web/new/xiugaihuiyuankatidu",
           this.$qs.stringify(data),
           {
             headers: {
@@ -713,7 +713,7 @@ export default {
         data.cardid = e.cardid;
         this.$axios
           .post(
-            "http://localhost:8081/web/new/getCrdMembershipCardCategoryTeamCourse",
+            "https://www.facebodyfitness.com/web/new/getCrdMembershipCardCategoryTeamCourse",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -729,7 +729,7 @@ export default {
 
         this.$axios
           .post(
-            "http://localhost:8081/web/new/getCrdMembershipCardCategoryTypeCard",
+            "https://www.facebodyfitness.com/web/new/getCrdMembershipCardCategoryTypeCard",
             this.$qs.stringify(data),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
@@ -762,7 +762,7 @@ export default {
     insertImg() {
       this.$axios
         .post(
-          "http://localhost:8081/web/new/setImage",
+          "https://www.facebodyfitness.com/web/new/setImage",
           this.$qs.stringify(this.insertForm),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )

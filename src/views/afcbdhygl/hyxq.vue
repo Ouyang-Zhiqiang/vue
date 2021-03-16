@@ -1883,7 +1883,7 @@ export default {
       data.page = 0;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCaozuojilu",
+          "https://www.facebodyfitness.com/web/new/getCaozuojilu",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -1898,7 +1898,7 @@ export default {
       data.page = this.fenye.page - 1;
       this.$axios
         .post(
-          "http://localhost:8081/web/new/getCaozuojilu",
+          "https://www.facebodyfitness.com/web/new/getCaozuojilu",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
