@@ -136,7 +136,7 @@ export default {
                     parentArr.push(item)
                   }
                 })
-
+ 
                 mylist.forEach(item=>{
                   parentArr.forEach(item1=>{
                     if(item.pid==item1.id){

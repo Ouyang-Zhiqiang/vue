@@ -881,7 +881,7 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.strenthNumberArr6 = res.data;
+          this.strenthNumberArr6 = res.data; 
         });
     },
     getCourseItem7(cid, strenth, index) {

@@ -206,7 +206,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.password.focus();
       });
-    },
+    }, 
     handleLogin() {
       if (
         this.loginForm.username == "admin" &&

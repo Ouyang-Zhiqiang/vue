@@ -1298,7 +1298,7 @@ export default {
           this.$message({
             message: "恭喜你，操作成功",
             type: "success",
-          });
+          }); 
         })
         .catch((error) => {
           this.$message.error("错了哦，这是一条错误消息");

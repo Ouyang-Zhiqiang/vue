@@ -790,7 +790,7 @@ export default {
         .then((res) => {
           this.allCourse = res.data;
         });
-    },
+    }, 
     getAllCards() {
       var data = {};
       this.listLoading = true;

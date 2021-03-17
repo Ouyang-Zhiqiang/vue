@@ -672,7 +672,7 @@ export default {
       this.dialogFormVisible3 = true;
       this.form3.memgrade = e.memgrade;
       this.form3.userid = e.userid;
-    },
+    }, 
     //修改会员等级
     toTrueClose3() {
       this.$axios
