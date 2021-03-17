@@ -532,7 +532,7 @@ export default {
           this.getAllCards();
         })
         .catch((error) => {
-          this.$message.error("新增会员(基础)卡失败");
+          this.$message.error("操作失败");
         });
     },
     createInput() {

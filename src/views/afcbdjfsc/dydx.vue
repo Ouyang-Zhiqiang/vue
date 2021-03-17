@@ -160,7 +160,7 @@ export default {
         obj.createdby= localStorage.getItem("userid");
         obj.createdname=localStorage.getItem("username");
         obj.ip='127.01';
-        this.$axios.post('http://localhost:8081/web/SpmGood/spmGoodChange', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/spmGoodChange', this.$qs.stringify(obj), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
             if(res.data=='操作成功！'){
                this.getAllSp(this.listQuery)
                this.$message( {
