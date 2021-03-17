@@ -253,7 +253,7 @@ export default {
         toClickNext(){
             this.nextWeek()
             this.getCources()
-        },
+        }, 
         getPreCourse(){
             this.$axios.post('https://www.facebodyfitness.com/web/new/getPreCourse', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
                 this.allCourse=res.data

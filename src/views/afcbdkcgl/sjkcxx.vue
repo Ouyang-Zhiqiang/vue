@@ -228,7 +228,7 @@ export default {
             message: "恭喜你，操作成功",
             type: "success"
           });
-          this.getusers()
+          this.getusers() 
 
         })
         .catch((error) => {

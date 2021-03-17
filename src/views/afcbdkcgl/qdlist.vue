@@ -856,7 +856,7 @@ export default {
       this.updateForm.partsjson[index1].actions.push(obj);
     },
     addParts1() {
-      var obj = {
+      var obj = { 
         partname: "",
         aims: "",
         actions: [

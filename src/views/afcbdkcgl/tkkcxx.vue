@@ -249,7 +249,7 @@ export default {
       }
 
       return i;
-    },
+    }, 
     signed(e) {
       //签到
       var obj = {};
