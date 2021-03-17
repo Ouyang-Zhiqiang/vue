@@ -184,7 +184,6 @@ export default {
       });
     },
     teDelete(data, index){
-      console.log(index)
       this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24C2HHHWUVN3', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
         this.list.splice(index, 1)
         this.$message({

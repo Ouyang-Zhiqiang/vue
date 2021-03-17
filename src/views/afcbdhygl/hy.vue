@@ -525,7 +525,7 @@ export default {
       data.name = this.xm;
       data.cardid = this.hykvalue;
       data.limit = this.listQuery.limit;
-      data.page = this.listQuery.page - 1;
+      data.page = this.listQuery.page;
       this.$axios
         .post(
           "https://www.facebodyfitness.com/web/new/getUsers",
@@ -533,22 +533,9 @@ export default {
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
         .then((res) => {
-          this.list = res.data;
-          data.limit = 999999;
-          this.$axios
-            .post(
-              "https://www.facebodyfitness.com/web/new/getUsers",
-              this.$qs.stringify(data),
-              {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
-              }
-            )
-            .then((res) => {
-              this.total = res.data.length;
-              this.listLoading = false;
-            });
+          this.list = res.data.list;
+          this.total = res.data.total;
+          this.listLoading = false;
         });
     },
     toGetAllByStore(e) {
@@ -693,7 +680,7 @@ export default {
             message: "恭喜你，操作成功",
             type: "success",
           });
-          this.toGetAll()
+          this.toGetAll();
           this.dialogFormVisible3 = false;
         })
         .catch((error) => {

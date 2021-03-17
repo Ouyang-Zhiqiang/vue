@@ -185,7 +185,7 @@ export default {
     },
     methods:{
       getAllStore2(){
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+        this.$axios.post('https://www.facebodyfitness.com/web/new/getStoreIdAll', {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.theAllStores=res.data.rows
         });
       },
@@ -228,21 +228,12 @@ export default {
         // this.dialogFormVisible1=false
       },
       getAllSp(data){
-        if(this.selectForm.storeid==''){
-          data.storeid='A'
-        }else{
-          data.storeid=this.selectForm.storeid
-        }
-        if(this.selectForm.name==''){
-          data.name='B'
-        }else{
           data.name=this.selectForm.name
-        }
         this.listLoading=true
-        data.page=this.listQuery.page-1
-        this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1VOF', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
-          this.list=res.data.rows
-          this.total=res.data.rows[0].counts
+        // data.page=this.listQuery.page-1
+        this.$axios.post('https://www.facebodyfitness.com/web/SpmGood/GoodsList', this.$qs.stringify(data), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
+          this.list=res.data.list
+          this.total=res.data.
           this.listLoading=false
         });
       },

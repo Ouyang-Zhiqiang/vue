@@ -455,7 +455,6 @@ export default {
         });
       },
       updateStoreAndImage(){
-        console.log(this.updateForm)
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BIUVHG1WVH', this.$qs.stringify(this.updateForm), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.$message({
             message: '恭喜你，操作成功',

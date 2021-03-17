@@ -193,11 +193,9 @@ export default {
       handleSelect(item) {
         this.$axios.post('https://www.facebodyfitness.com/hi/main?hi=24BACFMEWAR9', this.$qs.stringify(item), {headers: {'Content-Type':'application/x-www-form-urlencoded'}}).then((res)=>{
           this.user=res.data.rows[0]
-          console.log(this.user)
           this.form.currentpoints=this.user.currentpoints
           this.form.currentpoints1=this.user.points
           this.form.userid=this.user.userid
-          console.log(this.form)
           if(res.data.rows.length){
             this.showNow=true
           }

@@ -111,7 +111,6 @@ export default {
   created(){
     this.query=this.$route.query.item
     this.imgurl=this.$route.query.item2
-    // console.log(this.imgurl)
     this.getAllComment(this.listQuery)
     this.getCategory()
     this.getStrength()
