@@ -167,11 +167,10 @@ export default {
   methods: {
     getAllSp() {
       var data={}
-        // data.state =this.selectForm.state;
-        // data.username =this.selectForm.username;
-        // data.userphone = this.selectForm.userphone;
+        data.state =this.selectForm.state;
+        data.username =this.selectForm.username;
+        data.userphone = this.selectForm.userphone;
       data.storeid=this.storeid
-      console.log(data)
       this.listLoading = true;
       data.page=this.listQuery.page
       data.limit=this.listQuery.limit
