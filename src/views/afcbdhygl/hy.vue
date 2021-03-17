@@ -103,7 +103,7 @@
             </el-form-item>
             <el-form-item label="场馆" :label-width="formLabelWidth">
               <el-select
-                v-model="form.storeId"
+                v-model="form.storeid"
                 style="width: 270px; float: left"
               >
                 <el-option
@@ -365,8 +365,8 @@ export default {
         sex: "",
         tel: "",
         saleuserid: "",
-        storeId: "",
-        storeName: "",
+        storeid: "",
+        storename: "",
         xsname: "",
         remarks: "",
       },
@@ -595,6 +595,12 @@ export default {
 
     //用户基本信息修改
     updateUser() {
+      for(var i=0;i<this.stores.length;i++){
+        if(this.form.storeid==this.stores[i].id){
+          this.form.storename=this.stores[i].name
+        }
+      }
+
       this.$axios
         .post(
           "https://www.facebodyfitness.com/web/new/updateUser",

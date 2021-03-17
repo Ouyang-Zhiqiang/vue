@@ -2,7 +2,6 @@
   <div id="container" style="padding:15px">
     <el-tabs type="border-card">
       <el-tab-pane label="课程内容">
-        <el-button type="success" style="position:relative;right:0px">训练项管理</el-button>
         <el-button type="success" style="position:relative;right:0px" @click="toOpen2">新增课程大类</el-button>
         <el-dialog title="新增课程大类" :visible.sync="dialogFormVisible2" style="width:1200px;margin:0 auto">
           <el-form :model="courseItem">
