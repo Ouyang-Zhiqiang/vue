@@ -22,7 +22,7 @@
           placeholder="电话"
           style="width: 180px; margin-top: 5px"
         />
-        <el-button type="success" style="margin-top: 5px" @click="clickSearch"
+        <el-button type="success" style="margin-top: 5px" @click="toClickSearch"
           >搜索</el-button
         >
         <el-button type="success" style="margin-top: 5px">导出Excel</el-button>
@@ -47,7 +47,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column width="200" label="会员" align="center">
+          <el-table-column width="130" label="会员" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.username }}</span>
             </template>
@@ -56,6 +56,12 @@
           <el-table-column width="150" label="手机号" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.userphone }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column width="130" label="场馆" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.storename }}</span>
             </template>
           </el-table-column>
 
@@ -124,6 +130,7 @@ export default {
       theAllStores: [],
       storeid:'',
       list: [],
+      clickSearch:false,
       total: 0,
       listQuery: {
         page: 1,
@@ -158,26 +165,18 @@ export default {
     this.getAllStore2();
   },
   methods: {
-    getAllSp(data) {
-      if (this.selectForm.state == "") {
-        data.state = "A";
-      } else {
-        data.state = this.selectForm.state;
-      }
-      if (this.selectForm.username == "") {
-        data.username = "B";
-      } else {
-        data.username = this.selectForm.username;
-      }
-      if (this.selectForm.userphone == "") {
-        data.userphone = "C";
-      } else {
-        data.userphone = this.selectForm.userphone;
-      }
+    getAllSp() {
+      var data={}
+        // data.state =this.selectForm.state;
+        // data.username =this.selectForm.username;
+        // data.userphone = this.selectForm.userphone;
+      data.storeid=this.storeid
+      console.log(data)
       this.listLoading = true;
-      this.$axios
-        .post(
-          "https://www.facebodyfitness.com/web/SpmGood/selectGoodsOrderList",
+      data.page=this.listQuery.page
+      data.limit=this.listQuery.limit
+      this.$axios.post(
+          "http://localhost:8081/web/SpmGood/selectGoodsOrderList",
           this.$qs.stringify(data),
           { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         )
@@ -187,10 +186,14 @@ export default {
           this.listLoading = false;
         });
     },
-    clickSearch() {
+    toClickSearch() {
       this.listQuery.page = 1;
       this.getAllSp(this.listQuery);
     },
+    storeSearch(id){
+            this.storeid=id
+             this.getAllSp()
+        },
     clerkExchange(orderid) {
       this.$confirm("是否继续兑换积分?", "提示", {
         confirmButtonText: "确定",

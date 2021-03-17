@@ -365,7 +365,7 @@ export default {
              this.selectForm.storeid=''
           }else{
               var userStore=localStorage.getItem('storeid').split(',')
-              var storeArr=res.data.rows
+              var storeArr=res.data
               userStore.forEach(item1=>{
                 storeArr.forEach(item => {
                       if(item1==item.id){

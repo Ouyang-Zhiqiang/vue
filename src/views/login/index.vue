@@ -9,12 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h1
-          class="title"
-          style="color: white; margin-top: 200px; margin-left: 820px"
-        >
-          FaceBody颜身管理系统
-        </h1>
+        <h1 class="title" style="color:white;margin-top:200px;margin-left:820px">FaceBody颜身管理系统</h1>
       </div>
       <el-tabs v-model="activeName">
         <el-tab-pane label="验证码登录" name="first">
@@ -214,14 +209,14 @@ export default {
       ) {
         localStorage.setItem("myphone", "admin");
         this.$axios
-          .post("https://www.facebodyfitness.com/web/new/getStoreIdAll", {
+          .post("https://www.facebodyfitness.com/hi/main?hi=24BACFMEVSWV", {
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
           })
           .then((res) => {
             var storeid = "";
-            for (var i = 0; i < res.data.length; i++) {
-              storeid += res.data[i].id + ",";
-            }
+            res.data.rows.forEach((item) => {
+              storeid += item.id + ",";
+            });
             localStorage.setItem("storeid", storeid);
             localStorage.setItem("userid", "系统管理员");
             localStorage.setItem("username", "系统管理员");
@@ -253,28 +248,27 @@ export default {
         phonesearch.tel = this.loginForm.username;
         this.$axios
           .post(
-            "https://www.facebodyfitness.com/web/new/login",
+            "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNAA6R",
             this.$qs.stringify(phonesearch),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           )
           .then((res) => {
-            console.log(res)
-            localStorage.setItem("roleid", res.data[0].roleid);
-            // this.$axios
-            //   .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
-            //     headers: {
-            //       "Content-Type": "application/x-www-form-urlencoded",
-            //     },
-            //   })
-            //   .then((res) => {
-                localStorage.setItem("storenumber", 7);
-              // });
-            if (res.data.length > 0) {
-              localStorage.setItem("username", res.data[0].name);
-              localStorage.setItem("userid", res.data[0].userid);
-              localStorage.setItem("storeid", res.data[0].storeid);
-              localStorage.setItem("resurl", res.data[0].resurl);
-              localStorage.setItem("createdon", res.data[0].createdon);
+            localStorage.setItem("roleid", res.data.rows[0].roleid);
+            this.$axios
+              .post("https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R", {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }
+              })
+              .then((res) => {
+                localStorage.setItem("storenumber", res.data.rows[0].count);
+              });
+            if (res.data.rows.length > 0) {
+              localStorage.setItem("username", res.data.rows[0].name);
+              localStorage.setItem("userid", res.data.rows[0].userid);
+              localStorage.setItem("storeid", res.data.rows[0].storeid);
+              localStorage.setItem("resurl", res.data.rows[0].resurl);
+              localStorage.setItem("createdon", res.data.rows[0].createdon);
               this.loading = true;
               this.loginForm.username = "admin";
               this.$store
@@ -316,8 +310,7 @@ export default {
           id: "weixin", // 需要显示的容器id
           appid: "wx1aac047a48fb2c68", // 公众号appid wx*******
           scope: "snsapi_login", // 网页默认即可
-          redirect_uri:
-            "https://www.facebodyfitness.com/fbadmin/#/login?redirect=%2Fafcbdindex", // 授权成功后回调的url
+          redirect_uri: "https://www.facebodyfitness.com/fbadmin/#/login?redirect=%2Fafcbdindex", // 授权成功后回调的url
           state: Math.ceil(Math.random() * 1000), // 可设置为简单的随机数加session用来校验
           style: "black" // 提供"black"、"white"可选。二维码的样式
         });
@@ -335,18 +328,18 @@ export default {
           )
           .then((res) => {
             if (res.data.name != "" && res.data.name != null) {
-              // this.$axios
-              //   .post(
-              //     "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R",
-              //     {
-              //       headers: {
-              //         "Content-Type": "application/x-www-form-urlencoded"
-              //       }
-              //     }
-              //   )
-              //   .then((res) => {
-              //     localStorage.setItem("storenumber", res.data.rows[0].count);
-              //   });
+              this.$axios
+                .post(
+                  "https://www.facebodyfitness.com/hi/main?hi=24CQRLLNGW4R",
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                  }
+                )
+                .then((res) => {
+                  localStorage.setItem("storenumber", res.data.rows[0].count);
+                });
               localStorage.setItem("username", res.data.name);
               localStorage.setItem("userid", res.data.userid);
               localStorage.setItem("storeid", res.data.storeid);
@@ -404,18 +397,19 @@ export default {
     width: 150px !important;
     text-align: center;
     font-weight: bolder;
-    background: #fdfdfd;
+    background: #FDFDFD;
     border-radius: 5px;
+    
   }
   .el-tabs {
-    background: #fdfdfd;
+    background: #FDFDFD;
     width: 300px;
     height: 440px;
     border-radius: 15px;
     float: right;
-    margin-right: 400px;
+    margin-right:400px;
     margin-top: -20px;
-    opacity: 0.85;
+    opacity:0.85;
   }
 }
 </style>
